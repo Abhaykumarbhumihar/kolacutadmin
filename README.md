@@ -1,6 +1,7 @@
 # kolacur_admin
 
 A new Flutter project for kolact admin
+with getx
 
 ## Getting Started
 
