@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "60956915581",
+    "project_id": "kolacut-user-anroid",
+    "storage_bucket": "kolacut-user-anroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60956915581:android:d49684eb2365c80fc53e14",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60956915581-iolk73gulfgs32jtmi68bb3tmup6i2sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv8dOFKFx3moQz212ZXRndG-ddwhj_TRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60956915581-iolk73gulfgs32jtmi68bb3tmup6i2sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60956915581:android:1ab8f8d7524c6e92c53e14",
+        "android_client_info": {
+          "package_name": "com.kolacutadmin.kolacur_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60956915581-iolk73gulfgs32jtmi68bb3tmup6i2sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv8dOFKFx3moQz212ZXRndG-ddwhj_TRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60956915581-iolk73gulfgs32jtmi68bb3tmup6i2sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
