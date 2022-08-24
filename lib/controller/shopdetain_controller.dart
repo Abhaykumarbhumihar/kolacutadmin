@@ -166,6 +166,7 @@ class ShopDetailController extends GetxController {
       "coupon_code":"$coupon_code",
       "transaction_id":"$transaction_id"
     };
+
     print("API HIT HIT HIT HIT");
     try {
       lodaer = true;
