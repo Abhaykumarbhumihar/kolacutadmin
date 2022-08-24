@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
-import 'package:kolacur_admin/screen/registertwo.dart';
-import '../utils/CommomDialog.dart';
-import '../utils/Utils.dart';
+import 'package:untitled/screen/homebottombar.dart';
+import 'package:untitled/screen/homepage.dart';
+import 'package:untitled/utils/CommomDialog.dart';
+import 'package:untitled/utils/Utils.dart';
+import 'package:intl/intl.dart';
+import '../controller/auth_controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,20 +22,24 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  AuthControlller authControlller = Get.put(AuthControlller());
   late TextEditingController emailcontroller,
-      _namecontroller,
-      _websitecontroller,
-      _addresscontroller,
-      _passwordcontroller;
-     var imageFile;
+      _nameController,
+      _dobController,
+      _phonecontroller;
+  String date = "";
 
   // Initial Selected Value
-  final list = ["Unisex", "Male", ];
-  var selectSalong = "unisex";
-  // List of items in our dropdown menu
-  var items = ['Male', 'Female'];
+  String dropdownvalue = 'Male';
+  final list = ['Male', 'Female'];
+
+  var imageFile;
+  DateTime selectedDate = DateTime.now();
+  var genderSelect = "";
+  var dob = "";
   var dropdown;
   var showselectGender = "";
+
   List<DropdownMenuItem<String>> _createList() {
     return list
         .map<DropdownMenuItem<String>>(
@@ -49,10 +56,9 @@ class _RegisterPageState extends State<RegisterPage> {
     // TODO: implement initState
     super.initState();
     emailcontroller = TextEditingController();
-    _namecontroller = TextEditingController();
-    _websitecontroller = TextEditingController();
-    _addresscontroller = TextEditingController();
-    _passwordcontroller = TextEditingController();
+    _nameController = TextEditingController();
+    _dobController = TextEditingController();
+    _phonecontroller = TextEditingController();
   }
 
   @override
@@ -83,48 +89,67 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: height * 0.04,
               ),
-              GestureDetector(
-                onTap: () {
-                  _showImageChooser(context);
-                },
-                child: Material(
-                  elevation: 6,
-                  borderRadius: BorderRadius.circular(width * 0.04),
-                  child: Container(
-                    width: width * 0.6,
-                    height: height * 0.2,
-                    decoration: BoxDecoration(
-                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                        borderRadius: BorderRadius.circular(width * 0.04)),
-                    child: Center(
-                        child: imageFile == null
-                            ? Image.asset(
-                                'images/svgicons/uploadpn.png',
-                                width: width * 0.06,
-                                height: height * 0.06,
-                              )
-                            : Material(
-                                borderRadius:
-                                    BorderRadius.circular(width * 0.4),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(width * 0.04)),
-                                  child: Image.file(
-                                    imageFile,
-                                    fit: BoxFit.cover,
-                                    width: width * 0.6,
-                                    height: height * 0.2,
-                                  ),
-                                ),
-                              )),
-                  ),
+              ///////
+              Container(
+                width: width * 0.5,
+                height: height * 0.2,
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      width: width * 0.5,
+                      height: height * 0.2,
+                      child: imageFile == null
+                          ? Container(
+                              width: width * 0.5,
+                              height: height * 0.2,
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'images/svgicons/profilehoto.png'),
+                                      fit: BoxFit.contain)),
+                            )
+                          : Container(
+                              width: width * 0.5,
+                              height: height * 0.2,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: FileImage(imageFile),
+                                      fit: BoxFit.fill)),
+                            ),
+                    ),
+                    Positioned(
+                      top: height * 0.1 + height * 0.04,
+                      right: width * 0.06,
+                      child: GestureDetector(
+                        onTap: () {
+                          _showImageChooser(context);
+                        },
+                        child: Container(
+                          width: width * 0.1,
+                          height: height * 0.06,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'images/svgicons/circleaddback.png'),
+                                  fit: BoxFit.fill)),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              'images/svgicons/adddd.svg',
+                              width: width * 0.02,
+                              height: height * 0.02,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(
                 height: height * 0.02,
               ),
-              Text("Upload pictures",
+              Text("Add profile Photo",
                   style: TextStyle(
                     color: Color(Utils.hexStringToHexInt('77ACA2')),
                     fontSize: width * 0.05,
@@ -172,9 +197,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
-                          controller: _namecontroller,
+                          controller: _nameController,
                           decoration: InputDecoration(
-                              hintText: 'Name of the Salon',
+                              hintText: 'Name',
                               hintStyle: TextStyle(
                                   color:
                                       Color(Utils.hexStringToHexInt('A4A4A4')),
@@ -189,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(left: 6),
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(4)),
+                            const BorderRadius.all(Radius.circular(4)),
                         color: Color(Utils.hexStringToHexInt('F4F4F4')),
                       ),
                       child: TextField(
@@ -215,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(left: 6),
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(4)),
+                            const BorderRadius.all(Radius.circular(4)),
                         color: Color(Utils.hexStringToHexInt('F4F4F4')),
                       ),
                       child: TextField(
@@ -224,9 +249,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
-                          controller: _websitecontroller,
+                          controller: _phonecontroller,
                           decoration: InputDecoration(
-                              hintText: 'Website',
+                              hintText: 'Phone',
                               hintStyle: TextStyle(
                                   color:
                                       Color(Utils.hexStringToHexInt('A4A4A4')),
@@ -234,167 +259,87 @@ class _RegisterPageState extends State<RegisterPage> {
                                   fontSize: width * 0.03),
                               border: InputBorder.none)),
                     ),
-                    Container(
-                      width: width - 5,
-                      height: height * 0.1 - height * 0.04,
-                      margin: const EdgeInsets.only(top: 6),
-                      padding: const EdgeInsets.only(left: 6),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: TextField(
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                textAlignVertical: TextAlignVertical.center,
-                                textAlign: TextAlign.left,
-                                controller: _addresscontroller,
-                                decoration: InputDecoration(
-                                    hintText: 'Janakpuri, New Delhi',
-                                    hintStyle: TextStyle(
-                                        color: Color(
-                                            Utils.hexStringToHexInt('A4A4A4')),
-                                        fontFamily: 'Poppins Regular',
-                                        fontSize: width * 0.03),
-                                    border: InputBorder.none)),
-                          ),
-                          const SizedBox(width: 10.0),
-                          const Icon(Icons.edit,color: Colors.grey,),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: width - 5,
-                      height: height * 0.1 - height * 0.04,
-                      margin: const EdgeInsets.only(top: 6),
-                      padding: const EdgeInsets.only(left: 6),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: TextField(
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                textAlignVertical: TextAlignVertical.center,
-                                textAlign: TextAlign.left,
-                                controller: _passwordcontroller,
-                                decoration: InputDecoration(
-                                    hintText: 'password',
-                                    hintStyle: TextStyle(
-                                        color: Color(
-                                            Utils.hexStringToHexInt('A4A4A4')),
-                                        fontFamily: 'Poppins Regular',
-                                        fontSize: width * 0.03),
-                                    border: InputBorder.none)),
-                          ),
-                          const SizedBox(width: 10.0),
-                          // const Icon(Icons.settings),
-                        ],
-                      ),
-                    ),
-
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(
-                         children: [
-                           Container(
-                             width: width*0.4,
-
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               children: <Widget>[
-                                 Expanded(
-                                   flex: 1,
-                                   child: Container(
-                                     width: width - 5,
-                                     height: height * 0.1 - height * 0.04,
-                                     margin: const EdgeInsets.only(top: 6),
-                                     padding: const EdgeInsets.only(left: 6),
-                                     decoration: BoxDecoration(
-                                       borderRadius: const BorderRadius.all(
-                                           const Radius.circular(4)),
-                                       color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                                     ),
-                                     child:  DropdownButton(
-                                       icon: const Icon(null),
-                                       hint: Text(
-                                         "${showselectGender == "" ? "Unisex" : showselectGender}",
-                                         style: TextStyle(
-                                             color: Color(
-                                                 Utils.hexStringToHexInt('A4A4A4')),
-                                             fontFamily: 'Poppins Regular',
-                                             fontSize: width * 0.03),
-                                       ),
-                                       items: _createList(),
-                                       onChanged: (value) {
-                                         setState(() {
-                                           showselectGender = value.toString();
-                                           if (value == "Male") {
-                                             selectSalong = "unisex";
-                                             print(selectSalong);
-                                           } else if (value == "Female") {
-                                             selectSalong = "unisex";
-                                             print(selectSalong);
-                                           }
-                                         });
-                                       },
-                                     ),
-
-                                     // TextField(
-                                     //     style: TextStyle(
-                                     //       color: Colors.black,
-                                     //     ),
-                                     //     controller: emailcontroller,
-                                     //     decoration: InputDecoration(
-                                     //         hintText: 'Gender',
-                                     //         hintStyle: TextStyle(
-                                     //             color: Color(
-                                     //                 Utils.hexStringToHexInt('A4A4A4')),
-                                     //             fontFamily: 'Poppins Regular',
-                                     //             fontSize: width * 0.05),
-                                     //         border: InputBorder.none,
-                                     //         suffixIcon: Icon(Icons.keyboard_arrow_down_rounded,color: Colors.black,)),
-                                     // ),
-                                   ),
-                                 ),
-                                 const SizedBox(
-                                   width: 6,
-                                 ),
-                                 // Expanded(
-                                 //   flex: 1,
-                                 //   child: Container(
-                                 //     width: width - 5,
-                                 //     height: height * 0.1 - height * 0.04,
-                                 //     margin: const EdgeInsets.only(top: 6),
-                                 //     padding: const EdgeInsets.only(left: 6),
-                                 //     decoration: const BoxDecoration(
-                                 //       borderRadius:
-                                 //           BorderRadius.all(Radius.circular(4)),
-                                 //     ),
-                                 //   ),
-                                 // ),
-                               ],
-                             ),
-                           ),
-                           Positioned(
-                             top: height*0.02,
-                               right: 6,
-                               child: Icon(Icons.keyboard_arrow_down_outlined,color: Colors.grey,
-                               size: 24,))
-                         ],
-
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              _selectDate(context);
+                            },
+                            child: Container(
+                              width: width - 5,
+                              height: height * 0.1 - height * 0.04,
+                              margin: const EdgeInsets.only(top: 6),
+                              padding: const EdgeInsets.only(left: 6),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(4)),
+                                color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    dob == "" ? "Date of birth" : dob,
+                                    style: TextStyle(
+                                        color: Color(
+                                            Utils.hexStringToHexInt('A4A4A4')),
+                                        fontFamily: 'Poppins Regular',
+                                        fontSize: width * 0.03),
+                                  ),
+                                  const Icon(
+                                    Icons.calendar_today,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: width - 5,
+                            height: height * 0.1 - height * 0.04,
+                            margin: const EdgeInsets.only(top: 6),
+                            padding: const EdgeInsets.only(left: 6),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(4)),
+                              color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                            ),
+                            child:
+                            DropdownButton(
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              hint: Text(
+                                "${showselectGender == "" ? "Gender" : showselectGender}",
+                                style: TextStyle(
+                                    color: Color(
+                                        Utils.hexStringToHexInt('A4A4A4')),
+                                    fontFamily: 'Poppins Regular',
+                                    fontSize: width * 0.03),
+                              ),
+                              items: _createList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  showselectGender = value.toString();
+                                  if (value == "Male") {
+                                    genderSelect = "1";
+                                    print(genderSelect);
+                                  } else if (value == "Female") {
+                                    genderSelect = "2";
+                                    print(genderSelect);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     )
                   ],
@@ -406,19 +351,19 @@ class _RegisterPageState extends State<RegisterPage> {
               GestureDetector(
                 onTap: () {
                   if (validate()) {
-                    var email = emailcontroller.text.toString();
-                    var name = _namecontroller.text.toString();
-                    var website = _websitecontroller.text.toString();
-                    var address = _addresscontroller.text.toString();
-                    var passowrd = _passwordcontroller.text.toString();
-                    Get.to(const RegisterPageTwo(), arguments: [
-                      imageFile as File,
-                      email + "",
-                      name + "",
-                      website + "",
-                      address + "",
-                      passowrd
-                    ]);
+
+
+
+                    authControlller.registerUser(
+                        imageFile,
+                        _nameController.text.toString(),
+                        emailcontroller.text.toString(),
+                        dob,
+                        genderSelect,
+                        _phonecontroller.text.toString(),
+                        "android",
+                        "sdfsdfsdfsdf",
+                    context);
                   }
                 },
                 child: Container(
@@ -426,10 +371,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: height * 0.06,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(width * 0.08),
-                      color: Color(Utils.hexStringToHexInt('46D0D9'))),
+                      color: Color(Utils.hexStringToHexInt('77ACA2'))),
                   child: Center(
                     child: Text(
-                      'Verify',
+                      'Register',
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Poppins Semibold',
@@ -443,6 +388,29 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(
                 height: height * 0.02,
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const MainPage()),
+                    // );
+                  },
+                  child: Container(
+                    child: Text("SKIP",
+                        style: TextStyle(
+                          color: Color(Utils.hexStringToHexInt('77ACA2')),
+                          fontSize: width * 0.04,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins Semibold',
+                        ),
+                        textAlign: TextAlign.end),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.04,
               ),
             ],
           ),
@@ -597,12 +565,29 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  _selectDate(BuildContext context) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2025),
+    );
+    if (selected != null && selected != "") {
+      setState(() {
+        var outputFormat = DateFormat('yyyy-MM-dd');
+        dob = outputFormat.format(selected);
+      });
+    } else {
+      print(selected);
+    }
+  }
+
   bool validate() {
     var email = emailcontroller.text.toString();
-    var name = _namecontroller.text.toString();
-    var website = _websitecontroller.text.toString();
-    var address = _addresscontroller.text.toString();
-    var passowrd = _passwordcontroller.text.toString();
+    var name = _nameController.text.toString();
+    var phone = _phonecontroller.text.toString();
+    bool isValidPhoneNumber(String? value) =>
+        RegExp(r'(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$)').hasMatch(value ?? '');
     if (name == "") {
       CommonDialog.showsnackbar("Please enter name.");
       return false;
@@ -612,18 +597,20 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (!isEmail(email)) {
       CommonDialog.showsnackbar("Please enter valid email ");
       return false;
-    } else if (website == "" || website == null) {
-      CommonDialog.showsnackbar("Please enter website url. ");
+    } else if (phone == "" || phone == null) {
+      CommonDialog.showsnackbar("Please enter phone no. ");
       return false;
+    } else if (isValidPhoneNumber(emailcontroller.text.toString())) {
+      CommonDialog.showsnackbar("Please enter valid mobile no");
     } else if (imageFile == null) {
       CommonDialog.showsnackbar("Please choose image.");
       return false;
-    } else if (address == "") {
-      CommonDialog.showsnackbar("Please enter address");
-      false;
-    } else if (passowrd == "") {
-      CommonDialog.showsnackbar("Please enter password");
-      false;
+    } else if (dob == "") {
+      CommonDialog.showsnackbar("Please select dob.");
+      return false;
+    } else if (showselectGender == "") {
+      CommonDialog.showsnackbar("Please select gender.");
+      return false;
     }
     return true;
   }
@@ -631,9 +618,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isEmail(String em) {
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
     RegExp regExp = new RegExp(p);
-
     return regExp.hasMatch(em);
   }
 }

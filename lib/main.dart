@@ -1,14 +1,29 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screen/homebottombar.dart';
-import 'screen/login.dart';
+import 'package:untitled/controller/home_controller.dart';
+import 'package:untitled/model/ProfilePojo.dart';
+import 'package:untitled/screen/HomeScreen.dart';
+import 'package:untitled/screen/coin.dart';
+import 'package:untitled/screen/homebottombar.dart';
+import 'package:untitled/screen/homepage.dart';
+import 'package:untitled/screen/login.dart';
+import 'package:untitled/screen/orderdetail.dart';
+import 'package:untitled/screen/profile.dart';
+import 'package:untitled/screen/register.dart';
+import 'package:untitled/screen/saloondetail.dart';
+import 'package:untitled/screen/userprofile.dart';
+import 'package:untitled/screen/verifyOtp.dart';
+import 'package:untitled/screen/wishlish.dart';
+import 'package:untitled/screen/yourbooking.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 late FirebaseMessaging _firebaseMessaging;
 
@@ -124,81 +139,46 @@ class MyApp extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
-
+    print(session);
+    if(session!=null){
+      Get.put<HomeController>(HomeController());
+    }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: session == null ? const LoginPage() : const HomeBottomBar(),
+      home: session == null ? const LoginPage() : const MainPage(),
     );
   }
 }
-
 // void main() {
 //   runApp(MyApp());
 // }
 //
 // class MyApp extends StatelessWidget {
-//   final box = GetStorage();
-//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//   var box = GetStorage();
+//
 //
 //
 //   @override
 //   Widget build(BuildContext context) {
 //     // late var a;
-//     // late var b;
-//     // a = _prefs.then((SharedPreferences prefs) {
-//     //   return prefs.getInt('token') ?? 0;
-//     // });
-//     // if (a.toString().trim() != null || a.toString().trim() != "") {
-//     //   b = HomeBottomBar();
-//     // } else
-//     //   {
-//     //     b = LoginPage();
-//     //   }
-//
-//
-//     return GetMaterialApp(debugShowCheckedModeBanner: false, home:Firstpage() );
-//   }
-// }
-//
-// class Firstpage extends StatefulWidget {
-//   const Firstpage({Key? key}) : super(key: key);
-//
-//
-//
-//   @override
-//   State<Firstpage> createState() => _FirstpageState();
-// }
-//
-// class _FirstpageState extends State<Firstpage> {
-//
-//   final box = GetStorage();
-//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-//
-//   late var a;
-//   late var b;
-//   String  toke="";
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//
-//     a = _prefs.then((SharedPreferences prefs) {
-//       toke=  prefs.getString('token')!;
-//       return prefs.getString('token') ?? "";
+//     // if (box.read('session') == null) {
+//     //   print(box.read("session"));
+//     //   a = LoginPage();
+//     // } else {
+//     //   print(box.read("session"));
+//     //   a = MainPage();
+//     // }
+//     //
+//     // return GetMaterialApp(debugShowCheckedModeBanner: false, home: LoginPage());
+//     var box = GetStorage();
+//     String? session;
+//     Future.delayed(const Duration(seconds: 5), () {
+//       session = http://box.read('session');
 //     });
-//     if ( toke.toString().trim() == "") {
-//       b = LoginPage();
-//     } else
-//     {
-//       b = HomeBottomBar();
-//     }
 //
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return b;
+//     return GetMaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: session == null ? const LoginPage() : const MainPage(),
+//     );
 //   }
 // }
-
-
