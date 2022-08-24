@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:untitled/screen/register.dart';
-import 'package:untitled/screen/verifyOtp.dart';
-import 'package:untitled/utils/CommomDialog.dart';
-import 'package:untitled/utils/Utils.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:kolacur_admin/screen/homebottombar.dart';
+import 'package:kolacur_admin/screen/homepage.dart';
+import 'package:kolacur_admin/screen/verifyOtp.dart';
+import 'package:kolacur_admin/utils/CommomDialog.dart';
+import 'package:http/http.dart' as http;
 import '../controller/auth_controller.dart';
-import 'homebottombar.dart';
+import '../utils/Utils.dart';
+import '../utils/appconstant.dart';
+import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,53 +22,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late TextEditingController emailcontroller;
   AuthControlller authControlller = Get.put(AuthControlller());
-  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-  late Position _currentPosition;
-  late String _currentAddress;
-
+  late TextEditingController emailcontroller,_passwordcontorller;
+  TextEditingController _textFieldControllerupdateABout =
+  TextEditingController();
+  final box = GetStorage();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     emailcontroller = TextEditingController();
-    _getCurrentLocation();
+    _passwordcontorller=TextEditingController();
   }
 
-  _getCurrentLocation() {
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        if (kDebugMode) {
-          print(_currentPosition);
-        }
-      });
-
-      _getAddressFromLatLng();
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  _getAddressFromLatLng() async {
-    try {
-      List<Placemark> p = await geolocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
-
-      Placemark place = p[0];
-
-      setState(() {
-        _currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
-        print(_currentAddress);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +42,14 @@ class _LoginPageState extends State<LoginPage> {
     var height = MediaQuery.of(context).size.height;
     return SafeArea(
         child: Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: width,
-          height: height,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/svgicons/dottedbackground.png'),
-                  fit: BoxFit.fill)),
+      body: Container(
+        width: width,
+        height: height,
+        decoration: const BoxDecoration(
+            image: const DecorationImage(
+                image: AssetImage('images/svgicons/dottedbackground.png'),
+                fit: BoxFit.fill)),
+        child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               SizedBox(
@@ -90,18 +58,18 @@ class _LoginPageState extends State<LoginPage> {
               const Center(
                 child: Text(
                   'Kolacut',
-                  style: TextStyle(fontFamily: 'Poppins Regular'),
+                  style: const TextStyle(fontFamily: 'Poppins Regular'),
                 ),
               ),
               SizedBox(
                 height: height * 0.04,
               ),
               Container(
-                width: width * 0.5 +width*0.06,
-                height: height * 0.2+height*0.06 ,
+                width: width * 0.7 - width * 0.03,
+                height: height * 0.4 - height * 0.03,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('images/svgicons/logibar.png'),
+                        image: AssetImage('images/svgicons/loginpn.png'),
                         fit: BoxFit.fill)),
               ),
               SizedBox(
@@ -111,84 +79,222 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: width * 0.08, right: width * 0.08),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: width * 0.2 - width * 0.20,
-                        height: height * 0.1 - height * 0.04,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.white,
-                              blurRadius: 2.0,
-                              spreadRadius: 0.0,
-                              offset: Offset(
-                                  1.0, 1.0), // shadow direction: bottom right
-                            )
-                          ],
-                        ),
-                        child: Center(
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                ' +91',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins Regular',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: width * 0.03),
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                size: width * 0.06,
-                              )
-                            ],
+              Center(
+                child: Text(
+                  'Welcome to the Kolacut Partner',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color(Utils.hexStringToHexInt('7E7E7E')),
+                      fontFamily: 'Poppins Regular',
+                      fontSize: width * 0.03),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: width * 0.7,
+                    height: height * 0.1 - height * 0.04,
+                    padding: const EdgeInsets.only(left: 6),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                      color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                    ),
+                    child: Center(
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
                           ),
-                        ),
-                      ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: emailcontroller,
+                          decoration: InputDecoration(
+                              hintText: 'abc@gmail.com',
+                              hintStyle: TextStyle(
+                                  color:
+                                      Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
                     ),
-                    const SizedBox(
-                      width: 3,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: width * 0.7,
+                    height: height * 0.1 - height * 0.04,
+                    padding: const EdgeInsets.only(left: 6),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                      color: Color(Utils.hexStringToHexInt('F4F4F4')),
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                        width: width - 5,
-                        height: height * 0.1 - height * 0.04,
-                        padding: const EdgeInsets.only(left: 6),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                          color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                        ),
-                        child: Center(
-                          child: TextField(
-                              style: const TextStyle(
-                                color: Colors.black,
+                    child: Center(
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          obscureText: true,
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _passwordcontorller,
+                          decoration: InputDecoration(
+                              hintText: '*********',
+                              hintStyle: TextStyle(
+                                  color:
+                                      Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: height*0.01,),
+              Container(
+                margin: EdgeInsets.only(right: width*0.1+width*0.05),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: (){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            var valueName = "";
+                            var valuePrice = "";
+                            return AlertDialog(
+                              title: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: <Widget>[
+                                  const Text(
+                                    'Reset password here...',
+                                    style: TextStyle(
+                                        fontSize: 8.0),
+                                  ),
+                                  IconButton(
+                                    onPressed: () =>
+                                        Navigator.pop(
+                                            context),
+                                    icon: const Icon(Icons
+                                        .cancel_outlined),
+                                  ),
+                                ],
                               ),
-                              textAlignVertical: TextAlignVertical.center,
-                              textAlign: TextAlign.left,
-                              controller: emailcontroller,
-                              decoration: InputDecoration(
-                                  hintText: 'Enter your 10 Digit Mobile No.',
-                                  hintStyle: TextStyle(
-                                      color: Color(
-                                          Utils.hexStringToHexInt('A4A4A4')),
-                                      fontFamily: 'Poppins Regular',
-                                      fontSize: width * 0.03),
-                                  border: InputBorder.none)),
+                              content: Container(
+                                width: 200,
+                                child:
+                                SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment
+                                        .start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height:
+                                        height * 0.03,
+                                      ),
+                                      SizedBox(
+                                        width: width,
+                                        child: TextField(
+                                          textCapitalization:
+                                          TextCapitalization
+                                              .sentences,
+                                          onChanged:
+                                              (value) {
+                                            setState(() {
+                                              valueName =
+                                                  value;
+                                            });
+                                          },
+                                          keyboardType:
+                                          TextInputType
+                                              .multiline,
+                                          maxLines: 1,
+                                          controller:
+                                          _textFieldControllerupdateABout,
+                                          decoration:
+                                          const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                              icon: Icon(Icons.email,color: Colors.cyan,),
+                                              hintText:
+                                              "Enter email here..."),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      FlatButton(
+                                        padding: EdgeInsets.all(6.0),
+                                        color: Color(Utils.hexStringToHexInt('46D0D9')),
+                                        textColor:
+                                        Colors.white,
+                                        child: Text('OK'),
+                                        onPressed:
+                                            () async {
+                                          Map map = {
+                                            "session_id":
+                                            box.read(
+                                                'session'),
+                                            "description":
+                                            _textFieldControllerupdateABout
+                                                .text
+                                                .toString()
+                                          };
+                                          print(map);
+                                          // var apiUrl = Uri
+                                          //     .parse(AppConstant
+                                          //     .BASE_URL +
+                                          //     AppConstant
+                                          //         .UPDTE_SHOP);
+                                          // print(apiUrl);
+                                          // print(map);
+                                          // final response =
+                                          // await http
+                                          //     .post(
+                                          //   apiUrl,
+                                          //   body: map,
+                                          // );
+                                          // print(response
+                                          //     .body);
+                                          // _textFieldControllerupdateABout
+                                          //     .clear();
+                                          Navigator.pop(
+                                              context);
+
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              actions: <Widget>[],
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        '  Forgot Password ?',
+                        style: TextStyle(
+                          fontSize: width * 0.02,
+                          color: Color(Utils.hexStringToHexInt('77ACA2')),
+                          fontFamily: 'Poppins Regular',
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -197,22 +303,23 @@ class _LoginPageState extends State<LoginPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (emailcontroller.text.toString() == "") {
-                    CommonDialog.showsnackbar("Please enter mobile no");
-                  } else if (!GetUtils.isPhoneNumber(
-                      emailcontroller.text.toString())) {
-                    CommonDialog.showsnackbar("Please enter valid mobile no");
-                    //print(authControlller.sendData() + "fsdfsdfsdf");
-                  } else {
-                    authControlller.login(emailcontroller.text.toString());
+                  if(emailcontroller.text.toString()!=""||
+                  _passwordcontorller.text.toString()!=""){
+authControlller.login(emailcontroller.text.toString(),  _passwordcontorller.text.toString());
+                  }else{
+                    CommonDialog.showsnackbar("All fileds are mandatory");
                   }
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => const HomeBottomBar()),
+                  // );
                 },
                 child: Container(
                   width: width * 0.5,
                   height: height * 0.06,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(width * 0.08),
-                      color: Color(Utils.hexStringToHexInt('77ACA2'))),
+                      color: Color(Utils.hexStringToHexInt('46D0D9'))),
                   child: Center(
                     child: Text(
                       'Verify',
@@ -220,76 +327,6 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                           fontFamily: 'Poppins Semibold',
                           fontSize: width * 0.04),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: width * 0.08, right: width * 0.08),
-                child: Row(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                        child: Divider(
-                          color: Color(Utils.hexStringToHexInt('77ACA2')),
-                          thickness: 2,
-                        )),
-                  ),
-                  Text(
-                    "OR",
-                    style: TextStyle(
-                        color: Color(Utils.hexStringToHexInt('77ACA2')),
-                        fontFamily: 'Poppins Regular',
-                        fontSize: width * 0.02),
-                  ),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 15.0, right: 10.0),
-                        child: Divider(
-                          color: Color(Utils.hexStringToHexInt('77ACA2')),
-                          thickness: 2,
-                        )),
-                  ),
-                ]),
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: width * 0.08, right: width * 0.08),
-                width: width,
-                height: height * .07,
-                child: Material(
-                  borderRadius: BorderRadius.circular(width * 0.03),
-                  elevation: 8,
-                  child: Container(
-                    width: width,
-                    height: height * .07,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width * 0.03),
-                        color: Colors.white),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SvgPicture.asset(
-                          "images/svgicons/logos_google-gmail.svg",
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Continue with Gmail',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Poppins Regular',
-                              fontSize: width * 0.03),
-                        )
-                      ],
                     ),
                   ),
                 ),
@@ -325,18 +362,16 @@ class _LoginPageState extends State<LoginPage> {
                           // );
                         },
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: (){
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()),
+                              MaterialPageRoute(builder: (context) => const RegisterPage()),
                             );
                           },
                           child: Container(
                             child: Text("Register",
                                 style: TextStyle(
-                                  color:
-                                      Color(Utils.hexStringToHexInt('77ACA2')),
+                                  color: Color(Utils.hexStringToHexInt('77ACA2')),
                                   fontSize: width * 0.03,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Poppins Semibold',
@@ -348,30 +383,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               SizedBox(
-                height: height * 0.02,
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MainPage()),
-                    );
-                  },
-                  child: Container(
-                    child: Text("SKIP",
-                        style: TextStyle(
-                          color: Color(Utils.hexStringToHexInt('77ACA2')),
-                          fontSize: width * 0.04,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins Semibold',
-                        ),
-                        textAlign: TextAlign.end),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * 0.04,
+                height: height * 0.03,
               ),
             ],
           ),

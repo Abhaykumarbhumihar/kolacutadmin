@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import '../utils/appconstant.dart';
 
@@ -8,91 +8,47 @@ class APICall {
   final apiBaseUri = "http://bltechno.atwebpages.com/index.php/Dashboard";
 
   Future<String> registerUrse(Map map, url) async {
-    Map<String, String> mainheader = {
-      "Content-type": "application/x-www-form-urlencoded",
-
-    };
     var apiUrl = Uri.parse(AppConstant.BASE_URL + url);
     print(apiUrl);
     print(map);
     final response = await http.post(
       apiUrl,
-headers: mainheader,
-      body: map
+      body: map,
     );
+
+
+
     if (response.statusCode == 200) {
-
       var jsonString = response.body;
-      print(response.statusCode);
-     // print(response.body);
-      return jsonString;
-    } else {
-      return "null";
-    }
-  }
-  Future<String> postWithoutBody(url) async {
-    Map<String, String> mainheader = {
-      "Content-type": "application/x-www-form-urlencoded",
-
-    };
-    var apiUrl = Uri.parse(AppConstant.BASE_URL + url);
-    print(apiUrl);
-    final response = await http.post(
-        apiUrl,
-        headers: mainheader,
-    );
-    if (response.statusCode == 200) {
-
-      var jsonString = response.body;
-      print(response.statusCode);
-      // print(response.body);
       return jsonString;
     } else {
       return "null";
     }
   }
 
-  Future<String> getMethod(Map map, url) async {
-    Map<String, String> mainheader = {
-      "Content-type": "application/x-www-form-urlencoded",
+  Future<String> AddEmployee(experience, session_id, name, email, address,
+      skills, password, phone_number, image) async {
+    print("IN API FILE");
+    print(skills);
 
-    };
-    var apiUrl = Uri.parse(AppConstant.BASE_URL + url);
-    print(apiUrl);
-    print(map);
-    final response = await http.get(
-        apiUrl,
-        headers: mainheader,
-
-    );
-    print("SDFDSFDFDFDF");
-    print(response.body);
-    if (response.statusCode == 200) {
-      var jsonString = response.body;
-      print(response.statusCode);
-      print("SDFDSFDFDFDF");
-       print(response.body);
-      return jsonString;
-    } else {
-      return "null";
-    }
-  }
-  Future<String> registerUserMulti(
-      image, name, email, dob, gender, phone, device_type, device_token) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse(AppConstant.BASE_URL + AppConstant.REGISTER));
+        'POST', Uri.parse(AppConstant.BASE_URL + AppConstant.ADD_EMPLOYEE));
+    // var fileContent = file.readAsBytesSync();
+    // var fileContentBase64 = base64.encode(fileContent);
 
     request.files.add(http.MultipartFile.fromBytes(
-        'image', File(image.path).readAsBytesSync(),
+        'image', image.readAsBytesSync(),
         filename: image.path.split("/").last));
 
+    request.fields['experience'] = experience + " years Experience";
+    request.fields['skills[]'] = skills;
+    request.fields['session_id'] = session_id;
+    request.fields['address'] = address;
     request.fields['name'] = name;
     request.fields['email'] = email;
-    request.fields['dob'] = "" + dob;
-    request.fields['gender'] = gender;
-    request.fields['device_type'] = device_type;
-    request.fields['device_token'] = device_token;
-    request.fields['phone'] = phone;
+    request.fields['password'] = password;
+    request.fields['phone_number'] = "" + phone_number;
+
     print(request);
     http.Response response =
         await http.Response.fromStream(await request.send());
@@ -106,27 +62,58 @@ headers: mainheader,
     }
   }
 
-  Future<String> registerUpdateProfileMulti(session,
-      image, name, email, dob, gender, phone, device_type, device_token) async {
+  Future<String> registerUserMulti(
+      shop_name,
+      email,
+      shop_type,
+      address,
+      latitude,
+      longitude,
+      owner_name,
+      owner_email,
+      age,
+      owner_phone_no,
+      device_type,
+      device_token,
+      password,
+      logo,
+      owner_profile_image,
+      adhaar_card_file) async {
+    print("IN API FILE");
+    print(logo);
+    print(owner_profile_image);
     var request = http.MultipartRequest(
-        'POST', Uri.parse(AppConstant.BASE_URL + AppConstant.UPDATE_PROFILE));
-if(image!=null){
-  request.files.add(http.MultipartFile.fromBytes(
-      'image', File(image.path).readAsBytesSync(),
-      filename: image.path.split("/").last));
-}
+        'POST', Uri.parse(AppConstant.BASE_URL + AppConstant.REGISTER));
+    // var fileContent = file.readAsBytesSync();
+    // var fileContentBase64 = base64.encode(fileContent);
 
-   request.fields["session_id"]=session;
-    request.fields['name'] = name;
+    request.files.add(http.MultipartFile.fromBytes(
+        'logo', logo.readAsBytesSync(),
+        filename: logo.path.split("/").last));
+
+    request.files.add(http.MultipartFile.fromBytes(
+        'owner_profile_image', owner_profile_image.readAsBytesSync(),
+        filename: owner_profile_image.path.split("/").last));
+    request.fields['adhaar_card_file'] = adhaar_card_file;
+    request.fields['shop_name'] = shop_name;
     request.fields['email'] = email;
-    request.fields['dob'] = "" + dob;
-    request.fields['gender'] = gender;
+    request.fields['shop_type'] = "" + shop_type;
+    request.fields['address'] = address;
+    request.fields['adhaar_card_file'] = adhaar_card_file;
+    print(adhaar_card_file + "SDFSDFD");
+    request.fields['address'] = address;
+    request.fields['latitude'] = latitude;
+    request.fields['longitude'] = longitude;
+    request.fields['owner_name'] = owner_name;
+    request.fields['owner_email'] = owner_email;
+    request.fields['age'] = "" + age;
+    request.fields['owner_phone_no'] = owner_phone_no;
     request.fields['device_type'] = device_type;
     request.fields['device_token'] = device_token;
-    request.fields['phone'] = phone;
+    request.fields['password'] = password;
     print(request);
     http.Response response =
-    await http.Response.fromStream(await request.send());
+        await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");
     print("Result: ${response.body}");
     if (response.statusCode == 400) {
@@ -136,4 +123,57 @@ if(image!=null){
       return response.body;
     }
   }
+
+  Future<String> uploadshopimages(List<XFile> logo, session_id) async {
+    print("IN API FILE");
+
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(AppConstant.BASE_URL + AppConstant.UPDTE_SHOP));
+
+    request.fields['session_id'] = session_id;
+
+    logo.forEach((element) async {
+      request.files
+          .add(await http.MultipartFile.fromPath("shop_image[]", element.path));
+    });
+
+    print("$request  sdfdsfsdfsdf");
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    print("SDF DSF SDF SDF SDF ");
+    print("Result: ${response.body}");
+    if (response.statusCode == 400) {
+      print(response);
+      print("SFSDFSDFDSFSDFSDFSDFSDFSDF");
+      return "null";
+    }
+    else {
+      return response.body;
+    }
+  }
 }
+
+/*void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final String? session = prefs.getString('session');
+  runApp(MyApp(session: session));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key, this.session}) : super(key: key);
+  final String? session;
+
+
+  @override
+
+  Widget build(BuildContext context) {
+    print(session);
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: session == null ? const LoginPage() : const HomeBottomBar(),
+    );
+  }
+}
+
+*/

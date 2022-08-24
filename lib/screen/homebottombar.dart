@@ -4,43 +4,38 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:untitled/screen/circular_slider.dart';
-import 'package:untitled/screen/coin.dart';
-import 'package:untitled/screen/homepage.dart';
-import 'package:untitled/screen/orderdetail.dart';
-import 'package:untitled/screen/register.dart';
-import 'package:untitled/screen/saloondetail.dart';
-import 'package:untitled/screen/userprofile.dart';
-import 'package:untitled/screen/wishlish.dart';
-import 'package:untitled/screen/yourbooking.dart';
-import 'package:untitled/utils/Utils.dart';
+import 'package:kolacur_admin/screen/homepage.dart';
+import 'package:kolacur_admin/screen/manageslot.dart';
+import 'package:kolacur_admin/screen/managestaff.dart';
+import 'package:kolacur_admin/screen/profile.dart';
+import 'package:kolacur_admin/screen/profilecarosed.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../main.dart';
-import 'profile.dart';
+import '../utils/Utils.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class HomeBottomBar extends StatefulWidget {
+  const HomeBottomBar({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<HomeBottomBar> createState() => _HomeBottomBarState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _HomeBottomBarState extends State<HomeBottomBar> {
   var index = 0;
   final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+  PersistentTabController(initialIndex: 0);
 
-   List<Widget> _buildScreens() {
+  List<Widget> _buildScreens() {
     return [
      const HomePage(),
-     const TableBasicsExample(),
-    const  CoinPage(),
-     const Wishlist(),
-    const  ProfilePage()
+     const ManageStaff(),
+     const ManageSlotPage(),
+     const ProfileCarose()
     ];
   }
+
+
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
@@ -49,34 +44,23 @@ class _MainPageState extends State<MainPage> {
           index == 0 ? Icons.home : Icons.home_outlined,
           size: 30,
         ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('77ACA2')),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: ImageIcon(
-          AssetImage(index == 1
-              ? "images/svgicons/fillcal.png"
-              : "images/svgicons/emptycal.png"),
-          size: 30,
-        ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('77ACA2')),
+        icon:  Icon(
+      index == 1 ? Icons.group : Icons.group,
+      size: 30,
+      ),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        iconSize: 30,
-        icon: const Icon(
-          CupertinoIcons.creditcard_fill,
-          color: Colors.white,
-        ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('77ACA2')),
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const ImageIcon(
-          AssetImage("images/svgicons/emptyheart.png"),
-          size: 30,
-        ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('77ACA2')),
+    icon: Icon(
+    index == 2 ? Icons.settings_rounded : Icons.settings_rounded,
+    size: 30,
+    ),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
@@ -84,11 +68,12 @@ class _MainPageState extends State<MainPage> {
           CupertinoIcons.profile_circled,
           size: 30,
         ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('77ACA2')),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
     ];
   }
+
 
   @override
   void initState() {
@@ -96,6 +81,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     notification();
   }
+
 
   notification() async {
     await FirebaseMessaging.instance
@@ -173,12 +159,13 @@ class _MainPageState extends State<MainPage> {
       //  _homepage = TwilioPhoneNumberInput();
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    //box.write('session', "TXKe48DXicKoAjkyEOgXWqU3VuVZqdHm");
     return PersistentTabView(
       context,
       controller: _controller,
+
 
       screens: _buildScreens(),
       items: _navBarsItems(),
@@ -204,13 +191,13 @@ class _MainPageState extends State<MainPage> {
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style15,
+      navBarStyle: NavBarStyle.style3,
 
       // Choose the nav bar style with this property.
       onItemSelected: (value) {

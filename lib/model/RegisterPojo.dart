@@ -28,7 +28,7 @@ class RegisterPojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data?.toJson(),
+    "data": data!.toJson(),
   };
 }
 
@@ -37,30 +37,51 @@ class Data {
     this.id,
     this.name,
     this.email,
-    this.phone,
-    this.dob,
-    this.gender,
-    this.profileImage,
+    this.ownerName,
+    this.ownerEmail,
+    this.ownerPhoneNo,
+    this.ownerProfileImage,
+    this.owerAge,
+    this.logo,
+    this.adhaarCardFile,
+    this.address,
+    this.latitude,
+    this.longitude,
+    this.shopType,
     this.token,
   });
 
   int? id;
   String? name;
   String? email;
-  String? phone;
-  DateTime? dob;
-  String? gender;
-  String? profileImage;
+  String? ownerName;
+  String? ownerEmail;
+  String? ownerPhoneNo;
+  String? ownerProfileImage;
+  int? owerAge;
+  String? logo;
+  String? adhaarCardFile;
+  String? address;
+  String? latitude;
+  String? longitude;
+  String? shopType;
   String? token;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     name: json["name"],
     email: json["email"],
-    phone: json["phone"],
-    dob: DateTime.parse(json["dob"]),
-    gender: json["gender"],
-    profileImage: json["profile image"],
+    ownerName: json["owner_name"],
+    ownerEmail: json["owner_email"],
+    ownerPhoneNo: json["owner_phone_no"],
+    ownerProfileImage: json["owner_profile_image"],
+    owerAge: json["ower_age"],
+    logo: json["logo"],
+    adhaarCardFile: json["adhaar_card_file"],
+    address: json["address"],
+    latitude: json["latitude"],
+    longitude: json["longitude"],
+    shopType: json["shop_type"],
     token: json["token"],
   );
 
@@ -68,10 +89,17 @@ class Data {
     "id": id,
     "name": name,
     "email": email,
-    "phone": phone,
-    "dob": "${dob?.year.toString().padLeft(4, '0')}-${dob?.month.toString().padLeft(2, '0')}-${dob?.day.toString().padLeft(2, '0')}",
-    "gender": gender,
-    "profile image": profileImage,
+    "owner_name": ownerName,
+    "owner_email": ownerEmail,
+    "owner_phone_no": ownerPhoneNo,
+    "owner_profile_image": ownerProfileImage,
+    "ower_age": owerAge,
+    "logo": logo,
+    "adhaar_card_file": adhaarCardFile,
+    "address": address,
+    "latitude": latitude,
+    "longitude": longitude,
+    "shop_type": shopType,
     "token": token,
   };
 }

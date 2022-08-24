@@ -2,24 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 
-import '../controller/auth_controller.dart';
 import '../utils/Utils.dart';
 
-class VerifyOtpPage extends StatefulWidget {
-  const VerifyOtpPage({Key? key}) : super(key: key);
+class VerifyOtp extends StatefulWidget {
+  const VerifyOtp({Key? key}) : super(key: key);
 
   @override
-  State<VerifyOtpPage> createState() => _VerifyPageState();
+  State<VerifyOtp> createState() => _VerifyPageState();
 }
 
-class _VerifyPageState extends State<VerifyOtpPage> {
+class _VerifyPageState extends State<VerifyOtp> {
   late TextEditingController emailcontroller;
   var otp = "";
-  AuthControlller authControlller = Get.put(AuthControlller());
 
   @override
   void initState() {
@@ -32,22 +29,12 @@ class _VerifyPageState extends State<VerifyOtpPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    var one = Get.arguments;
-    print(one);
-    var fistt=one.toString().substring(0, 2);
-    var lastwp=one.toString().substring(one.length-2);
-    final src = one;
-    final result = src.split(' ').take(2).join(' ');
-    var shophone=fistt+"*****"+lastwp;
-    print(shophone);
-
     return SafeArea(
         child: Scaffold(
       body: Container(
         width: width,
         height: height,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('images/svgicons/dottedbackground.png'),
                 fit: BoxFit.fill)),
@@ -57,7 +44,7 @@ class _VerifyPageState extends State<VerifyOtpPage> {
               SizedBox(
                 height: height * 0.04,
               ),
-              const Center(
+              Center(
                 child: Text(
                   'Kolacut',
                   style: TextStyle(fontFamily: 'Poppins Regular'),
@@ -83,11 +70,12 @@ class _VerifyPageState extends State<VerifyOtpPage> {
               ),
               Center(
                 child: Text(
-                  'Enter 4 digit code sent to '+shophone,
+                  'Enter 4 digit code sent to  98******28',
                   style: TextStyle(
                       color: Color(Utils.hexStringToHexInt('7E7E7E')),
                       fontFamily: 'Poppins Regular',
-                      fontSize: width * 0.03),
+                    fontSize: width*0.03
+                  ),
                 ),
               ),
               SizedBox(
@@ -124,8 +112,8 @@ class _VerifyPageState extends State<VerifyOtpPage> {
                 height: height * 0.03,
               ),
               GestureDetector(
-                onTap: () {
-                  authControlller.verifyOtp(otp);
+                onTap: (){
+                  showLoaderDialog(context);
                 },
                 child: Container(
                   width: width * 0.5,
@@ -152,27 +140,29 @@ class _VerifyPageState extends State<VerifyOtpPage> {
         ),
       ),
     ));
-
   }
-
   showLoaderDialog(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
+    
     AlertDialog alert = AlertDialog(
       contentPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      content:
-      Container(
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+
+        ),
+      content: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height*0.3,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: Colors.grey, width: 2),
-            borderRadius: BorderRadius.circular(
-                MediaQuery.of(context).size.width * 0.04)),
+            border: Border.all(
+              color: Colors.grey,
+              width: 2
+            ),
+            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.04)
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,30 +171,31 @@ class _VerifyPageState extends State<VerifyOtpPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.all(width * 0.06),
-                  child: SvgPicture.asset(
-                      'images/svgicons/eva_close-circle-fill.svg'),
-                  width: width * 0.08,
-                  height: height * 0.05,
-                )
+                    margin:EdgeInsets.all(width*0.06),
+                    child: SvgPicture.asset('images/svgicons/eva_close-circle-fill.svg'),
+                width: width*0.08,
+                height: height*0.05,)
               ],
             ),
+
             Container(
-              margin: EdgeInsets.only(bottom: width * 0.06),
-              child: Text(
-                'Verification Successful',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins Medium',
-                    fontSize: MediaQuery.of(context).size.width * 0.04),
-              ),
+              margin:EdgeInsets.only(bottom:width*0.06),
+              child: Text('Verification Successful',
+                textAlign:TextAlign.center,style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Poppins Medium',
+                fontSize: MediaQuery.of(context).size.width*0.04
+
+              ),),
             )
           ],
         ),
+
+
       ),
     );
     showDialog(
+
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
