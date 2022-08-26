@@ -72,48 +72,48 @@ class _HomePageState extends State<ManageStaff> {
                 fontSize: width * 0.04),
           ),
           actions: <Widget>[
-            PopupMenuButton(
-                child: Container(
-                  margin: EdgeInsets.only(right: width * 0.01),
-                  child: SvgPicture.asset(
-                    "images/svgicons/filtersv.svg",
-                  ),
-                ),
-                icon: null,
-                // add this line
-                itemBuilder: (_) => <PopupMenuItem<String>>[
-                      PopupMenuItem<String>(
-                          child: Container(
-                              width: 100,
-                              // height: 30,
-                              child: const Text(
-                                "All",
-                                style: TextStyle(color: Colors.red),
-                              )),
-                          value: 'All'),
-                      PopupMenuItem<String>(
-                          child: Container(
-                              width: 100,
-                              // height: 30,
-                              child: const Text(
-                                "Available",
-                                style: TextStyle(color: Colors.red),
-                              )),
-                          value: 'Available'),
-                      PopupMenuItem<String>(
-                          child: Container(
-                              width: 100,
-                              // height: 30,
-                              child: const Text(
-                                "Not Available",
-                                style: TextStyle(color: Colors.red),
-                              )),
-                          value: 'Not Available')
-                    ],
-                onSelected: (index) async {
-                  print(index);
-                  profileController.filterStatus(index);
-                })
+            // PopupMenuButton(
+            //     child: Container(
+            //       margin: EdgeInsets.only(right: width * 0.01),
+            //       child: SvgPicture.asset(
+            //         "images/svgicons/filtersv.svg",
+            //       ),
+            //     ),
+            //     icon: null,
+            //     // add this line
+            //     itemBuilder: (_) => <PopupMenuItem<String>>[
+            //           PopupMenuItem<String>(
+            //               child: Container(
+            //                   width: 100,
+            //                   // height: 30,
+            //                   child: const Text(
+            //                     "All",
+            //                     style: TextStyle(color: Colors.red),
+            //                   )),
+            //               value: 'All'),
+            //           PopupMenuItem<String>(
+            //               child: Container(
+            //                   width: 100,
+            //                   // height: 30,
+            //                   child: const Text(
+            //                     "Available",
+            //                     style: TextStyle(color: Colors.red),
+            //                   )),
+            //               value: 'Available'),
+            //           PopupMenuItem<String>(
+            //               child: Container(
+            //                   width: 100,
+            //                   // height: 30,
+            //                   child: const Text(
+            //                     "Not Available",
+            //                     style: TextStyle(color: Colors.red),
+            //                   )),
+            //               value: 'Not Available')
+            //         ],
+            //     onSelected: (index) async {
+            //       print(index);
+            //       profileController.filterStatus(index);
+            //     })
           ],
         ),
         backgroundColor: Colors.transparent,

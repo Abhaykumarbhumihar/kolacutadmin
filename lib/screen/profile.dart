@@ -33,6 +33,7 @@ class _HomePageState extends State<ProfilePage> {
         accountStatus = employeeController.employeeListPojo.value.data!.status!;
         return Scaffold(
             resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
             appBar: AppBar(
               centerTitle: false,
               elevation: 0.0,

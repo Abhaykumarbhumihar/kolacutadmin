@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
 
                            Container(
                              width: width,
-                             margin: EdgeInsets.only(left: width*0.03),
+                             //margin: EdgeInsets.only(left: width*0.03),
                              child: Center(
                                child: Column(
                                  mainAxisAlignment: MainAxisAlignment.start,
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                                          BorderRadius.circular(width * 0.04),
                                          elevation: 12,
                                          child: Container(
-                                           width: width * 0.4,
+                                           width: width * 0.4+width*0.02,
                                            height: height * 0.1 - height * 0.01,
                                            decoration: BoxDecoration(
                                                borderRadius: BorderRadius.circular(
@@ -193,14 +193,14 @@ class _HomePageState extends State<HomePage> {
                                          ),
                                        ),
                                        SizedBox(
-                                         width: width * 0.03,
+                                         width: width * 0.05,
                                        ),
                                        Material(
                                          borderRadius:
                                          BorderRadius.circular(width * 0.04),
                                          elevation: 12,
                                          child: Container(
-                                           width: width * 0.4,
+                                           width: width * 0.4+width*0.02,
                                            height: height * 0.1 - height * 0.01,
                                            decoration: BoxDecoration(
                                                borderRadius: BorderRadius.circular(
@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                                          BorderRadius.circular(width * 0.04),
                                          elevation: 12,
                                          child: Container(
-                                           width: width * 0.4,
+                                           width: width * 0.4+width*0.02,
                                            height: height * 0.1 - height * 0.01,
                                            decoration: BoxDecoration(
                                                borderRadius: BorderRadius.circular(
@@ -337,14 +337,14 @@ class _HomePageState extends State<HomePage> {
                                          ),
                                        ),
                                        SizedBox(
-                                         width: width * 0.03,
+                                         width: width * 0.05,
                                        ),
                                        Material(
                                          borderRadius:
                                          BorderRadius.circular(width * 0.04),
                                          elevation: 12,
                                          child: Container(
-                                           width: width * 0.4,
+                                           width: width * 0.4+width*0.02,
                                            height: height * 0.1 - height * 0.01,
                                            decoration: BoxDecoration(
                                                borderRadius: BorderRadius.circular(

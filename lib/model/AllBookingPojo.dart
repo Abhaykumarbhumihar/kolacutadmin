@@ -45,6 +45,10 @@ class SlotDetail {
     this.date,
     this.status,
     this.service,
+    this.coupon_code,
+    this.coin,
+    this.transaction_id,
+    this.payment_type,
   });
 
   int? id;
@@ -57,6 +61,12 @@ class SlotDetail {
   String? toTime;
   String? status;
   DateTime? date;
+  String? coupon_code;
+  String? payment_type;
+  String? coin;
+  String? transaction_id;
+
+
   List<Service>? service;
 
   factory SlotDetail.fromJson(Map<String, dynamic> json) => SlotDetail(
@@ -66,6 +76,10 @@ class SlotDetail {
     shopName: json["shop_name"],
     userImage: json["user_image"],
     bookingDay: json["booking_day"],
+    coupon_code: json["coupon_code"],
+    coin: json["coin"],
+    payment_type: json["payment_type"],
+    transaction_id: json["transaction_id"],
     fromTime: json["from_time"],
     status: json["status"],
     toTime: json["to_time"],
@@ -83,6 +97,10 @@ class SlotDetail {
     "from_time": fromTime,
     "status": status,
     "to_time": toTime,
+    "coupon_code": coupon_code,
+    "coin": coin,
+    "payment_type": payment_type,
+    "transaction_id": transaction_id,
     "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
     "service": List<dynamic>.from(service!.map((x) => x.toJson())),
   };

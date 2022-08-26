@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kolacur_admin/screen/graph.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screen/homebottombar.dart';
 import 'screen/login.dart';
@@ -20,12 +21,13 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     playSound: true);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   // print('A bg message just showed up :  ${message.messageId}');
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -36,7 +38,7 @@ void main() async {
   debugPrint(fcm_token);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -120,11 +122,8 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key, this.session}) : super(key: key);
   final String? session;
 
-
   @override
-
   Widget build(BuildContext context) {
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: session == null ? const LoginPage() : const HomeBottomBar(),
@@ -200,5 +199,3 @@ class MyApp extends StatelessWidget {
 //     return b;
 //   }
 // }
-
-

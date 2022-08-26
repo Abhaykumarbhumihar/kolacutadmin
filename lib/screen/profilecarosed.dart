@@ -737,15 +737,15 @@ class _HomePageState extends State<ProfileCarose> {
                     children: <Widget>[
                       Stack(
                         children: <Widget>[
-                          Container(
-                            width: width,
-                            height: height * 0.7,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'images/svgicons/fullbackpn.png'),
-                                    fit: BoxFit.fill)),
-                          ),
+                          // Container(
+                          //   width: width,
+                          //   height: height * 0.7,
+                          //   decoration: const BoxDecoration(
+                          //       image: DecorationImage(
+                          //           image: AssetImage(
+                          //               'images/svgicons/fullbackpn.png'),
+                          //           fit: BoxFit.fill)),
+                          // ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -763,7 +763,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       'Photo Gallery',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontFamily: 'Poppins Regular',
                                           fontSize: width * 0.03),
                                     ),
@@ -836,40 +836,40 @@ class _HomePageState extends State<ProfileCarose> {
                                           });
                                         }),
                                   ),
-                                  Positioned(
-                                    top: height * 0.2,
-                                    left: width * 0.4,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children:
-                                          imgList.asMap().entries.map((entry) {
-                                        return GestureDetector(
-                                          onTap: () => _controller
-                                              .animateToPage(entry.key),
-                                          child: Container(
-                                            width: 12.0,
-                                            height: 12.0,
-                                            margin: const EdgeInsets.symmetric(
-                                                vertical: 8.0, horizontal: 4.0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: (Theme.of(context)
-                                                                .brightness ==
-                                                            Brightness.dark
-                                                        ? Colors.white
-                                                        : Color(Utils
-                                                            .hexStringToHexInt(
-                                                                'FFFFFF')))
-                                                    .withOpacity(
-                                                        _current == entry.key
-                                                            ? 0.9
-                                                            : 0.4)),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
+                                  // Positioned(
+                                  //   top: height * 0.2,
+                                  //   left: width * 0.4,
+                                  //   child: Row(
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.center,
+                                  //     children:
+                                  //         imgList.asMap().entries.map((entry) {
+                                  //       return GestureDetector(
+                                  //         onTap: () => _controller
+                                  //             .animateToPage(entry.key),
+                                  //         child: Container(
+                                  //           width: 12.0,
+                                  //           height: 12.0,
+                                  //           margin: const EdgeInsets.symmetric(
+                                  //               vertical: 8.0, horizontal: 4.0),
+                                  //           decoration: BoxDecoration(
+                                  //               shape: BoxShape.circle,
+                                  //               color: (Theme.of(context)
+                                  //                               .brightness ==
+                                  //                           Brightness.dark
+                                  //                       ? Colors.white
+                                  //                       : Color(Utils
+                                  //                           .hexStringToHexInt(
+                                  //                               'FFFFFF')))
+                                  //                   .withOpacity(
+                                  //                       _current == entry.key
+                                  //                           ? 0.9
+                                  //                           : 0.4)),
+                                  //         ),
+                                  //       );
+                                  //     }).toList(),
+                                  //   ),
+                                  // ),
                                 ]),
                               ),
                               Container(
@@ -1788,8 +1788,8 @@ class _HomePageState extends State<ProfileCarose> {
                                     ),
                                     SizedBox(
                                       width: width,
-                                      height: height * 0.8,
                                       child: ListView.builder(
+                                        itemCount: 2,
                                           shrinkWrap: true,
                                           physics:
                                               NeverScrollableScrollPhysics(),
@@ -1866,6 +1866,8 @@ class _HomePageState extends State<ProfileCarose> {
                                                       child: ListView.builder(
                                                           itemCount: 4,
                                                           shrinkWrap: true,
+                                                          physics:
+                                                          NeverScrollableScrollPhysics(),
                                                           scrollDirection:
                                                               Axis.vertical,
                                                           itemBuilder: (context,

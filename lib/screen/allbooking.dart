@@ -104,39 +104,38 @@ class _HomePageState extends State<AllBooking> {
                   icon: null,
                   // add this line
                   itemBuilder: (_) => <PopupMenuItem<String>>[
-                    PopupMenuItem<String>(
-                        child: Container(
-                            width: 100,
-                            // height: 30,
-                            child: const Text(
-                              "All",
-                              style: TextStyle(color: Colors.red),
-                            )),
-                        value: 'All'),
-                    PopupMenuItem<String>(
-                        child: Container(
-                            width: 100,
-                            // height: 30,
-                            child: const Text(
-                              "Accepted",
-                              style: TextStyle(color: Colors.red),
-                            )),
-                        value: 'Accepted'),
-                    PopupMenuItem<String>(
-                        child: Container(
-                            width: 100,
-                            // height: 30,
-                            child: const Text(
-                              "Pending",
-                              style: TextStyle(color: Colors.red),
-                            )),
-                        value: 'Pending')
-                  ],
+                        PopupMenuItem<String>(
+                            child: Container(
+                                width: 100,
+                                // height: 30,
+                                child: const Text(
+                                  "All",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            value: 'All'),
+                        PopupMenuItem<String>(
+                            child: Container(
+                                width: 100,
+                                // height: 30,
+                                child: const Text(
+                                  "Accepted",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            value: 'Accepted'),
+                        PopupMenuItem<String>(
+                            child: Container(
+                                width: 100,
+                                // height: 30,
+                                child: const Text(
+                                  "Pending",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            value: 'Pending')
+                      ],
                   onSelected: (index) async {
                     print(index);
                     //bookingController.slotDetail=[];
-                   // bookingController.filterStatus(index);
-
+                    // bookingController.filterStatus(index);
                   }),
             ],
           ),
@@ -402,11 +401,13 @@ class _HomePageState extends State<AllBooking> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Order detail of ${element.bookingId}",style: TextStyle(
-                      fontFamily: 'Poppins Regular',
-                      color: Colors.black,
-                      fontSize: width * 0.03
-                  ),),
+                  Text(
+                    "Order detail of ${element.bookingId}",
+                    style: TextStyle(
+                        fontFamily: 'Poppins Regular',
+                        color: Colors.black,
+                        fontSize: width * 0.03),
+                  ),
                   IconButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -421,7 +422,7 @@ class _HomePageState extends State<AllBooking> {
                 builder: (BuildContext context, StateSetter setState) {
                   return Container(
                       width: width,
-                      height: height*0.5,
+                      height: height * 0.5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -487,6 +488,86 @@ class _HomePageState extends State<AllBooking> {
                                       fontSize: width * 0.03)),
                             ],
                           ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Payment Mode",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text("${element.payment_type==null?"":element.payment_type}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Transaction id",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text("${element.transaction_id}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Coupon Code",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text("${element.coupon_code==null?"N/A":element.coupon_code}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Coin ",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text("${element.coin==null?"N/A":element.coin} (100 coins = ₹ 1)",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+
+
+
                           LimitedBox(
                             maxHeight: height * 0.3,
                             child: ListView.builder(
@@ -595,7 +676,7 @@ class _HomePageState extends State<AllBooking> {
                               visible:
                                   element.status == "Accepted" ? false : true,
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   bookingController.acceptBooking(element.id);
                                 },
                                 child: Container(

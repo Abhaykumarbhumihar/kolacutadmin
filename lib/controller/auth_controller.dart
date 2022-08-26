@@ -44,8 +44,8 @@ class AuthControlller extends GetxController {
     map = {
       "email": email,
       "password": password,
-      "device_token": "123456",
-      "device_type": "$fcm_token"
+      "device_token": "$fcm_token",
+      "device_type": "android"
     };
 
     try {

@@ -9,8 +9,6 @@ import '../utils/CommomDialog.dart';
 import '../utils/appconstant.dart';
 
 class BookingController extends GetxController {
-
-
   var bookingPojo = AllBookingPojoo().obs;
   var acceptBookingPojo = AcceptBookigPojo().obs;
   final box = GetStorage();
