@@ -79,293 +79,291 @@ class _HomePageState extends State<ProfileCarose> {
         var mainlistPosition = 0;
         var bntname = "Add";
         return AlertDialog(
+          title: Text("Add Services"),
           content: StatefulBuilder(
             // You need this, notice the parameters below:
             builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                width: width,
-                height: height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Visibility(
-                      visible: showmainList,
-                      child: Expanded(
-                        child: ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: data!.length,
-                            itemBuilder: (context, positio) {
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    mainlistPosition = positio;
-                                    serviceId =
-                                        data[positio].serviceId.toString();
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Visibility(
+                    visible: showmainList,
+                    child: Expanded(
+                      child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: data!.length,
+                          itemBuilder: (context, positio) {
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  mainlistPosition = positio;
+                                  serviceId =
+                                      data[positio].serviceId.toString();
 
-                                    if (showSublist) {
-                                      showSublist = false;
-                                    } else {
-                                      showSublist = true;
-                                    }
+                                  if (showSublist) {
+                                    showSublist = false;
+                                  } else {
+                                    showSublist = true;
+                                  }
 
-                                    if (showmainList) {
-                                      showmainList = false;
-                                    } else {
-                                      showmainList = true;
-                                    }
-                                  });
-                                },
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: width,
-                                      height: height * 0.1,
-                                      margin:
-                                          EdgeInsets.only(top: 4, bottom: 4),
-                                      child: Material(
-                                        elevation: 8.0,
-                                        shadowColor: Colors.white,
-                                        child: Row(
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 6.0,
-                                            ),
-                                            CircleAvatar(
-                                              child: ClipOval(
-                                                child: Image.network(
-                                                  data[positio]
-                                                      .serviceImage
-                                                      .toString(),
-                                                  fit: BoxFit.contain,
-                                                ),
+                                  if (showmainList) {
+                                    showmainList = false;
+                                  } else {
+                                    showmainList = true;
+                                  }
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: width,
+                                    height: height * 0.1,
+                                    margin:
+                                        EdgeInsets.only(top: 4, bottom: 4),
+                                    child: Material(
+                                      elevation: 8.0,
+                                      shadowColor: Colors.white,
+                                      child: Row(
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 6.0,
+                                          ),
+                                          CircleAvatar(
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                data[positio]
+                                                    .serviceImage
+                                                    .toString(),
+                                                fit: BoxFit.contain,
                                               ),
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              radius: 25,
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              data[positio]
-                                                  .serviceTitle
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
-                                        ),
+                                            backgroundColor:
+                                                Colors.transparent,
+                                            radius: 25,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            data[positio]
+                                                .serviceTitle
+                                                .toString(),
+                                            style: TextStyle(fontSize: 12.0),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              );
-                            }),
-                      ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ),
-                    Visibility(
-                        visible: showSublist,
-                        child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: height * 0.6,
-                                width: width,
-                                child: ListView.builder(
-                                    itemCount:
-                                        data[mainlistPosition].services!.length,
-                                    itemBuilder: (context, position) {
-                                      return InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            print(data[mainlistPosition]
-                                                .services![position]
-                                                .id);
-                                            if (tempArray.contains(
+                  ),
+                  Visibility(
+                      visible: showSublist,
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: height * 0.6,
+                              width: width,
+                              child: ListView.builder(
+                                  itemCount:
+                                      data[mainlistPosition].services!.length,
+                                  itemBuilder: (context, position) {
+                                    return InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          print(data[mainlistPosition]
+                                              .services![position]
+                                              .id);
+                                          if (tempArray.contains(
+                                              data[mainlistPosition]
+                                                  .services![position])) {
+                                            tempArray.remove(
                                                 data[mainlistPosition]
-                                                    .services![position])) {
-                                              tempArray.remove(
-                                                  data[mainlistPosition]
-                                                      .services![position]);
-                                            } else {
-                                              tempArray.add(
-                                                  data[mainlistPosition]
-                                                      .services![position]);
-                                            }
-                                            print(tempArray.toString());
-                                          });
-                                        },
-                                        child: Container(
-                                          height: height * 0.1,
-                                          margin: EdgeInsets.only(
-                                              top: 4.0, bottom: 4.0),
-                                          child: Material(
-                                            elevation: 8.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            shadowColor: Colors.white,
-                                            child: Container(
-                                              margin: EdgeInsets.all(4.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            data[mainlistPosition]
-                                                                .services![
-                                                                    position]
-                                                                .name
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                                fontSize: 8.0),
-                                                          ),
-                                                          Text(
+                                                    .services![position]);
+                                          } else {
+                                            tempArray.add(
+                                                data[mainlistPosition]
+                                                    .services![position]);
+                                          }
+                                          print(tempArray.toString());
+                                        });
+                                      },
+                                      child: Container(
+                                        height: height * 0.1,
+                                        margin: EdgeInsets.only(
+                                            top: 4.0, bottom: 4.0),
+                                        child: Material(
+                                          elevation: 8.0,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          shadowColor: Colors.white,
+                                          child: Container(
+                                            margin: EdgeInsets.all(4.0),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          data[mainlistPosition]
+                                                              .services![
+                                                                  position]
+                                                              .name
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              fontSize: 8.0),
+                                                        ),
+                                                        Text(
+                                                          data[mainlistPosition]
+                                                              .services![
+                                                                  position]
+                                                              .price
+                                                              .toString(),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                              fontSize: 8.0),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    IconButton(
+                                                      icon: Icon(Icons
+                                                          .info_outline_rounded),
+                                                      onPressed: () {
+                                                        //price,servicename,subservice,service
+                                                        //mainlistPosition
+                                                        updateService(
+                                                            context,
                                                             data[mainlistPosition]
                                                                 .services![
                                                                     position]
                                                                 .price
                                                                 .toString(),
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: TextStyle(
-                                                                fontSize: 8.0),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      IconButton(
-                                                        icon: Icon(Icons
-                                                            .info_outline_rounded),
-                                                        onPressed: () {
-                                                          //price,servicename,subservice,service
-                                                          //mainlistPosition
-                                                          updateService(
-                                                              context,
-                                                              data[mainlistPosition]
-                                                                  .services![
-                                                                      position]
-                                                                  .price
-                                                                  .toString(),
-                                                              data[mainlistPosition]
-                                                                  .services![
-                                                                      position]
-                                                                  .name
-                                                                  .toString(),
-                                                              data[mainlistPosition]
-                                                                  .services![
-                                                                      position]
-                                                                  .id
-                                                                  .toString(),
-                                                              mainlistPosition);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Icon(tempArray.contains(data[
-                                                              mainlistPosition]
-                                                          .services![position])
-                                                      ? Icons.cancel
-                                                      : Icons
-                                                          .add_circle_outline),
-                                                ],
-                                              ),
+                                                            data[mainlistPosition]
+                                                                .services![
+                                                                    position]
+                                                                .name
+                                                                .toString(),
+                                                            data[mainlistPosition]
+                                                                .services![
+                                                                    position]
+                                                                .id
+                                                                .toString(),
+                                                            mainlistPosition);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                Icon(tempArray.contains(data[
+                                                            mainlistPosition]
+                                                        .services![position])
+                                                    ? Icons.cancel
+                                                    : Icons
+                                                        .add_circle_outline),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      );
-                                    }),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  var list = [];
-                                  setState(() async {
-                                    print("SDF SDF SFDSF SDF SDF SDF DS");
-                                    for (var i = 0; i < tempArray.length; i++) {
-                                      print(tempArray[i].name);
-                                      list.add(tempArray[i].id);
-                                    }
-
-                                    var stringList = list.join(",");
-                                    print(stringList);
-                                    Map map = {
-                                      "session_id": box.read('session'),
-                                      "sub_service_id": stringList.toString(),
-                                      "service_id": serviceId + ""
-                                    };
-
-                                    print(map);
-                                    var apiUrl = Uri.parse(
-                                        AppConstant.BASE_URL +
-                                            AppConstant.ADD_SERVICE);
-                                    print(apiUrl);
-
-                                    print(map);
-                                    final response = await http.post(
-                                      apiUrl,
-                                      body: map,
+                                      ),
                                     );
-                                    tempArray.clear();
-                                    mainlistPosition = 0;
-                                    serviceId = "";
-                                    if (response.statusCode == 200) {
-                                      setState(() {
-                                        var jsonString = response.body;
-                                        print(jsonString);
-                                        Navigator.pop(context);
-                                      });
-                                      //return jsonString;
-                                    } else {
-                                      setState(() {
-                                        Navigator.pop(context);
-                                      });
-                                      // return "null";
-                                    }
+                                  }),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                var list = [];
+                                setState(() async {
+                                  print("SDF SDF SFDSF SDF SDF SDF DS");
+                                  for (var i = 0; i < tempArray.length; i++) {
+                                    print(tempArray[i].name);
+                                    list.add(tempArray[i].id);
+                                  }
 
-                                    if (showSublist) {
-                                      showSublist = false;
-                                    } else {
-                                      showSublist = true;
-                                    }
+                                  var stringList = list.join(",");
+                                  print(stringList);
+                                  Map map = {
+                                    "session_id": box.read('session'),
+                                    "sub_service_id": stringList.toString(),
+                                    "service_id": serviceId + ""
+                                  };
 
-                                    if (showmainList) {
-                                      showmainList = false;
-                                    } else {
-                                      showmainList = true;
-                                    }
-                                  });
-                                },
-                                child: Text('Add Services'),
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(12), // <-- Radius
-                                  ),
+                                  print(map);
+                                  var apiUrl = Uri.parse(
+                                      AppConstant.BASE_URL +
+                                          AppConstant.ADD_SERVICE);
+                                  print(apiUrl);
+
+                                  print(map);
+                                  final response = await http.post(
+                                    apiUrl,
+                                    body: map,
+                                  );
+                                  tempArray.clear();
+                                  mainlistPosition = 0;
+                                  serviceId = "";
+                                  if (response.statusCode == 200) {
+                                    setState(() {
+                                      var jsonString = response.body;
+                                      print(jsonString);
+                                      Navigator.pop(context);
+                                    });
+                                    //return jsonString;
+                                  } else {
+                                    setState(() {
+                                      Navigator.pop(context);
+                                    });
+                                    // return "null";
+                                  }
+
+                                  if (showSublist) {
+                                    showSublist = false;
+                                  } else {
+                                    showSublist = true;
+                                  }
+
+                                  if (showmainList) {
+                                    showmainList = false;
+                                  } else {
+                                    showmainList = true;
+                                  }
+                                });
+                              },
+                              child: Text('Add Services'),
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(12), // <-- Radius
                                 ),
-                              )
-                            ],
-                          ),
-                        ))
-                  ],
-                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))
+                ],
               );
             },
           ),

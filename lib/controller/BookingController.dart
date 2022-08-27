@@ -120,7 +120,6 @@ class BookingController extends GetxController {
   void acceptBooking(bookingId) async {
     Map map;
     map = {"session_id": box.read('session'), "booking_id": bookingId.toString()};
-    //map = {"session_id": "TXKe48DXicKoAjkyEOgXWqU3VuVZqdHm"};
     print("API HIT HIT HIT HIT");
     try {
       // CommonDialog.showLoading(title: "Please waitt...");
@@ -130,12 +129,11 @@ class BookingController extends GetxController {
       // CommonDialog.hideLoading();
       final body = json.decode(response);
       // lodaer = false;
-      //         leaveListUpdated("PqtoOdpQ0SBVTMT0a15gnT7euR9x8fO6");
-      //         update();
-      if (body['status'] == 200) {
+      if (body['message'] == "Booking has been accepted successfully.") {
         lodaer = false;
-        acceptBookingPojo.value = acceptBookigPojoFromJson(response);
-        CommonDialog.showsnackbar(acceptBookingPojo.value.message);
+        CommonDialog.showsnackbar(body['message']);
+        slotDetail!.clear();
+        bookingPojo.value.slotDetail!.clear();
         getUpdatedBookingList();
         update();
       } else {
@@ -151,6 +149,8 @@ class BookingController extends GetxController {
 
   void getUpdatedBookingList() async {
     lodaer = false;
+    slotDetail!.clear();
+    bookingPojo.value.slotDetail!.clear();
     update();
     Map map;
     map = {"session_id": box.read('session')};
@@ -161,21 +161,20 @@ class BookingController extends GetxController {
       final response =
           await APICall().registerUrse(map, AppConstant.GET_ALL_BOOKING);
       print(response);
+      update();
       // Navigator.pop(context);
       if (bookingPojo.value.message == "No Data found") {
         //   print(response);
 
         CommonDialog.showsnackbar("No Data found");
       } else {
-        bookingPojo.value.slotDetail!.clear();
-        update();
         bookingPojo.value = allBookingPojoFromJson(response);
         slotDetail=[];
-        update();
         slotDetail = bookingPojo.value.slotDetail;
-        update();
         lodaer = false;
+        update();
       }
+      update();
     } catch (error) {
       print(error);
     }

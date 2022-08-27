@@ -55,17 +55,17 @@ class _GraphState extends State<Graph> {
             elevation: 0,
             leading: IconButton(icon: const Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: Colors.black,
             ),
             onPressed: (){
               Navigator.pop(context);
             },
             ),
            title: Text(
-              'Profile',
+              'Revenie',
               style: TextStyle(
                   fontFamily: 'Poppins Regular',
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: width * 0.04),
             ),
           ),
