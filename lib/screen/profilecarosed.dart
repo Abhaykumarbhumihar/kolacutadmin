@@ -1,5 +1,6 @@
 // ignore_for_file: iterable_contains_unrelated_type
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -388,6 +389,7 @@ class _HomePageState extends State<ProfileCarose> {
               var apicall = APICall();
               var a =
                   apicall.uploadshopimages(imagefiles!, box.read('session'));
+
               print("${a} KLKLKLKLKLK");
             });
           }
@@ -686,7 +688,11 @@ class _HomePageState extends State<ProfileCarose> {
           backgroundColor: Colors.transparent,
           body: GetBuilder<ProfileCOntroller>(builder: (profileController) {
             if (profileController.lodaer) {
-              return Container();
+              return Container(
+                width: width,
+                height: height,
+                color: Colors.green,
+              );
             } else {
               var profiledata = profileController.shopproflePojo.value.data;
 
@@ -1054,7 +1060,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       height: 4.0,
                                     ),
                                     AutoSizeText(
-                                      "${profiledata.description.toString()}",
+                                      "${profiledata.description.toString()==""?"N/A":profiledata.description.toString()}",
                                       style: TextStyle(
                                           fontSize: width * 0.02,
                                           color: Color(Utils.hexStringToHexInt(
@@ -1253,7 +1259,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       height: 4.0,
                                     ),
                                     AutoSizeText(
-                                      "${profiledata.amenties.toString()}",
+                                      "${profiledata.amenties.toString()==""?"N/A":profiledata.amenties.toString()}",
                                       style: TextStyle(
                                           fontSize: width * 0.02,
                                           color: Color(Utils.hexStringToHexInt(
@@ -1349,255 +1355,255 @@ class _HomePageState extends State<ProfileCarose> {
                               SizedBox(
                                 height: height * 0.02,
                               ),
-                              Container(
-                                  margin: EdgeInsets.only(
-                                      left: width * 0.06, right: width * 0.06),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                'Services Offered',
-                                                style: TextStyle(
-                                                    fontSize: width * 0.03,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'Poppins Regular'),
-                                              ),
-                                              Text(
-                                                '${profileController.shopService.value.serviceDetail!.length.toString() != null ? profileController.shopService.value.serviceDetail!.length.toString() : ""} services',
-                                                style: TextStyle(
-                                                    fontSize: width * 0.02,
-                                                    color: Color(
-                                                        Utils.hexStringToHexInt(
-                                                            '8D8D8D')),
-                                                    fontFamily:
-                                                        'Poppins Regular'),
-                                              ),
-                                            ],
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              debugPrint(
-                                                  "SDF SDF SDF SDF S DF");
-                                              print(profileController
-                                                  .adminServicePojo
-                                                  .value
-                                                  .serviceDetail!
-                                                  .length);
-                                              //  Get.to(AddService());
-                                              dd(
-                                                  context,
-                                                  profileController
-                                                      .adminServicePojo
-                                                      .value
-                                                      .serviceDetail);
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                  right: width * 0.02),
-                                              width: width * 0.2,
-                                              height: height * 0.03,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          width * 0.01),
-                                                  color: Color(
-                                                      Utils.hexStringToHexInt(
-                                                          '#ecfafb'))),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Center(
-                                                    child: SvgPicture.asset(
-                                                      "images/svgicons/modify.svg",
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Modify',
-                                                    style: TextStyle(
-                                                        fontSize: width * 0.02,
-                                                        fontFamily:
-                                                            'Poppins Regular',
-                                                        color: Color(Utils
-                                                            .hexStringToHexInt(
-                                                                '46D0D9'))),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: width,
-                                        height: height * 0.1,
-                                        child: ListView.builder(
-                                            itemCount: profileController
-                                                .shopService
-                                                .value
-                                                .serviceDetail!
-                                                .length,
-                                            scrollDirection: Axis.horizontal,
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, position) {
-                                              return InkWell(
-                                                onTap: () {
-                                                  var width =
-                                                      MediaQuery.of(context)
-                                                          .size
-                                                          .width;
-                                                  var height =
-                                                      MediaQuery.of(context)
-                                                          .size
-                                                          .height;
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      List<Service> tempArray =
-                                                          [];
-
-                                                      return AlertDialog(
-                                                        content:
-                                                            StatefulBuilder(
-                                                          // You need this, notice the parameters below:
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              StateSetter
-                                                                  setState) {
-                                                            return Container(
-                                                              width: width,
-                                                              child: Column(
-                                                                children: [
-                                                                  Column(
-                                                                    children: [
-                                                                      Container(
-                                                                        height: height *
-                                                                            0.6,
-                                                                        width:
-                                                                            width,
-                                                                        child: ListView.builder(
-                                                                            itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
-                                                                            itemBuilder: (context, positionn) {
-                                                                              return InkWell(
-                                                                                onTap: () {
-                                                                                  setState(() {});
-                                                                                },
-                                                                                child: Container(
-                                                                                  height: height * 0.1,
-                                                                                  margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
-                                                                                  child: Material(
-                                                                                    elevation: 8.0,
-                                                                                    borderRadius: BorderRadius.circular(8.0),
-                                                                                    shadowColor: Colors.white,
-                                                                                    child: Container(
-                                                                                      width: width,
-                                                                                      margin: EdgeInsets.all(4.0),
-                                                                                      child: Row(
-                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                        children: <Widget>[
-                                                                                          Column(
-                                                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                            children: <Widget>[
-                                                                                              Text(
-                                                                                                profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
-                                                                                                style: TextStyle(fontSize: 8.0),
-                                                                                              ),
-                                                                                              Text(
-                                                                                                profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
-                                                                                                textAlign: TextAlign.left,
-                                                                                                style: TextStyle(fontSize: 8.0),
-                                                                                              ),
-                                                                                            ],
-                                                                                          ),
-                                                                                          /*TODO---remove service*/
-                                                                                          IconButton(
-                                                                                              onPressed: () async {
-                                                                                                // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
-                                                                                                // sub_service_id:1,2
-                                                                                                Map map = {
-                                                                                                  "session_id": box.read('session'),
-                                                                                                  "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
-                                                                                                  "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
-                                                                                                };
-
-                                                                                                print(map);
-                                                                                                var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
-                                                                                                print(apiUrl);
-                                                                                                print(map);
-
-                                                                                                final response = await http.post(
-                                                                                                  apiUrl,
-                                                                                                  body: map,
-                                                                                                );
-                                                                                                var data = deleteCouponFromJson(response.body);
-                                                                                                print(response.body);
-                                                                                                CommonDialog.showsnackbar(data.message);
-                                                                                                Navigator.pop(context);
-                                                                                                profileController.getUpdatedShopService(box.read('session'));
-                                                                                              },
-                                                                                              icon: Icon(
-                                                                                                Icons.remove_circle_outline,
-                                                                                                size: width * 0.05,
-                                                                                                color: Colors.red,
-                                                                                              )),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            }),
-                                                                      ),
-                                                                    ],
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  margin: EdgeInsets.all(4),
-                                                  width: width * 0.2,
-                                                  height: height * 0.1,
-                                                  child: Material(
-                                                    elevation: 6,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            width * 0.04),
-                                                    child: Container(
-                                                      width: width * 0.2,
-                                                      height: height * 0.1,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      width *
-                                                                          0.04),
-                                                          image: DecorationImage(
-                                                              image: NetworkImage(
-                                                                  '${profileController.shopService.value.serviceDetail![position].serviceImage.toString()}'))),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }),
-                                      )
-                                    ],
-                                  )),
+                              // Container(
+                              //     margin: EdgeInsets.only(
+                              //         left: width * 0.06, right: width * 0.06),
+                              //     child: Column(
+                              //       children: <Widget>[
+                              //         Row(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.spaceBetween,
+                              //           children: <Widget>[
+                              //             Column(
+                              //               crossAxisAlignment:
+                              //                   CrossAxisAlignment.start,
+                              //               children: <Widget>[
+                              //                 Text(
+                              //                   'Services Offered',
+                              //                   style: TextStyle(
+                              //                       fontSize: width * 0.03,
+                              //                       color: Colors.black,
+                              //                       fontFamily:
+                              //                           'Poppins Regular'),
+                              //                 ),
+                              //                 Text(
+                              //                   '${profileController.shopService.value.serviceDetail!.length.toString() != null ? profileController.shopService.value.serviceDetail!.length.toString() : ""} services',
+                              //                   style: TextStyle(
+                              //                       fontSize: width * 0.02,
+                              //                       color: Color(
+                              //                           Utils.hexStringToHexInt(
+                              //                               '8D8D8D')),
+                              //                       fontFamily:
+                              //                           'Poppins Regular'),
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //             InkWell(
+                              //               onTap: () {
+                              //                 debugPrint(
+                              //                     "SDF SDF SDF SDF S DF");
+                              //                 print(profileController
+                              //                     .adminServicePojo
+                              //                     .value
+                              //                     .serviceDetail!
+                              //                     .length);
+                              //                 //  Get.to(AddService());
+                              //                 dd(
+                              //                     context,
+                              //                     profileController
+                              //                         .adminServicePojo
+                              //                         .value
+                              //                         .serviceDetail);
+                              //               },
+                              //               child: Container(
+                              //                 margin: EdgeInsets.only(
+                              //                     right: width * 0.02),
+                              //                 width: width * 0.2,
+                              //                 height: height * 0.03,
+                              //                 decoration: BoxDecoration(
+                              //                     borderRadius:
+                              //                         BorderRadius.circular(
+                              //                             width * 0.01),
+                              //                     color: Color(
+                              //                         Utils.hexStringToHexInt(
+                              //                             '#ecfafb'))),
+                              //                 child: Row(
+                              //                   mainAxisAlignment:
+                              //                       MainAxisAlignment.center,
+                              //                   children: <Widget>[
+                              //                     Center(
+                              //                       child: SvgPicture.asset(
+                              //                         "images/svgicons/modify.svg",
+                              //                       ),
+                              //                     ),
+                              //                     Text(
+                              //                       'Modify',
+                              //                       style: TextStyle(
+                              //                           fontSize: width * 0.02,
+                              //                           fontFamily:
+                              //                               'Poppins Regular',
+                              //                           color: Color(Utils
+                              //                               .hexStringToHexInt(
+                              //                                   '46D0D9'))),
+                              //                     )
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //         SizedBox(
+                              //           width: width,
+                              //           height: height * 0.1,
+                              //           child: ListView.builder(
+                              //               itemCount: profileController
+                              //                   .shopService
+                              //                   .value
+                              //                   .serviceDetail!
+                              //                   .length,
+                              //               scrollDirection: Axis.horizontal,
+                              //               shrinkWrap: true,
+                              //               itemBuilder: (context, position) {
+                              //                 return InkWell(
+                              //                   onTap: () {
+                              //                     var width =
+                              //                         MediaQuery.of(context)
+                              //                             .size
+                              //                             .width;
+                              //                     var height =
+                              //                         MediaQuery.of(context)
+                              //                             .size
+                              //                             .height;
+                              //                     showDialog(
+                              //                       context: context,
+                              //                       builder:
+                              //                           (BuildContext context) {
+                              //                         List<Service> tempArray =
+                              //                             [];
+                              //
+                              //                         return AlertDialog(
+                              //                           content:
+                              //                               StatefulBuilder(
+                              //                             // You need this, notice the parameters below:
+                              //                             builder: (BuildContext
+                              //                                     context,
+                              //                                 StateSetter
+                              //                                     setState) {
+                              //                               return Container(
+                              //                                 width: width,
+                              //                                 child: Column(
+                              //                                   children: [
+                              //                                     Column(
+                              //                                       children: [
+                              //                                         Container(
+                              //                                           height: height *
+                              //                                               0.6,
+                              //                                           width:
+                              //                                               width,
+                              //                                           child: ListView.builder(
+                              //                                               itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
+                              //                                               itemBuilder: (context, positionn) {
+                              //                                                 return InkWell(
+                              //                                                   onTap: () {
+                              //                                                     setState(() {});
+                              //                                                   },
+                              //                                                   child: Container(
+                              //                                                     height: height * 0.1,
+                              //                                                     margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                              //                                                     child: Material(
+                              //                                                       elevation: 8.0,
+                              //                                                       borderRadius: BorderRadius.circular(8.0),
+                              //                                                       shadowColor: Colors.white,
+                              //                                                       child: Container(
+                              //                                                         width: width,
+                              //                                                         margin: EdgeInsets.all(4.0),
+                              //                                                         child: Row(
+                              //                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //                                                           children: <Widget>[
+                              //                                                             Column(
+                              //                                                               mainAxisAlignment: MainAxisAlignment.center,
+                              //                                                               crossAxisAlignment: CrossAxisAlignment.start,
+                              //                                                               children: <Widget>[
+                              //                                                                 Text(
+                              //                                                                   profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
+                              //                                                                   style: TextStyle(fontSize: 8.0),
+                              //                                                                 ),
+                              //                                                                 Text(
+                              //                                                                   profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
+                              //                                                                   textAlign: TextAlign.left,
+                              //                                                                   style: TextStyle(fontSize: 8.0),
+                              //                                                                 ),
+                              //                                                               ],
+                              //                                                             ),
+                              //                                                             /*TODO---remove service*/
+                              //                                                             IconButton(
+                              //                                                                 onPressed: () async {
+                              //                                                                   // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
+                              //                                                                   // sub_service_id:1,2
+                              //                                                                   Map map = {
+                              //                                                                     "session_id": box.read('session'),
+                              //                                                                     "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
+                              //                                                                     "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
+                              //                                                                   };
+                              //
+                              //                                                                   print(map);
+                              //                                                                   var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
+                              //                                                                   print(apiUrl);
+                              //                                                                   print(map);
+                              //
+                              //                                                                   final response = await http.post(
+                              //                                                                     apiUrl,
+                              //                                                                     body: map,
+                              //                                                                   );
+                              //                                                                   var data = deleteCouponFromJson(response.body);
+                              //                                                                   print(response.body);
+                              //                                                                   CommonDialog.showsnackbar(data.message);
+                              //                                                                   Navigator.pop(context);
+                              //                                                                   profileController.getUpdatedShopService(box.read('session'));
+                              //                                                                 },
+                              //                                                                 icon: Icon(
+                              //                                                                   Icons.remove_circle_outline,
+                              //                                                                   size: width * 0.05,
+                              //                                                                   color: Colors.red,
+                              //                                                                 )),
+                              //                                                           ],
+                              //                                                         ),
+                              //                                                       ),
+                              //                                                     ),
+                              //                                                   ),
+                              //                                                 );
+                              //                                               }),
+                              //                                         ),
+                              //                                       ],
+                              //                                     )
+                              //                                   ],
+                              //                                 ),
+                              //                               );
+                              //                             },
+                              //                           ),
+                              //                         );
+                              //                       },
+                              //                     );
+                              //                   },
+                              //                   child: Container(
+                              //                     margin: EdgeInsets.all(4),
+                              //                     width: width * 0.2,
+                              //                     height: height * 0.1,
+                              //                     child: Material(
+                              //                       elevation: 6,
+                              //                       borderRadius:
+                              //                           BorderRadius.circular(
+                              //                               width * 0.04),
+                              //                       child: Container(
+                              //                         width: width * 0.2,
+                              //                         height: height * 0.1,
+                              //                         decoration: BoxDecoration(
+                              //                             borderRadius:
+                              //                                 BorderRadius
+                              //                                     .circular(
+                              //                                         width *
+                              //                                             0.04),
+                              //                             image: DecorationImage(
+                              //                                 image: NetworkImage(
+                              //                                     '${profileController.shopService.value.serviceDetail![position].serviceImage.toString()}'))),
+                              //                       ),
+                              //                     ),
+                              //                   ),
+                              //                 );
+                              //               }),
+                              //         )
+                              //       ],
+                              //     )),
                               SizedBox(
                                 height: height * 0.02,
                               ),

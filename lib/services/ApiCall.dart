@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -125,6 +126,7 @@ class APICall {
   }
 
   Future<String> uploadshopimages(List<XFile> logo, session_id) async {
+    print(logo.length);
     print("IN API FILE");
 
     var request = http.MultipartRequest(
@@ -132,22 +134,26 @@ class APICall {
 
     request.fields['session_id'] = session_id;
 
-    logo.forEach((element) async {
-      request.files
-          .add(await http.MultipartFile.fromPath("shop_image[]", element.path));
-    });
+    for(int i = 0; i < logo.length; i++){
+      request.fields['shop_image[$i]'] = '${logo[i]}';
+    }
 
-    print("$request  sdfdsfsdfsdf");
+
+    print(request);
     http.Response response =
         await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");
-    print("Result: ${response.body}");
+   // print(response);
+    final body = json.decode(response.body);
+    print(body);
+    print("Result: ${response.statusCode}");
     if (response.statusCode == 400) {
       print(response);
       print("SFSDFSDFDSFSDFSDFSDFSDFSDF");
       return "null";
     }
     else {
+      print("HI I AM HERE");
       return response.body;
     }
   }

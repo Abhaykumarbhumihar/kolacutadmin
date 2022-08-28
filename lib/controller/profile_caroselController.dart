@@ -45,14 +45,17 @@ class ProfileCOntroller extends GetxController {
       print(response);
       //   CommonDialog.hideLoading();
       adminServicePojo.value = adminServicePojoFromJson(response);
+      //getShopService(box.read('session'));
+      getCouponList();
+      update();
       if (adminServicePojo.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         // Get.to(const VerifyOtpPage());
-        update();
+
      //   lodaer = false;
       }
-      getShopService(box.read('session'));
+
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -68,15 +71,16 @@ class ProfileCOntroller extends GetxController {
       //  CommonDialog.showLoading(title: "Please waitt...");
       final response =
           await APICall().registerUrse(map, AppConstant.COUPON_LIST);
+      lodaer = false;
       print(response);
       // CommonDialog.hideLoading();
       couponList.value = couponPojoFromJson(response);
+      update();
+      lodaer = false;
       if (couponList.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         // Get.to(const VerifyOtpPage());
-        update();
-        lodaer = false;
       }
     } catch (error) {
       if (kDebugMode) {
@@ -182,20 +186,21 @@ class ProfileCOntroller extends GetxController {
     Map map;
     map = {"session_id": session_id};
     try {
+      lodaer=true;
       CommonDialog.showLoading(title: "Please waitt...");
       final response =
           await APICall().registerUrse(map, AppConstant.SHOP_PROFILE);
       print(response);
 
       shopproflePojo.value = shopProfileePojoFromJson(response);
+      getAdminService(box.read('session'));
+      update();
       if (shopproflePojo.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         // Get.to(const VerifyOtpPage());
-        update();
-       // lodaer = false;
       }
-      getAdminService(box.read('session'));
+
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -282,13 +287,15 @@ class ProfileCOntroller extends GetxController {
       print(response);
       //  CommonDialog.hideLoading();
       shopService.value = shopServicePojoFromJson(response);
+      getCouponList();
+      update();
       if (shopService.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         // Get.to(const VerifyOtpPage());
-        update();
+
       //  lodaer = false;
-        getCouponList();
+
       }
     } catch (error) {
       if (kDebugMode) {
