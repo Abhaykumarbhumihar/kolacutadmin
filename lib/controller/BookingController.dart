@@ -45,11 +45,12 @@ class BookingController extends GetxController {
       update();
     } else {
       var newList = bookingPojo.value.slotDetail!
-          .where((t) =>
-          t.bookingId!.toString().contains(text) )
+          .where((t) => t.bookingId!.toString().contains(text))
           .toList();
 
-      slotDetail =  [...{...newList}];
+      slotDetail = [
+        ...{...newList}
+      ];
 
       update();
     }
@@ -60,17 +61,18 @@ class BookingController extends GetxController {
     update();
   }
 
-
   void filterStatus(selectedDate) {
+    slotDetail = [];
+    update();
     if (selectedDate == "All") {
       slotDetail = bookingPojo.value.slotDetail!;
       update();
     } else {
       var newlist = bookingPojo.value.slotDetail!
           .where((x) => x.status
-          .toString()
-          .toLowerCase()
-          .contains(selectedDate.toLowerCase()))
+              .toString()
+              .toLowerCase()
+              .contains(selectedDate.toLowerCase()))
           .toList();
       slotDetail = newlist;
       update();
@@ -79,7 +81,6 @@ class BookingController extends GetxController {
     update();
     print("here pring ${selectedDate}");
   }
-
 
   @override
   void onReady() {
@@ -119,7 +120,10 @@ class BookingController extends GetxController {
 
   void acceptBooking(bookingId) async {
     Map map;
-    map = {"session_id": box.read('session'), "booking_id": bookingId.toString()};
+    map = {
+      "session_id": box.read('session'),
+      "booking_id": bookingId.toString()
+    };
     print("API HIT HIT HIT HIT");
     try {
       // CommonDialog.showLoading(title: "Please waitt...");
@@ -169,7 +173,7 @@ class BookingController extends GetxController {
         CommonDialog.showsnackbar("No Data found");
       } else {
         bookingPojo.value = allBookingPojoFromJson(response);
-        slotDetail=[];
+        slotDetail = [];
         slotDetail = bookingPojo.value.slotDetail;
         lodaer = false;
         update();

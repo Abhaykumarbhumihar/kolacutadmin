@@ -135,12 +135,32 @@ class _HomePageState extends State<AllBooking> {
                                   "Pending",
                                   style: TextStyle(color: Colors.red),
                                 )),
-                            value: 'Pending')
+                            value: 'Pending'),
+                        PopupMenuItem<String>(
+                            child: Container(
+                                width: 100,
+                                // height: 30,
+                                child: const Text(
+                                  "Completed",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            value: 'Completed'),
+                        PopupMenuItem<String>(
+                            child: Container(
+                                width: 100,
+                                // height: 30,
+                                child: const Text(
+                                  "Rejected",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            value: 'Rejected'),
                       ],
                   onSelected: (index) async {
                     print(index);
-                    //bookingController.slotDetail=[];
-                    // bookingController.filterStatus(index);
+                    setState(() {
+                      bookingController.slotDetail = [];
+                      bookingController.filterStatus(index);
+                    });
                   }),
             ],
           ),
@@ -166,7 +186,11 @@ class _HomePageState extends State<AllBooking> {
                       child: CupertinoSearchTextField(
                         padding: EdgeInsets.all(width * 0.03),
                         onChanged: (value) {
-                          //  bookingController.filterEmplist(value);
+                          setState(() {
+                            bookingController.slotDetail = [];
+                            bookingController.filterEmplist(value);
+                          });
+
                         },
                         onSubmitted: (value) {},
                         backgroundColor: Colors.white,
@@ -657,16 +681,16 @@ class _HomePageState extends State<AllBooking> {
                               ),
                               Container(
                                   width: 64,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
                                             'images/svgicons/tagbackpn.png',
                                           ),
                                           fit: BoxFit.fitHeight)),
                                   child: Container(
-                                    padding: EdgeInsets.all(4.0),
+                                    padding: EdgeInsets.all(5.0),
                                     child: Text(
-                                      '${element.status == "Accepted" ? "Accepted" : "In Progress"}',
+                                      '${element.status == "Accepted" ? "In Progress " : element.status == "Pending" ? "New Order " : element.status == "Completed" ? "Completed " : "Rejected "}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: width * 0.02,
@@ -780,6 +804,7 @@ class _HomePageState extends State<AllBooking> {
                           //       ),
                           //     )
                           // ),
+
                           element.status == "Accepted"
                               ? InkWell(
                                   onTap: () async {
@@ -821,7 +846,7 @@ class _HomePageState extends State<AllBooking> {
                                         color: Colors.cyan),
                                     child: const Center(
                                       child: Text(
-                                        "Complete",
+                                        "Accepted",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 12),
                                       ),
@@ -831,12 +856,13 @@ class _HomePageState extends State<AllBooking> {
                               : element.status == "Pending"
                                   ? InkWell(
                                       onTap: () async {
-                                        //  bookingController.acceptBooking(element.id);
+                                        print(box.read('session'));
                                         Map map = {
                                           "session_id": box.read('session'),
                                           "booking_id": element.id.toString()
                                         };
                                         print(map);
+
                                         var apiUrl = Uri.parse(
                                             AppConstant.BASE_URL +
                                                 AppConstant.ACCEPT_BOOKING);
@@ -849,8 +875,7 @@ class _HomePageState extends State<AllBooking> {
                                         print(response.body);
                                         var data = response.body;
                                         final body = json.decode(response.body);
-                                        if (body['message'] ==
-                                            "Booking has been accepted successfully.") {
+                                        if (body['message'] != "") {
                                           setState(() {
                                             bookingController.slotDetail!
                                                 .clear();
@@ -869,7 +894,7 @@ class _HomePageState extends State<AllBooking> {
                                             borderRadius:
                                                 BorderRadius.circular(6.0),
                                             color: Colors.cyan),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             "Confirm",
                                             style: TextStyle(
@@ -879,54 +904,45 @@ class _HomePageState extends State<AllBooking> {
                                         ),
                                       ),
                                     )
-                                  : InkWell(
-                                      onTap: () async {
-                                        //  bookingController.acceptBooking(element.id);
-                                        // Map map = {
-                                        //   "session_id": box.read('session'),
-                                        //   "booking_id": element.id.toString()
-                                        // };
-                                        // print(map);
-                                        // var apiUrl = Uri.parse(AppConstant.BASE_URL +
-                                        //     AppConstant.ACCEPT_BOOKING);
-                                        // print(apiUrl);
-                                        // print(map);
-                                        // final response = await http.post(
-                                        //   apiUrl,
-                                        //   body: map,
-                                        // );
-                                        // print(response.body);
-                                        // var data = response.body;
-                                        // final body = json.decode(response.body);
-                                        // if (body['message'] ==
-                                        //     "Booking has been accepted successfully.") {
-                                        //   setState(() {
-                                        //     bookingController.slotDetail!.clear();
-                                        //     bookingController
-                                        //         .bookingPojo.value.slotDetail!
-                                        //         .clear();
-                                        //
-                                        //     bookingController.getBookingList();
-                                        //   });
-                                        // }
-                                      },
-                                      child: Container(
-                                        width: width * 0.2,
-                                        height: 28,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(6.0),
-                                            color: Colors.cyan),
-                                        child: Center(
-                                          child: Text(
-                                            "Rejected",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12),
+                                  : element.status == "Completed"
+                                      ? InkWell(
+                                          onTap: () async {},
+                                          child: Container(
+                                            width: width * 0.2,
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6.0),
+                                                color: Colors.lightGreen),
+                                            child: Center(
+                                              child: Text(
+                                                "Completed",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    )
+                                        )
+                                      : InkWell(
+                                          onTap: () async {},
+                                          child: Container(
+                                            width: width * 0.2,
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6.0),
+                                                color: Colors.red),
+                                            child: Center(
+                                              child: Text(
+                                                "Rejected",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                          ),
+                                        )
                         ],
                       ),
                     ),

@@ -17,7 +17,23 @@ class APICall {
       body: map,
     );
 
+print(response);
 
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return jsonString;
+    } else {
+      return "null";
+    }
+  }
+  Future<String> registerUrseWithoutbody( url) async {
+    var apiUrl = Uri.parse(AppConstant.BASE_URL + url);
+    print(apiUrl);
+    final response = await http.get(
+      apiUrl,
+    );
+
+    print(response);
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -112,7 +128,9 @@ class APICall {
     request.fields['device_type'] = device_type;
     request.fields['device_token'] = device_token;
     request.fields['password'] = password;
+    print(request.fields);
     print(request);
+
     http.Response response =
         await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");

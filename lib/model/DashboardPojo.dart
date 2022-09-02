@@ -38,18 +38,20 @@ class Datum {
     this.totalBooking,
     this.openBooking,
     this.totalRevenue,
+    this.completed_booking
   });
 
   int? staffAccount;
   int? totalBooking;
   int? openBooking;
   int? totalRevenue;
-
+  int ? completed_booking;
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     staffAccount: json["staff_account"],
     totalBooking: json["total_booking"],
     openBooking: json["open_booking"],
     totalRevenue: json["total_revenue"],
+    completed_booking: json["completed_booking"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +59,6 @@ class Datum {
     "total_booking": totalBooking,
     "open_booking": openBooking,
     "total_revenue": totalRevenue,
+    "completed_booking": completed_booking,
   };
 }

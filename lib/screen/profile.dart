@@ -377,34 +377,80 @@ class _HomePageState extends State<ProfilePage> {
                                       fontFamily: 'Poppins Medium'),
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(right: width * 0.02),
-                                width: width * 0.2,
-                                height: height * 0.03,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(width * 0.01),
-                                    color: Color(
-                                        Utils.hexStringToHexInt('#ecfafb'))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Center(
-                                      child: SvgPicture.asset(
-                                        "images/svgicons/modify.svg",
-                                      ),
+                              // Container(
+                              //   margin: EdgeInsets.only(right: width * 0.02),
+                              //   width: width * 0.2,
+                              //   height: height * 0.03,
+                              //   decoration: BoxDecoration(
+                              //       borderRadius:
+                              //           BorderRadius.circular(width * 0.01),
+                              //       color: Color(
+                              //           Utils.hexStringToHexInt('#ecfafb'))),
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.center,
+                              //     children: <Widget>[
+                              //       Center(
+                              //         child: SvgPicture.asset(
+                              //           "images/svgicons/modify.svg",
+                              //         ),
+                              //       ),
+                              //       Text(
+                              //         'Modify',
+                              //         style: TextStyle(
+                              //             fontSize: width * 0.02,
+                              //             fontFamily: 'Poppins Regular',
+                              //             color: Color(Utils.hexStringToHexInt(
+                              //                 '46D0D9'))),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                              PopupMenuButton(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: width * 0.01),
+                                    child: SvgPicture.asset(
+                                      "images/svgicons/filtersv.svg",
                                     ),
-                                    Text(
-                                      'Modify',
-                                      style: TextStyle(
-                                          fontSize: width * 0.02,
-                                          fontFamily: 'Poppins Regular',
-                                          color: Color(Utils.hexStringToHexInt(
-                                              '46D0D9'))),
-                                    )
+                                  ),
+                                  icon: null,
+                                  // add this line
+                                  itemBuilder: (_) => <PopupMenuItem<String>>[
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "All",
+                                              style: TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'All'),
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "Partial Off",
+                                              style: TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'partialy_off'),
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "Fullday Off",
+                                              style: TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'Fully off'),
+
                                   ],
-                                ),
-                              ),
+                                  onSelected: (index) async {
+                                    print(index);
+                                    setState(() {
+                                       employeeController.leaveManagement = [];
+                                       employeeController.filterStatus(index);
+                                    });
+                                  }),
                             ],
                           ),
                           Container(
@@ -420,234 +466,220 @@ class _HomePageState extends State<ProfilePage> {
                           SizedBox(
                             height: height * 0.01,
                           ),
-                          Container(
-                            width: width,
-                            child: ListView.builder(
+                          ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 0.5,
+                              maxHeight: height*0.4,
+                            ),
+                            child:
+                            ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: employeeController.employeeListPojo
-                                    .value.data!.leaveManagement!.length,
+                                //physics: NeverScrollableScrollPhysics(),
+                                itemCount: employeeController.leaveManagement!.length,
                                 itemBuilder: (context, position) {
-                                  print(employeeController
-                                      .employeeListPojo.value.data);
-                                  return Container(
-                                    margin: EdgeInsets.only(
-                                        left: width * 0.04,
-                                        right: width * 0.04,
-                                        top: height * 0.02),
-                                    child: Material(
-                                      borderRadius:
-                                          BorderRadius.circular(width * 0.04),
-                                      elevation: 6,
-                                      child: Container(
-                                        width: width,
-                                        height: height * 0.2 - height * 0.06,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                              width * 0.04),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: width * 0.02),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      SizedBox(
-                                                        height: height * 0.002,
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: width * 0.01),
-                                                        width: width * 0.2,
-                                                        height: height * 0.03,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        width *
-                                                                            0.01),
-                                                            color: employeeController
-                                                                        .employeeListPojo
-                                                                        .value
-                                                                        .data!
-                                                                        .leaveManagement![
-                                                                            position]
-                                                                        .holidayType ==
-                                                                    "partialy_off"
-                                                                ? Color(Utils
-                                                                    .hexStringToHexInt(
-                                                                        '#fed69b'))
-                                                                : Color(Utils
-                                                                    .hexStringToHexInt(
-                                                                        '#ecfafb'))),
-                                                        child: Center(
-                                                          child: Text(
-                                                            employeeController
-                                                                        .employeeListPojo
-                                                                        .value
-                                                                        .data!
-                                                                        .leaveManagement![
-                                                                            position]
-                                                                        .holidayType ==
-                                                                    "partialy_off"
-                                                                ? "Partial off"
-                                                                : "Full day off",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                color: employeeController
-                                                                            .employeeListPojo
-                                                                            .value
-                                                                            .data!
-                                                                            .leaveManagement![
-                                                                                position]
-                                                                            .holidayType ==
-                                                                        "partialy_off"
-                                                                    ? Colors
-                                                                        .black
-                                                                    : Color(Utils
-                                                                        .hexStringToHexInt(
-                                                                            '46D0D9')),
-                                                                fontFamily:
-                                                                    'Poppins Regular',
-                                                                fontSize:
-                                                                    width *
-                                                                        0.02),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: height * 0.01,
-                                                      ),
-                                                      Text(
-                                                        employeeController
-                                                                .employeeListPojo
-                                                                .value
-                                                                .data!
-                                                                .leaveManagement![
-                                                                    position]
-                                                                .leaveDate
-                                                                .toString() +
-                                                            "",
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.02,
-                                                            color: Color(Utils
-                                                                .hexStringToHexInt(
-                                                                    '8D8D8D')),
-                                                            fontFamily:
-                                                                'Poppins Regular'),
-                                                      ),
-                                                      SizedBox(
-                                                        height: height * 0.001,
-                                                      ),
-                                                      Text(
-                                                        employeeController
-                                                                .employeeListPojo
-                                                                .value
-                                                                .data!
-                                                                .leaveManagement![
-                                                                    position]
-                                                                .holidayReason
-                                                                .toString() +
-                                                            "",
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.02,
-                                                            color: Color(Utils
-                                                                .hexStringToHexInt(
-                                                                    'C4C4C4')),
-                                                            fontFamily:
-                                                                'Poppins Regular'),
-                                                      ),
-                                                      SizedBox(
-                                                        height: height * 0.01,
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  right: width * 0.02),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+
+
+
+                                  return InkWell(
+                                    onTap: (){
+                                    //  print(employeeController.leaveManagement![position].holidayType);
+                                      //CommonDialog.showsnackbar(employeeController.leaveManagement![position].holidayType);
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          left: width * 0.04,
+                                          right: width * 0.04,
+                                          top: height * 0.02),
+                                      child: Material(
+                                        borderRadius:
+                                            BorderRadius.circular(width * 0.04),
+                                        elevation: 6,
+                                        child: Container(
+                                          width: width,
+                                          height: height * 0.2 - height * 0.06,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                width * 0.04),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Row(
                                                 children: <Widget>[
-                                                  employeeController
-                                                              .employeeListPojo
-                                                              .value
-                                                              .data!
-                                                              .leaveManagement![
-                                                                  position]
-                                                              .holidayType ==
-                                                          "partialy_off"
-                                                      ? Container(
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Text(
-                                                                '${employeeController.employeeListPojo.value.data!.leaveManagement![position].startFrom}-'
-                                                                '${employeeController.employeeListPojo.value.data!.leaveManagement![position].endFrom}',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        Utils.hexStringToHexInt(
-                                                                            '8D8D8D')),
-                                                                    fontFamily:
-                                                                        'Poppins Regular',
-                                                                    fontSize:
-                                                                        width *
-                                                                            0.02),
-                                                              ),
-                                                              Container(
-                                                                width: width *
-                                                                    0.06,
-                                                                height: height *
-                                                                    0.06,
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color: Color(
-                                                                        Utils.hexStringToHexInt(
-                                                                            '#fed69b'))),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      : Container(
-                                                          width: width * 0.2 -
-                                                              width * 0.06,
-                                                          height: height * 0.02,
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: width * 0.02),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        SizedBox(
+                                                          height: height * 0.002,
+                                                        ),
+                                                        Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: width * 0.01),
+                                                          width: width * 0.2,
+                                                          height: height * 0.03,
                                                           decoration: BoxDecoration(
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
                                                                           width *
-                                                                              0.04),
-                                                              color:
-                                                                  Colors.black),
+                                                                              0.01),
+                                                              color: employeeController.leaveManagement![
+                                                                              position]
+                                                                          .holidayType ==
+                                                                      "partialy_off"
+                                                                  ? Color(Utils
+                                                                      .hexStringToHexInt(
+                                                                          '#fed69b'))
+                                                                  : Color(Utils
+                                                                      .hexStringToHexInt(
+                                                                          '#ecfafb'))),
+                                                          child: Center(
+                                                            child: Text(
+                                                              employeeController.leaveManagement![
+                                                                              position]
+                                                                          .holidayType ==
+                                                                      "partialy_off"
+                                                                  ? "Partial off"
+                                                                  : "Full day off",
+                                                              textAlign: TextAlign
+                                                                  .center,
+                                                              style: TextStyle(
+                                                                  color: employeeController.leaveManagement![
+                                                                                  position]
+                                                                              .holidayType ==
+                                                                          "partialy_off"
+                                                                      ? Colors
+                                                                          .black
+                                                                      : Color(Utils
+                                                                          .hexStringToHexInt(
+                                                                              '46D0D9')),
+                                                                  fontFamily:
+                                                                      'Poppins Regular',
+                                                                  fontSize:
+                                                                      width *
+                                                                          0.02),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: height * 0.01,
+                                                        ),
+                                                        Text(
+                                                          employeeController.leaveManagement![
+                                                                      position]
+                                                                  .leaveDate
+                                                                  .toString() +
+                                                              "",
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  width * 0.02,
+                                                              color: Color(Utils
+                                                                  .hexStringToHexInt(
+                                                                      '8D8D8D')),
+                                                              fontFamily:
+                                                                  'Poppins Regular'),
+                                                        ),
+                                                        SizedBox(
+                                                          height: height * 0.001,
+                                                        ),
+                                                        Text(
+                                                          employeeController.leaveManagement![
+                                                                      position]
+                                                                  .holidayReason
+                                                                  .toString() +
+                                                              "",
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  width * 0.02,
+                                                              color: Color(Utils
+                                                                  .hexStringToHexInt(
+                                                                      'C4C4C4')),
+                                                              fontFamily:
+                                                                  'Poppins Regular'),
+                                                        ),
+                                                        SizedBox(
+                                                          height: height * 0.01,
                                                         )
+                                                      ],
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            )
-                                          ],
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    right: width * 0.02),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    employeeController.leaveManagement![
+                                                                    position]
+                                                                .holidayType ==
+                                                            "partialy_off"
+                                                        ? Container(
+                                                            child: Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  '${employeeController.leaveManagement![position].startFrom}-'
+                                                                  '${employeeController.leaveManagement![position].endFrom}',
+                                                                  style: TextStyle(
+                                                                      color: Color(
+                                                                          Utils.hexStringToHexInt(
+                                                                              '8D8D8D')),
+                                                                      fontFamily:
+                                                                          'Poppins Regular',
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.02),
+                                                                ),
+                                                                Container(
+                                                                  width: width *
+                                                                      0.06,
+                                                                  height: height *
+                                                                      0.06,
+                                                                  decoration: BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Color(
+                                                                          Utils.hexStringToHexInt(
+                                                                              '#fed69b'))),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            width: width * 0.2 -
+                                                                width * 0.06,
+                                                            height: height * 0.02,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            width *
+                                                                                0.04),
+                                                                color:
+                                                                    Colors.black),
+                                                          )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -691,127 +723,89 @@ class _HomePageState extends State<ProfilePage> {
                           SizedBox(
                             height: height * 0.04,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: width * 0.06, right: width * 0.03),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Sara Blush',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: width * 0.03,
-                                      fontFamily: 'Poppins Medium'),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    RatingBarIndicator(
-                                      rating: 2.75,
-                                      itemBuilder: (context, index) =>
-                                          const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: width * 0.05,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    Text(
-                                      ' 11/5/21',
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins Regular',
-                                          fontSize: width * 0.02,
-                                          color: Color(Utils.hexStringToHexInt(
-                                              'C4C4C4'))),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                AutoSizeText(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim facilisi rhoncus, vitae, id convallis eu nisl enim quam. Sed aenean molestie leo venenatis. Aliquet turpis nulla sodales aenean. Bibendum ut egestas massa sit.',
-                                  style: TextStyle(
-                                      fontSize: width * 0.02,
-                                      color: Color(
-                                          Utils.hexStringToHexInt('#8D8D8D')),
-                                      fontFamily: 'Poppins Light'),
-                                  maxLines: 5,
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                Divider(
-                                  color:
-                                      Color(Utils.hexStringToHexInt('C4C4C4')),
-                                  thickness: 1,
-                                )
-                              ],
+                          ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 0.5,
+                              maxHeight: height*0.4,
                             ),
-                          ),
-                          SizedBox(
-                            height: height * 0.02,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: width * 0.06, right: width * 0.03),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Sara Blush',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: width * 0.03,
-                                      fontFamily: 'Poppins Medium'),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    RatingBarIndicator(
-                                      rating: 2.75,
-                                      itemBuilder: (context, index) =>
-                                          const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
+                            child:
+                            ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                //physics: NeverScrollableScrollPhysics(),
+                                itemCount: employeeController.employeeListPojo
+                                    .value.data!.feedback!.length,
+                                itemBuilder: (context, position) {
+
+                                  return
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: width * 0.06, right: width * 0.03),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            employeeController.employeeListPojo
+                                                .value.data!.feedback![position]!.user_name.toString(),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: width * 0.03,
+                                                fontFamily: 'Poppins Medium'),
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              RatingBarIndicator(
+                                                rating: double.parse(employeeController.employeeListPojo
+                                                    .value.data!.feedback![position]!.rating.toString()),
+                                                itemBuilder: (context, index) =>
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                itemCount: 5,
+                                                itemSize: width * 0.05,
+                                                direction: Axis.horizontal,
+                                              ),
+                                              Text(
+                                                ' ${employeeController.employeeListPojo
+                                                    .value.data!.feedback![position]!.date.toString()}',
+                                                style: TextStyle(
+                                                    fontFamily: 'Poppins Regular',
+                                                    fontSize: width * 0.02,
+                                                    color: Color(Utils.hexStringToHexInt(
+                                                        'C4C4C4'))),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.01,
+                                          ),
+                                          AutoSizeText(
+                                            '${employeeController.employeeListPojo
+                                                .value.data!.feedback![position]!.comment}',
+                                            style: TextStyle(
+                                                fontSize: width * 0.02,
+                                                color: Color(
+                                                    Utils.hexStringToHexInt('#8D8D8D')),
+                                                fontFamily: 'Poppins Light'),
+                                            maxLines: 5,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.01,
+                                          ),
+                                          Divider(
+                                            color:
+                                            Color(Utils.hexStringToHexInt('C4C4C4')),
+                                            thickness: 1,
+                                          )
+                                        ],
                                       ),
-                                      itemCount: 5,
-                                      itemSize: width * 0.05,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    Text(
-                                      ' 11/5/21',
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins Regular',
-                                          fontSize: width * 0.02,
-                                          color: Color(Utils.hexStringToHexInt(
-                                              'C4C4C4'))),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                AutoSizeText(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim facilisi rhoncus, vitae, id convallis eu nisl enim quam. Sed aenean molestie leo venenatis. Aliquet turpis nulla sodales aenean. Bibendum ut egestas massa sit.',
-                                  style: TextStyle(
-                                      fontSize: width * 0.02,
-                                      color: Color(
-                                          Utils.hexStringToHexInt('#8D8D8D')),
-                                      fontFamily: 'Poppins Light'),
-                                  maxLines: 5,
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                Divider(
-                                  color:
-                                      Color(Utils.hexStringToHexInt('C4C4C4')),
-                                  thickness: 1,
-                                )
-                              ],
-                            ),
-                          )
+                                    );
+                                }),
+                          ),
+
+
+
                         ],
                       ),
                     ],

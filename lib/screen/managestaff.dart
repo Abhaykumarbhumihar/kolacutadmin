@@ -415,7 +415,7 @@ class _HomePageState extends State<ManageStaff> {
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
                                               Text(
-                                                '4.0',
+                                                '${profileController.staffDetail![position].rating.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: width * 0.03,
@@ -431,7 +431,10 @@ class _HomePageState extends State<ManageStaff> {
                                                         'Poppins Medium'),
                                               ),
                                               RatingBarIndicator(
-                                                rating: 2.75,
+                                                rating: profileController
+                                                    .staffDetail![position]
+                                                    .rating!
+                                                    .toDouble(),
                                                 itemBuilder: (context, index) =>
                                                     const Icon(
                                                   Icons.star,

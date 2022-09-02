@@ -29,7 +29,7 @@ class DayManage {
 class _HomePageState extends State<ManageSlotPage> {
   ManageSlotController addSlotcontroller = Get.put(ManageSlotController());
   int _currentValue = 3;
-  String pickerValue="";
+  String pickerValue = "";
   bool isSwitched = false;
   var textValue = 'Switch is OFF';
   List<DayManage> daylist = [];
@@ -39,7 +39,9 @@ class _HomePageState extends State<ManageSlotPage> {
   var email = "";
   var phone = "";
   var iamge = "";
+  var session = "";
   late SharedPreferences sharedPreferences;
+
   void toggleSwitch(bool value) {
     if (isSwitched == false) {
       setState(() {
@@ -89,30 +91,19 @@ class _HomePageState extends State<ManageSlotPage> {
     }
   }
 
-  void _duratin(BuildContext context){
-    var width =
-        MediaQuery.of(context)
-            .size
-            .width;
-    var height =
-        MediaQuery.of(context)
-            .size
-            .height;
+  void _duratin(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     showDialog(
       context: context,
-      builder:
-          (BuildContext context) {
+      builder: (BuildContext context) {
         return AlertDialog(
-          content:
-          StatefulBuilder(
+          content: StatefulBuilder(
             // You need this, notice the parameters below:
-            builder: (BuildContext
-            context,
-                StateSetter
-                setState) {
+            builder: (BuildContext context, StateSetter setState) {
               return Container(
                 width: width,
-                height: height*0.4,
+                height: height * 0.4,
                 child: Column(
                   children: [
                     Column(
@@ -121,8 +112,8 @@ class _HomePageState extends State<ManageSlotPage> {
                           value: _currentValue,
                           minValue: 0,
                           maxValue: 1000,
-                          onChanged: (value){
-                            setState((){
+                          onChanged: (value) {
+                            setState(() {
                               _currentValue = value;
                             });
                           },
@@ -132,18 +123,19 @@ class _HomePageState extends State<ManageSlotPage> {
                           children: <Widget>[
                             MaterialButton(
                               onPressed: () {
-                                setState((){
-                                  pickerValue=_currentValue.toString();
+                                setState(() {
+                                  pickerValue = _currentValue.toString();
                                 });
                                 print(_currentValue);
                                 print(_currentValue);
                                 print(_currentValue);
-                               // addSlotcontroller.updateCurrentValue(_currentValue);
+                                // addSlotcontroller.updateCurrentValue(_currentValue);
                                 Get.back();
                               },
                               child: Text(
                                 "OK",
-                                style: TextStyle(color: Theme.of(context).accentColor),
+                                style: TextStyle(
+                                    color: Theme.of(context).accentColor),
                               ),
                             ),
                           ],
@@ -161,7 +153,6 @@ class _HomePageState extends State<ManageSlotPage> {
       },
     );
   }
-
 
   _selectclosingDate(BuildContext context) async {
     final DateTime? selected = await showDatePicker(
@@ -191,6 +182,7 @@ class _HomePageState extends State<ManageSlotPage> {
     daylist.add(DayManage(false, "SAT"));
     daylist.add(DayManage(false, "SUN"));
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -201,14 +193,16 @@ class _HomePageState extends State<ManageSlotPage> {
       var emailValue = sharedPreferences.getString("email");
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
+      var _session = sharedPreferences.getString("session");
       setState(() {
+        session = _session!;
         name = _testValue!;
         email = emailValue!;
         phone = _phoneValue!;
         iamge = _imageValue!;
       });
       // will be null if never previously saved
-     // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
+      // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
     });
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -216,7 +210,7 @@ class _HomePageState extends State<ManageSlotPage> {
       child: Scaffold(
         key: _scaffoldKey,
         drawer:
-        SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
+            SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           centerTitle: true,
@@ -451,8 +445,7 @@ class _HomePageState extends State<ManageSlotPage> {
                     Container(
                       margin: EdgeInsets.only(
                           left: width * 0.06, right: width * 0.02),
-                      child:
-                      Row(
+                      child: Row(
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
@@ -486,7 +479,8 @@ class _HomePageState extends State<ManageSlotPage> {
                                                 .toString()
                                                 .split('.')[1] ==
                                             "am"
-                                        ? Color(Utils.hexStringToHexInt('46D0D9'))
+                                        ? Color(
+                                            Utils.hexStringToHexInt('46D0D9'))
                                         : Colors.black,
                                     fontFamily: 'Poppins Regular',
                                     fontSize: width * 0.03),
@@ -552,7 +546,8 @@ class _HomePageState extends State<ManageSlotPage> {
                                                 .toString()
                                                 .split('.')[1] ==
                                             "am"
-                                        ? Color(Utils.hexStringToHexInt('46D0D9'))
+                                        ? Color(
+                                            Utils.hexStringToHexInt('46D0D9'))
                                         : Colors.black,
                                     fontFamily: 'Poppins Regular',
                                     fontSize: width * 0.03),
@@ -579,84 +574,84 @@ class _HomePageState extends State<ManageSlotPage> {
                 SizedBox(
                   height: height * 0.03,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: width * 0.06),
-                      child: Text(
-                        'Duration of slots',
-                        style: TextStyle(
-                            color: Color(Utils.hexStringToHexInt('5E5E5E')),
-                            fontSize: width * 0.03,
-                            fontFamily: 'Poppins Medium'),
-                      ),
-                    ),
-                    // Container(
-                    //   margin: EdgeInsets.only(right: width * 0.02),
-                    //   width: width * 0.2,
-                    //   height: height * 0.03,
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(width * 0.01),
-                    //       color: Color(Utils.hexStringToHexInt('#ecfafb'))),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: <Widget>[
-                    //       Center(
-                    //         child: SvgPicture.asset(
-                    //           "images/svgicons/modify.svg",
-                    //         ),
-                    //       ),
-                    //       Text(
-                    //         'Modify',
-                    //         style: TextStyle(
-                    //             fontSize: width * 0.02,
-                    //             fontFamily: 'Poppins Regular',
-                    //             color:
-                    //                 Color(Utils.hexStringToHexInt('46D0D9'))),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-                SizedBox(
-                  height: height * 0.01,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _duratin(context);
-
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: width * 0.06),
-                    padding: EdgeInsets.only(
-                      left: width * 0.01,
-                    ),
-                    width: width * 0.2,
-                    height: height * 0.1 - height * .06,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width * 0.02),
-                        border: Border.all(
-                            width: 1,
-                            color: Color(Utils.hexStringToHexInt('5E5E5E')))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${pickerValue} min',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: width * 0.03,
-                              fontFamily: 'Poppins Medium'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.03,
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: <Widget>[
+                //     Container(
+                //       margin: EdgeInsets.only(left: width * 0.06),
+                //       child: Text(
+                //         'Duration of slots',
+                //         style: TextStyle(
+                //             color: Color(Utils.hexStringToHexInt('5E5E5E')),
+                //             fontSize: width * 0.03,
+                //             fontFamily: 'Poppins Medium'),
+                //       ),
+                //     ),
+                //     // Container(
+                //     //   margin: EdgeInsets.only(right: width * 0.02),
+                //     //   width: width * 0.2,
+                //     //   height: height * 0.03,
+                //     //   decoration: BoxDecoration(
+                //     //       borderRadius: BorderRadius.circular(width * 0.01),
+                //     //       color: Color(Utils.hexStringToHexInt('#ecfafb'))),
+                //     //   child: Row(
+                //     //     mainAxisAlignment: MainAxisAlignment.center,
+                //     //     children: <Widget>[
+                //     //       Center(
+                //     //         child: SvgPicture.asset(
+                //     //           "images/svgicons/modify.svg",
+                //     //         ),
+                //     //       ),
+                //     //       Text(
+                //     //         'Modify',
+                //     //         style: TextStyle(
+                //     //             fontSize: width * 0.02,
+                //     //             fontFamily: 'Poppins Regular',
+                //     //             color:
+                //     //                 Color(Utils.hexStringToHexInt('46D0D9'))),
+                //     //       )
+                //     //     ],
+                //     //   ),
+                //     // ),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: height * 0.01,
+                // ),
+                // GestureDetector(
+                //   onTap: () {
+                //     _duratin(context);
+                //
+                //   },
+                //   child: Container(
+                //     margin: EdgeInsets.only(left: width * 0.06),
+                //     padding: EdgeInsets.only(
+                //       left: width * 0.01,
+                //     ),
+                //     width: width * 0.2,
+                //     height: height * 0.1 - height * .06,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(width * 0.02),
+                //         border: Border.all(
+                //             width: 1,
+                //             color: Color(Utils.hexStringToHexInt('5E5E5E')))),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: <Widget>[
+                //         Text(
+                //           '${pickerValue} min',
+                //           style: TextStyle(
+                //               color: Colors.black,
+                //               fontSize: width * 0.03,
+                //               fontFamily: 'Poppins Medium'),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: height * 0.03,
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -856,7 +851,7 @@ class _HomePageState extends State<ManageSlotPage> {
       }
     }
     print(selectedday);
-    addSlotcontroller.addSlot("HlHA4Dvok3nUKG5MOwtiLgxc5eHzahMz", "slot_type",
-        _currentValue.toString(), selectedday.toString(), opent, closet);
+    addSlotcontroller.addSlot(
+        session, "slot_type", "1", selectedday.toString(), opent, closet);
   }
 }

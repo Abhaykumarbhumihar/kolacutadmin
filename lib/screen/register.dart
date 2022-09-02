@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:kolacur_admin/screen/registertwo.dart';
 import '../utils/CommomDialog.dart';
 import '../utils/Utils.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_place/google_place.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -24,15 +27,26 @@ class _RegisterPageState extends State<RegisterPage> {
       _websitecontroller,
       _addresscontroller,
       _passwordcontroller;
-     var imageFile;
+  var imageFile;
+  var latitude = 0.0;
+  var longitude = 0.0;
 
   // Initial Selected Value
-  final list = ["Unisex", "Male", ];
+  final list = ["Unisex", "Male", "Female"];
   var selectSalong = "unisex";
+
   // List of items in our dropdown menu
   var items = ['Male', 'Female'];
   var dropdown;
   var showselectGender = "";
+  late GooglePlace googlePlace;
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  late Position _currentPosition;
+  String _currentAddress = "";
+  bool _isLoading = true;
+
+  List<AutocompletePrediction> predictions = [];
+
   List<DropdownMenuItem<String>> _createList() {
     return list
         .map<DropdownMenuItem<String>>(
@@ -44,10 +58,76 @@ class _RegisterPageState extends State<RegisterPage> {
         .toList();
   }
 
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        latitude = _currentPosition.latitude;
+        longitude = _currentPosition.longitude;
+        _currentAddress =
+            "${place.locality}, ${place.postalCode}, ${place.country}";
+        print(_currentAddress);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        if (kDebugMode) {
+          print(_currentPosition);
+        }
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  void autoCompleteSearch(String value) async {
+    var result = await googlePlace.autocomplete.get(value);
+    if (result != null && result.predictions != null && mounted) {
+      setState(() {
+        predictions = result.predictions!;
+      });
+    }
+  }
+
+  void getDetils(String placeId) async {
+    var result = await this.googlePlace.details.get(placeId);
+    if (result != null && result.result != null && mounted) {
+      setState(() {
+        var detailsResult = result.result!;
+        print(detailsResult.name);
+        print(detailsResult.formattedAddress);
+        print(detailsResult.adrAddress);
+        print(detailsResult.scope);
+        print(detailsResult.name);
+        _currentAddress = detailsResult.name!;
+
+        //print(detailsResult.geometry!.location!.lat);
+        //print( detailsResult.geometry!.location!.lat);
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    String apiKey = "AIzaSyAIFnj6QxWUHPj3M086GFxMBPJrR6NePE8";
+    googlePlace = GooglePlace(apiKey);
     super.initState();
+
     emailcontroller = TextEditingController();
     _namecontroller = TextEditingController();
     _websitecontroller = TextEditingController();
@@ -234,38 +314,144 @@ class _RegisterPageState extends State<RegisterPage> {
                                   fontSize: width * 0.03),
                               border: InputBorder.none)),
                     ),
-                    Container(
-                      width: width - 5,
-                      height: height * 0.1 - height * 0.04,
-                      margin: const EdgeInsets.only(top: 6),
-                      padding: const EdgeInsets.only(left: 6),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: TextField(
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                textAlignVertical: TextAlignVertical.center,
-                                textAlign: TextAlign.left,
-                                controller: _addresscontroller,
-                                decoration: InputDecoration(
-                                    hintText: 'Janakpuri, New Delhi',
-                                    hintStyle: TextStyle(
-                                        color: Color(
-                                            Utils.hexStringToHexInt('A4A4A4')),
-                                        fontFamily: 'Poppins Regular',
-                                        fontSize: width * 0.03),
-                                    border: InputBorder.none)),
-                          ),
-                          const SizedBox(width: 10.0),
-                          const Icon(Icons.edit,color: Colors.grey,),
-                        ],
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            bool showSublist =
+                                false; // Declare your variable outside the builder
+
+                            bool showmainList = true;
+                            var mainlistPosition = 0;
+                            var bntname = "Add";
+                            return AlertDialog(
+                              title: Text("Search your location"),
+                              content: StatefulBuilder(
+                                // You need this, notice the parameters below:
+                                builder: (BuildContext context,
+                                    StateSetter setState) {
+                                  return Container(
+                                    width: width,
+                                    height: height * 0.4,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        TextField(
+                                          decoration: const InputDecoration(
+                                            labelText: "Search",
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.blue,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.black54,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            if (value.isNotEmpty) {
+                                              setState(() {
+                                                autoCompleteSearch(value);
+                                              });
+                                            } else {
+                                              if (predictions.length > 0 &&
+                                                  mounted) {
+                                                setState(() {
+                                                  predictions = [];
+                                                });
+                                              }
+                                            }
+                                          },
+                                        ),
+                                        ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                            minHeight: 0.5,
+                                            maxHeight: height * 0.3,
+                                          ),
+                                          child: ListView.builder(
+                                            itemCount: predictions.length,
+                                            itemBuilder: (context, index) {
+                                              return ListTile(
+                                                leading: const CircleAvatar(
+                                                  child: Icon(
+                                                    Icons.pin_drop,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                title: Text(
+                                                  predictions[index]
+                                                      .description
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    debugPrint(
+                                                        predictions[index]
+                                                            .placeId);
+                                                    getDetils(predictions[index]
+                                                        .placeId!);
+                                                    Navigator.pop(context);
+                                                  });
+                                                  // Navigator.push(
+                                                  //   context,
+                                                  //   MaterialPageRoute(
+                                                  //     builder: (context) => DetailsPage(
+                                                  //       placeId: predictions[index].placeId.toString(),
+                                                  //       googlePlace: googlePlace, key: null,
+                                                  //     ),
+                                                  //   ),
+                                                  // );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: width - 5,
+                        height: height * 0.1 - height * 0.04,
+                        margin: const EdgeInsets.only(top: 6),
+                        padding: const EdgeInsets.only(left: 6),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
+                          color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${_currentAddress==""?"Address":_currentAddress}",
+                              style: TextStyle(
+                                  color:
+                                  _currentAddress==""? Color(Utils.hexStringToHexInt('A4A4A4')):Colors.black,
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              textAlign: TextAlign.left,
+                            ),
+                            const SizedBox(width: 10.0),
+                            const Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(
@@ -302,98 +488,100 @@ class _RegisterPageState extends State<RegisterPage> {
                         ],
                       ),
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Stack(
-                         children: [
-                           Container(
-                             width: width*0.4,
+                          children: [
+                            Container(
+                              width: width * 0.4,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      width: width - 5,
+                                      height: height * 0.1 - height * 0.04,
+                                      margin: const EdgeInsets.only(top: 6),
+                                      padding: const EdgeInsets.only(left: 6),
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                            const Radius.circular(4)),
+                                        color: Color(
+                                            Utils.hexStringToHexInt('F4F4F4')),
+                                      ),
+                                      child: DropdownButton(
+                                        icon: const Icon(null),
+                                        hint: Text(
+                                          "${showselectGender == "" ? "Unisex" : showselectGender}",
+                                          style: TextStyle(
+                                              color: Color(
+                                                  Utils.hexStringToHexInt(
+                                                      'A4A4A4')),
+                                              fontFamily: 'Poppins Regular',
+                                              fontSize: width * 0.03),
+                                        ),
+                                        items: _createList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            showselectGender = value.toString();
+                                            if (value == "Male") {
+                                              selectSalong = "unisex";
+                                              print(selectSalong);
+                                            } else if (value == "Female") {
+                                              selectSalong = "unisex";
+                                              print(selectSalong);
+                                            }
+                                          });
+                                        },
+                                      ),
 
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               children: <Widget>[
-                                 Expanded(
-                                   flex: 1,
-                                   child: Container(
-                                     width: width - 5,
-                                     height: height * 0.1 - height * 0.04,
-                                     margin: const EdgeInsets.only(top: 6),
-                                     padding: const EdgeInsets.only(left: 6),
-                                     decoration: BoxDecoration(
-                                       borderRadius: const BorderRadius.all(
-                                           const Radius.circular(4)),
-                                       color: Color(Utils.hexStringToHexInt('F4F4F4')),
-                                     ),
-                                     child:  DropdownButton(
-                                       icon: const Icon(null),
-                                       hint: Text(
-                                         "${showselectGender == "" ? "Unisex" : showselectGender}",
-                                         style: TextStyle(
-                                             color: Color(
-                                                 Utils.hexStringToHexInt('A4A4A4')),
-                                             fontFamily: 'Poppins Regular',
-                                             fontSize: width * 0.03),
-                                       ),
-                                       items: _createList(),
-                                       onChanged: (value) {
-                                         setState(() {
-                                           showselectGender = value.toString();
-                                           if (value == "Male") {
-                                             selectSalong = "unisex";
-                                             print(selectSalong);
-                                           } else if (value == "Female") {
-                                             selectSalong = "unisex";
-                                             print(selectSalong);
-                                           }
-                                         });
-                                       },
-                                     ),
-
-                                     // TextField(
-                                     //     style: TextStyle(
-                                     //       color: Colors.black,
-                                     //     ),
-                                     //     controller: emailcontroller,
-                                     //     decoration: InputDecoration(
-                                     //         hintText: 'Gender',
-                                     //         hintStyle: TextStyle(
-                                     //             color: Color(
-                                     //                 Utils.hexStringToHexInt('A4A4A4')),
-                                     //             fontFamily: 'Poppins Regular',
-                                     //             fontSize: width * 0.05),
-                                     //         border: InputBorder.none,
-                                     //         suffixIcon: Icon(Icons.keyboard_arrow_down_rounded,color: Colors.black,)),
-                                     // ),
-                                   ),
-                                 ),
-                                 const SizedBox(
-                                   width: 6,
-                                 ),
-                                 // Expanded(
-                                 //   flex: 1,
-                                 //   child: Container(
-                                 //     width: width - 5,
-                                 //     height: height * 0.1 - height * 0.04,
-                                 //     margin: const EdgeInsets.only(top: 6),
-                                 //     padding: const EdgeInsets.only(left: 6),
-                                 //     decoration: const BoxDecoration(
-                                 //       borderRadius:
-                                 //           BorderRadius.all(Radius.circular(4)),
-                                 //     ),
-                                 //   ),
-                                 // ),
-                               ],
-                             ),
-                           ),
-                           Positioned(
-                             top: height*0.02,
-                               right: 6,
-                               child: Icon(Icons.keyboard_arrow_down_outlined,color: Colors.grey,
-                               size: 24,))
-                         ],
-
+                                      // TextField(
+                                      //     style: TextStyle(
+                                      //       color: Colors.black,
+                                      //     ),
+                                      //     controller: emailcontroller,
+                                      //     decoration: InputDecoration(
+                                      //         hintText: 'Gender',
+                                      //         hintStyle: TextStyle(
+                                      //             color: Color(
+                                      //                 Utils.hexStringToHexInt('A4A4A4')),
+                                      //             fontFamily: 'Poppins Regular',
+                                      //             fontSize: width * 0.05),
+                                      //         border: InputBorder.none,
+                                      //         suffixIcon: Icon(Icons.keyboard_arrow_down_rounded,color: Colors.black,)),
+                                      // ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: Container(
+                                  //     width: width - 5,
+                                  //     height: height * 0.1 - height * 0.04,
+                                  //     margin: const EdgeInsets.only(top: 6),
+                                  //     padding: const EdgeInsets.only(left: 6),
+                                  //     decoration: const BoxDecoration(
+                                  //       borderRadius:
+                                  //           BorderRadius.all(Radius.circular(4)),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                            Positioned(
+                                top: height * 0.02,
+                                right: 6,
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  color: Colors.grey,
+                                  size: 24,
+                                ))
+                          ],
                         ),
                       ],
                     )
@@ -409,15 +597,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     var email = emailcontroller.text.toString();
                     var name = _namecontroller.text.toString();
                     var website = _websitecontroller.text.toString();
-                    var address = _addresscontroller.text.toString();
+
                     var passowrd = _passwordcontroller.text.toString();
+
                     Get.to(const RegisterPageTwo(), arguments: [
                       imageFile as File,
                       email + "",
                       name + "",
                       website + "",
-                      address + "",
-                      passowrd
+                      _currentAddress + "",
+                      passowrd,
+                      longitude,
+                      latitude
                     ]);
                   }
                 },
@@ -601,7 +792,6 @@ class _RegisterPageState extends State<RegisterPage> {
     var email = emailcontroller.text.toString();
     var name = _namecontroller.text.toString();
     var website = _websitecontroller.text.toString();
-    var address = _addresscontroller.text.toString();
     var passowrd = _passwordcontroller.text.toString();
     if (name == "") {
       CommonDialog.showsnackbar("Please enter name.");
@@ -618,12 +808,12 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (imageFile == null) {
       CommonDialog.showsnackbar("Please choose image.");
       return false;
-    } else if (address == "") {
+    } else if (_currentAddress == "") {
       CommonDialog.showsnackbar("Please enter address");
-      false;
+     return false;
     } else if (passowrd == "") {
       CommonDialog.showsnackbar("Please enter password");
-      false;
+     return false;
     }
     return true;
   }

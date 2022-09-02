@@ -56,8 +56,8 @@ class AuthControlller extends GetxController {
      
 
       loginPojo.value = loginPojoFromJson(response);
-      if (loginPojo.value.message ==
-          "The password must not be greater than 20 characters. ") {
+      if (response==
+          "null") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         box.write('session',   loginPojo.value.data?.token);
@@ -117,6 +117,7 @@ class AuthControlller extends GetxController {
       CommonDialog.hideLoading();
       registerPojo.value = registerPojoFromJson(response);
       CommonDialog.showsnackbar(registerPojo.value.message);
+
       Get.off(LoginPage());
     } else {
       CommonDialog.showsnackbar("Somthing wrong");

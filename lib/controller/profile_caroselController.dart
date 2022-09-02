@@ -6,6 +6,7 @@ import 'package:kolacur_admin/model/AddCouponPojo.dart';
 import 'package:kolacur_admin/model/AdminServicePojo.dart';
 import 'package:kolacur_admin/model/CouponPojo.dart';
 import 'package:kolacur_admin/model/DeleteCoupon.dart';
+import 'package:kolacur_admin/model/FeedbackBojo.dart';
 import 'package:kolacur_admin/model/ShopProfileePojo.dart';
 
 import '../model/ShopServicePojo.dart';
@@ -20,6 +21,7 @@ class ProfileCOntroller extends GetxController {
   var couponDeletePojo = DeleteCoupon().obs;
   var addCouponPojo = AddCouponPojo().obs;
   var shopService = ShopServicePojo().obs;
+  var feedback = FeedbackBojo().obs;
   var lodaer = true;
   final box = GetStorage();
 
@@ -29,10 +31,6 @@ class ProfileCOntroller extends GetxController {
     super.onReady();
 
     getShopProfile(box.read('session'));
-
-
-
-
   }
 
   void getAdminService(session_id) async {
@@ -45,17 +43,16 @@ class ProfileCOntroller extends GetxController {
       print(response);
       //   CommonDialog.hideLoading();
       adminServicePojo.value = adminServicePojoFromJson(response);
-      //getShopService(box.read('session'));
-      getCouponList();
+      getShopService(box.read('session'));
+
       update();
       if (adminServicePojo.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
         // Get.to(const VerifyOtpPage());
 
-     //   lodaer = false;
+        //   lodaer = false;
       }
-
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -71,12 +68,13 @@ class ProfileCOntroller extends GetxController {
       //  CommonDialog.showLoading(title: "Please waitt...");
       final response =
           await APICall().registerUrse(map, AppConstant.COUPON_LIST);
-      lodaer = false;
+
       print(response);
       // CommonDialog.hideLoading();
       couponList.value = couponPojoFromJson(response);
+      getFeedback();
       update();
-      lodaer = false;
+
       if (couponList.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
@@ -166,8 +164,9 @@ class ProfileCOntroller extends GetxController {
       couponList.value = couponPojoFromJson(response);
       //couponList.value.staffDetail=couponPojoFromJson(response).staffDetail;
       print("I M HERE");
-      lodaer = false;
+
       update();
+
       if (couponList.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {
@@ -182,11 +181,33 @@ class ProfileCOntroller extends GetxController {
     }
   }
 
+  void getFeedback() async {
+    Map map;
+    map = {"session_id": box.read('session')};
+    try {
+      //CommonDialog.showLoading(title: "Please waitt...");
+      final response =
+          await APICall().registerUrse(map, AppConstant.GET_FEEDBACK);
+      print("CODE RUNNING HERE");
+      print(response);
+      // CommonDialog.hideLoading();
+      feedback.value = feedbackBojoFromJson(response);
+      print("I M HERE");
+      lodaer = false;
+      update();
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+      // CommonDialog.hideLoading();
+    }
+  }
+
   void getShopProfile(session_id) async {
     Map map;
     map = {"session_id": session_id};
     try {
-      lodaer=true;
+      lodaer = true;
       CommonDialog.showLoading(title: "Please waitt...");
       final response =
           await APICall().registerUrse(map, AppConstant.SHOP_PROFILE);
@@ -200,7 +221,6 @@ class ProfileCOntroller extends GetxController {
       } else {
         // Get.to(const VerifyOtpPage());
       }
-
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -215,9 +235,9 @@ class ProfileCOntroller extends GetxController {
     Map map;
     map = {"session_id": session_id};
     try {
-     // CommonDialog.showLoading(title: "Please waitt...");
+      // CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrse(map, AppConstant.SHOP_PROFILE);
+          await APICall().registerUrse(map, AppConstant.SHOP_PROFILE);
       print(response);
 
       shopproflePojo.value = shopProfileePojoFromJson(response);
@@ -229,7 +249,6 @@ class ProfileCOntroller extends GetxController {
         update();
         // lodaer = false;
       }
-
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -237,7 +256,7 @@ class ProfileCOntroller extends GetxController {
       print("SDF SDF SDF SDF SDF SDF SD FDS F SDFDSFDSFSD $error");
       //lodaer = false;
     }
-   // CommonDialog.hideLoading();
+    // CommonDialog.hideLoading();
   }
 
   void addCoupon(price, name) async {
@@ -294,7 +313,7 @@ class ProfileCOntroller extends GetxController {
       } else {
         // Get.to(const VerifyOtpPage());
 
-      //  lodaer = false;
+        //  lodaer = false;
 
       }
     } catch (error) {
@@ -311,7 +330,7 @@ class ProfileCOntroller extends GetxController {
     try {
       //CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrse(map, AppConstant.SHOP_SERVICE);
+          await APICall().registerUrse(map, AppConstant.SHOP_SERVICE);
       print(response);
       //  CommonDialog.hideLoading();
       shopService.value = shopServicePojoFromJson(response);

@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
       _ownenamecontroller,
       _owncontactnocontroller,
       _adharnocontroller,
-     _genderController;
+      _genderController;
 
   //late File shopimagefile;
 
@@ -40,7 +40,6 @@ class _RegisterPageState extends State<RegisterPageTwo> {
   var imageFile;
   var age = "";
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -49,7 +48,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
     _ownenamecontroller = TextEditingController();
     _owncontactnocontroller = TextEditingController();
     _adharnocontroller = TextEditingController();
-    _genderController=TextEditingController();
+    _genderController = TextEditingController();
   }
 
   @override
@@ -63,6 +62,8 @@ class _RegisterPageState extends State<RegisterPageTwo> {
     var shopWebsite = one[3].toString();
     var shopAddress = one[4].toString();
     var password = one[5].toString();
+    var longitude = one[6];
+    var latitude = one[7];
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -132,7 +133,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                               image: DecorationImage(
                                   image: AssetImage(
                                       'images/svgicons/addphotocircleplus.png'),
-                                  fit: BoxFit.fill)),
+                                  fit: BoxFit.contain)),
                           child: Center(
                             child: SvgPicture.asset(
                               'images/svgicons/adddd.svg',
@@ -273,23 +274,21 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                                   const BorderRadius.all(Radius.circular(4)),
                               color: Color(Utils.hexStringToHexInt('F4F4F4')),
                             ),
-                            child:
-
-                            TextField(
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
+                            child: TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
                               keyboardType: TextInputType.number,
-                                controller: _genderController,
-                                decoration: InputDecoration(
-                                    hintText: 'Gender',
-                                    hintStyle: TextStyle(
-                                        color: Color(
-                                            Utils.hexStringToHexInt('A4A4A4')),
-                                        fontFamily: 'Poppins Regular',
-                                        fontSize: width * 0.03),
-                                    border: InputBorder.none,
-                                  ),
+                              controller: _genderController,
+                              decoration: InputDecoration(
+                                hintText: 'Age',
+                                hintStyle: TextStyle(
+                                    color: Color(
+                                        Utils.hexStringToHexInt('A4A4A4')),
+                                    fontFamily: 'Poppins Regular',
+                                    fontSize: width * 0.03),
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
                         ),
@@ -343,7 +342,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                     var adharno = _adharnocontroller.text.toString();
                     // shopimagefile=shopimage;
                     print(shopimagefile);
-                    CommonDialog.showsnackbar("Hit here api");
+                    //  CommonDialog.showsnackbar("Hit here api");
                     authControlller.registerUser(
                         shopname,
                         shopEmail,
@@ -353,7 +352,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                         '8.5',
                         nameOwner,
                         emailOwner,
-                        _genderController.text.toString()+"",
+                        _genderController.text.toString() + "",
                         ownercontact,
                         "ANDROID",
                         "SDFSDFD",
@@ -362,7 +361,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                         imageFile,
                         adharno);
                   } else {
-                    CommonDialog.showsnackbar("Hit here api");
+                    // CommonDialog.showsnackbar("Hit here api");
                   }
 
                   //showLoaderDialog(context);
@@ -680,6 +679,6 @@ class _RegisterPageState extends State<RegisterPageTwo> {
           print(picker.getSelectedValues());
           age = picker.getSelectedValues().toString();
           print(picker.getSelectedValues());
-       }).showDialog(context);
+        }).showDialog(context);
   }
 }

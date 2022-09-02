@@ -13,7 +13,7 @@ import '../controller/auth_controller.dart';
 import '../utils/Utils.dart';
 import '../utils/appconstant.dart';
 import 'register.dart';
-
+import 'dart:io';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -302,10 +302,17 @@ class _LoginPageState extends State<LoginPage> {
                 height: height * 0.04,
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async{
                   if(emailcontroller.text.toString()!=""||
                   _passwordcontorller.text.toString()!=""){
-authControlller.login(emailcontroller.text.toString(),  _passwordcontorller.text.toString());
+                    try {
+                      final result = await InternetAddress.lookup('example.com');
+                      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                        authControlller.login(emailcontroller.text.toString(),  _passwordcontorller.text.toString());
+                      }
+                    } on SocketException catch (_) {
+                      CommonDialog.showsnackbar("No internet");
+                    }
                   }else{
                     CommonDialog.showsnackbar("All fileds are mandatory");
                   }

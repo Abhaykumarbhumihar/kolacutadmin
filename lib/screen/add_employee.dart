@@ -160,7 +160,7 @@ class _RegisterPageState extends State<AddEmployee> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       image: FileImage(imageFile),
-                                      fit: BoxFit.fill)),
+                                      fit: BoxFit.contain)),
                             ),
                     ),
                     Positioned(

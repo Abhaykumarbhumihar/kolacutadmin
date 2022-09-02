@@ -21,8 +21,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../model/AdminServicePojo.dart';
 import '../model/DeleteCoupon.dart';
+import '../model/FeedbackBojo.dart';
 import '../utils/appconstant.dart';
 import 'sidenavigation.dart';
 
@@ -75,12 +77,15 @@ class _HomePageState extends State<ProfileCarose> {
         bool showSublist = false; // Declare your variable outside the builder
         List<Service> tempArray = [];
 
+
+
         bool showmainList = true;
         var serviceId = "";
         var mainlistPosition = 0;
         var bntname = "Add";
+        var serviceNmae = "";
         return AlertDialog(
-          title: Text("Add Services"),
+          title: const Text("Choose your services"),
           content: StatefulBuilder(
             // You need this, notice the parameters below:
             builder: (BuildContext context, StateSetter setState) {
@@ -90,9 +95,9 @@ class _HomePageState extends State<ProfileCarose> {
                 children: [
                   Visibility(
                     visible: showmainList,
-                    child: Expanded(
+                    child: Flexible(
                       child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: data!.length,
@@ -100,6 +105,8 @@ class _HomePageState extends State<ProfileCarose> {
                             return InkWell(
                               onTap: () {
                                 setState(() {
+
+
                                   mainlistPosition = positio;
                                   serviceId =
                                       data[positio].serviceId.toString();
@@ -108,6 +115,8 @@ class _HomePageState extends State<ProfileCarose> {
                                     showSublist = false;
                                   } else {
                                     showSublist = true;
+
+
                                   }
 
                                   if (showmainList) {
@@ -122,8 +131,7 @@ class _HomePageState extends State<ProfileCarose> {
                                   Container(
                                     width: width,
                                     height: height * 0.1,
-                                    margin:
-                                        EdgeInsets.only(top: 4, bottom: 4),
+                                    margin: EdgeInsets.only(top: 4, bottom: 4),
                                     child: Material(
                                       elevation: 8.0,
                                       shadowColor: Colors.white,
@@ -141,8 +149,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
-                                            backgroundColor:
-                                                Colors.transparent,
+                                            backgroundColor: Colors.transparent,
                                             radius: 25,
                                           ),
                                           SizedBox(
@@ -180,6 +187,8 @@ class _HomePageState extends State<ProfileCarose> {
                                     return InkWell(
                                       onTap: () {
                                         setState(() {
+
+
                                           print(data[mainlistPosition]
                                               .services![position]
                                               .id);
@@ -190,9 +199,8 @@ class _HomePageState extends State<ProfileCarose> {
                                                 data[mainlistPosition]
                                                     .services![position]);
                                           } else {
-                                            tempArray.add(
-                                                data[mainlistPosition]
-                                                    .services![position]);
+                                            tempArray.add(data[mainlistPosition]
+                                                .services![position]);
                                           }
                                           print(tempArray.toString());
                                         });
@@ -219,8 +227,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .center,
+                                                      CrossAxisAlignment.center,
                                                   children: <Widget>[
                                                     Column(
                                                       mainAxisAlignment:
@@ -284,8 +291,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                             mainlistPosition]
                                                         .services![position])
                                                     ? Icons.cancel
-                                                    : Icons
-                                                        .add_circle_outline),
+                                                    : Icons.add_circle_outline),
                                               ],
                                             ),
                                           ),
@@ -313,9 +319,8 @@ class _HomePageState extends State<ProfileCarose> {
                                   };
 
                                   print(map);
-                                  var apiUrl = Uri.parse(
-                                      AppConstant.BASE_URL +
-                                          AppConstant.ADD_SERVICE);
+                                  var apiUrl = Uri.parse(AppConstant.BASE_URL +
+                                      AppConstant.ADD_SERVICE);
                                   print(apiUrl);
 
                                   print(map);
@@ -331,6 +336,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       var jsonString = response.body;
                                       print(jsonString);
                                       Navigator.pop(context);
+                                      profileController.getShopService(session);
                                     });
                                     //return jsonString;
                                   } else {
@@ -545,11 +551,14 @@ class _HomePageState extends State<ProfileCarose> {
       },
     );
   }
+
   var name = "";
   var email = "";
   var phone = "";
   var iamge = "";
+  var session = "";
   late SharedPreferences sharedPreferences;
+
   void addCoupon(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -642,14 +651,16 @@ class _HomePageState extends State<ProfileCarose> {
       var emailValue = sharedPreferences.getString("email");
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
+      var _session = sharedPreferences.getString("session");
       setState(() {
         name = _testValue!;
         email = emailValue!;
         phone = _phoneValue!;
         iamge = _imageValue!;
+        session = _session!;
       });
       // will be null if never previously saved
-    //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
+      //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
     });
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -662,7 +673,7 @@ class _HomePageState extends State<ProfileCarose> {
           key: _scaffoldKey,
           resizeToAvoidBottomInset: true,
           drawer:
-          SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
+              SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
           appBar: AppBar(
             centerTitle: true,
             elevation: 0.0,
@@ -683,7 +694,7 @@ class _HomePageState extends State<ProfileCarose> {
                   color: Colors.white,
                   fontSize: width * 0.04),
             ),
-            actions: <Widget>[const Icon(CupertinoIcons.bell)],
+            // actions: <Widget>[const Icon(CupertinoIcons.bell)],
           ),
           backgroundColor: Colors.transparent,
           body: GetBuilder<ProfileCOntroller>(builder: (profileController) {
@@ -691,11 +702,30 @@ class _HomePageState extends State<ProfileCarose> {
               return Container(
                 width: width,
                 height: height,
-                color: Colors.green,
+                color: Colors.white,
               );
             } else {
               var profiledata = profileController.shopproflePojo.value.data;
-
+              var oneStar =
+                  profileController.feedback.value.ratingDetail!.where((item) {
+                return int.parse(item.rating!) == 1;
+              });
+              var twoStar =
+                  profileController.feedback.value.ratingDetail!.where((item) {
+                return int.parse(item.rating!) == 2;
+              });
+              var threeStar =
+                  profileController.feedback.value.ratingDetail!.where((item) {
+                return int.parse(item.rating!) == 3;
+              });
+              var fourStar =
+                  profileController.feedback.value.ratingDetail!.where((item) {
+                return int.parse(item.rating!) == 4;
+              });
+              var fiveStar =
+                  profileController.feedback.value.ratingDetail!.where((item) {
+                return int.parse(item.rating!) == 5;
+              });
               final List<Widget> imageSliders = profiledata!.shopImage!
                   .map((item) => Container(
                         child: Container(
@@ -1060,7 +1090,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       height: 4.0,
                                     ),
                                     AutoSizeText(
-                                      "${profiledata.description.toString()==""?"N/A":profiledata.description.toString()}",
+                                      "${profiledata.description.toString() == "" ? "N/A" : profiledata.description.toString()}",
                                       style: TextStyle(
                                           fontSize: width * 0.02,
                                           color: Color(Utils.hexStringToHexInt(
@@ -1259,7 +1289,7 @@ class _HomePageState extends State<ProfileCarose> {
                                       height: 4.0,
                                     ),
                                     AutoSizeText(
-                                      "${profiledata.amenties.toString()==""?"N/A":profiledata.amenties.toString()}",
+                                      "${profiledata.amenties.toString() == "" ? "N/A" : profiledata.amenties.toString()}",
                                       style: TextStyle(
                                           fontSize: width * 0.02,
                                           color: Color(Utils.hexStringToHexInt(
@@ -1325,7 +1355,7 @@ class _HomePageState extends State<ProfileCarose> {
                                               MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                              '4.5',
+                                              '${profileController.feedback.value?.totalRating}',
                                               style: TextStyle(
                                                   fontSize: width * 0.02,
                                                   fontFamily: 'Poppins Regular',
@@ -1355,255 +1385,258 @@ class _HomePageState extends State<ProfileCarose> {
                               SizedBox(
                                 height: height * 0.02,
                               ),
-                              // Container(
-                              //     margin: EdgeInsets.only(
-                              //         left: width * 0.06, right: width * 0.06),
-                              //     child: Column(
-                              //       children: <Widget>[
-                              //         Row(
-                              //           mainAxisAlignment:
-                              //               MainAxisAlignment.spaceBetween,
-                              //           children: <Widget>[
-                              //             Column(
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.start,
-                              //               children: <Widget>[
-                              //                 Text(
-                              //                   'Services Offered',
-                              //                   style: TextStyle(
-                              //                       fontSize: width * 0.03,
-                              //                       color: Colors.black,
-                              //                       fontFamily:
-                              //                           'Poppins Regular'),
-                              //                 ),
-                              //                 Text(
-                              //                   '${profileController.shopService.value.serviceDetail!.length.toString() != null ? profileController.shopService.value.serviceDetail!.length.toString() : ""} services',
-                              //                   style: TextStyle(
-                              //                       fontSize: width * 0.02,
-                              //                       color: Color(
-                              //                           Utils.hexStringToHexInt(
-                              //                               '8D8D8D')),
-                              //                       fontFamily:
-                              //                           'Poppins Regular'),
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //             InkWell(
-                              //               onTap: () {
-                              //                 debugPrint(
-                              //                     "SDF SDF SDF SDF S DF");
-                              //                 print(profileController
-                              //                     .adminServicePojo
-                              //                     .value
-                              //                     .serviceDetail!
-                              //                     .length);
-                              //                 //  Get.to(AddService());
-                              //                 dd(
-                              //                     context,
-                              //                     profileController
-                              //                         .adminServicePojo
-                              //                         .value
-                              //                         .serviceDetail);
-                              //               },
-                              //               child: Container(
-                              //                 margin: EdgeInsets.only(
-                              //                     right: width * 0.02),
-                              //                 width: width * 0.2,
-                              //                 height: height * 0.03,
-                              //                 decoration: BoxDecoration(
-                              //                     borderRadius:
-                              //                         BorderRadius.circular(
-                              //                             width * 0.01),
-                              //                     color: Color(
-                              //                         Utils.hexStringToHexInt(
-                              //                             '#ecfafb'))),
-                              //                 child: Row(
-                              //                   mainAxisAlignment:
-                              //                       MainAxisAlignment.center,
-                              //                   children: <Widget>[
-                              //                     Center(
-                              //                       child: SvgPicture.asset(
-                              //                         "images/svgicons/modify.svg",
-                              //                       ),
-                              //                     ),
-                              //                     Text(
-                              //                       'Modify',
-                              //                       style: TextStyle(
-                              //                           fontSize: width * 0.02,
-                              //                           fontFamily:
-                              //                               'Poppins Regular',
-                              //                           color: Color(Utils
-                              //                               .hexStringToHexInt(
-                              //                                   '46D0D9'))),
-                              //                     )
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //         SizedBox(
-                              //           width: width,
-                              //           height: height * 0.1,
-                              //           child: ListView.builder(
-                              //               itemCount: profileController
-                              //                   .shopService
-                              //                   .value
-                              //                   .serviceDetail!
-                              //                   .length,
-                              //               scrollDirection: Axis.horizontal,
-                              //               shrinkWrap: true,
-                              //               itemBuilder: (context, position) {
-                              //                 return InkWell(
-                              //                   onTap: () {
-                              //                     var width =
-                              //                         MediaQuery.of(context)
-                              //                             .size
-                              //                             .width;
-                              //                     var height =
-                              //                         MediaQuery.of(context)
-                              //                             .size
-                              //                             .height;
-                              //                     showDialog(
-                              //                       context: context,
-                              //                       builder:
-                              //                           (BuildContext context) {
-                              //                         List<Service> tempArray =
-                              //                             [];
-                              //
-                              //                         return AlertDialog(
-                              //                           content:
-                              //                               StatefulBuilder(
-                              //                             // You need this, notice the parameters below:
-                              //                             builder: (BuildContext
-                              //                                     context,
-                              //                                 StateSetter
-                              //                                     setState) {
-                              //                               return Container(
-                              //                                 width: width,
-                              //                                 child: Column(
-                              //                                   children: [
-                              //                                     Column(
-                              //                                       children: [
-                              //                                         Container(
-                              //                                           height: height *
-                              //                                               0.6,
-                              //                                           width:
-                              //                                               width,
-                              //                                           child: ListView.builder(
-                              //                                               itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
-                              //                                               itemBuilder: (context, positionn) {
-                              //                                                 return InkWell(
-                              //                                                   onTap: () {
-                              //                                                     setState(() {});
-                              //                                                   },
-                              //                                                   child: Container(
-                              //                                                     height: height * 0.1,
-                              //                                                     margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
-                              //                                                     child: Material(
-                              //                                                       elevation: 8.0,
-                              //                                                       borderRadius: BorderRadius.circular(8.0),
-                              //                                                       shadowColor: Colors.white,
-                              //                                                       child: Container(
-                              //                                                         width: width,
-                              //                                                         margin: EdgeInsets.all(4.0),
-                              //                                                         child: Row(
-                              //                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //                                                           children: <Widget>[
-                              //                                                             Column(
-                              //                                                               mainAxisAlignment: MainAxisAlignment.center,
-                              //                                                               crossAxisAlignment: CrossAxisAlignment.start,
-                              //                                                               children: <Widget>[
-                              //                                                                 Text(
-                              //                                                                   profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
-                              //                                                                   style: TextStyle(fontSize: 8.0),
-                              //                                                                 ),
-                              //                                                                 Text(
-                              //                                                                   profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
-                              //                                                                   textAlign: TextAlign.left,
-                              //                                                                   style: TextStyle(fontSize: 8.0),
-                              //                                                                 ),
-                              //                                                               ],
-                              //                                                             ),
-                              //                                                             /*TODO---remove service*/
-                              //                                                             IconButton(
-                              //                                                                 onPressed: () async {
-                              //                                                                   // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
-                              //                                                                   // sub_service_id:1,2
-                              //                                                                   Map map = {
-                              //                                                                     "session_id": box.read('session'),
-                              //                                                                     "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
-                              //                                                                     "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
-                              //                                                                   };
-                              //
-                              //                                                                   print(map);
-                              //                                                                   var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
-                              //                                                                   print(apiUrl);
-                              //                                                                   print(map);
-                              //
-                              //                                                                   final response = await http.post(
-                              //                                                                     apiUrl,
-                              //                                                                     body: map,
-                              //                                                                   );
-                              //                                                                   var data = deleteCouponFromJson(response.body);
-                              //                                                                   print(response.body);
-                              //                                                                   CommonDialog.showsnackbar(data.message);
-                              //                                                                   Navigator.pop(context);
-                              //                                                                   profileController.getUpdatedShopService(box.read('session'));
-                              //                                                                 },
-                              //                                                                 icon: Icon(
-                              //                                                                   Icons.remove_circle_outline,
-                              //                                                                   size: width * 0.05,
-                              //                                                                   color: Colors.red,
-                              //                                                                 )),
-                              //                                                           ],
-                              //                                                         ),
-                              //                                                       ),
-                              //                                                     ),
-                              //                                                   ),
-                              //                                                 );
-                              //                                               }),
-                              //                                         ),
-                              //                                       ],
-                              //                                     )
-                              //                                   ],
-                              //                                 ),
-                              //                               );
-                              //                             },
-                              //                           ),
-                              //                         );
-                              //                       },
-                              //                     );
-                              //                   },
-                              //                   child: Container(
-                              //                     margin: EdgeInsets.all(4),
-                              //                     width: width * 0.2,
-                              //                     height: height * 0.1,
-                              //                     child: Material(
-                              //                       elevation: 6,
-                              //                       borderRadius:
-                              //                           BorderRadius.circular(
-                              //                               width * 0.04),
-                              //                       child: Container(
-                              //                         width: width * 0.2,
-                              //                         height: height * 0.1,
-                              //                         decoration: BoxDecoration(
-                              //                             borderRadius:
-                              //                                 BorderRadius
-                              //                                     .circular(
-                              //                                         width *
-                              //                                             0.04),
-                              //                             image: DecorationImage(
-                              //                                 image: NetworkImage(
-                              //                                     '${profileController.shopService.value.serviceDetail![position].serviceImage.toString()}'))),
-                              //                       ),
-                              //                     ),
-                              //                   ),
-                              //                 );
-                              //               }),
-                              //         )
-                              //       ],
-                              //     )),
+                              Container(
+                                  margin: EdgeInsets.only(
+                                      left: width * 0.06, right: width * 0.06),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                'Services Offered',
+                                                style: TextStyle(
+                                                    fontSize: width * 0.03,
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        'Poppins Regular'),
+                                              ),
+                                              Text(
+                                                '${profileController.shopService.value.serviceDetail!.length.toString() != null ? profileController.shopService.value.serviceDetail!.length.toString() : ""} services',
+                                                style: TextStyle(
+                                                    fontSize: width * 0.02,
+                                                    color: Color(
+                                                        Utils.hexStringToHexInt(
+                                                            '8D8D8D')),
+                                                    fontFamily:
+                                                        'Poppins Regular'),
+                                              ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              debugPrint(
+                                                  "SDF SDF SDF SDF S DF");
+                                              print(profileController
+                                                  .adminServicePojo
+                                                  .value
+                                                  .serviceDetail!
+                                                  .length);
+                                              //  Get.to(AddService());
+                                              dd(
+                                                  context,
+                                                  profileController
+                                                      .adminServicePojo
+                                                      .value
+                                                      .serviceDetail);
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  right: width * 0.02),
+                                              width: width * 0.2,
+                                              height: height * 0.03,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          width * 0.01),
+                                                  color: Color(
+                                                      Utils.hexStringToHexInt(
+                                                          '#ecfafb'))),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Center(
+                                                    child: SvgPicture.asset(
+                                                      "images/svgicons/modify.svg",
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Modify',
+                                                    style: TextStyle(
+                                                        fontSize: width * 0.02,
+                                                        fontFamily:
+                                                            'Poppins Regular',
+                                                        color: Color(Utils
+                                                            .hexStringToHexInt(
+                                                                '46D0D9'))),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: width,
+                                        height: height * 0.1,
+                                        child: ListView.builder(
+                                            itemCount: profileController
+                                                .shopService
+                                                .value
+                                                .serviceDetail!
+                                                .length,
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, position) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  var width =
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width;
+                                                  var height =
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .height;
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      List<Service> tempArray =
+                                                          [];
+
+                                                      return AlertDialog(
+                                                        content:
+                                                            StatefulBuilder(
+                                                          // You need this, notice the parameters below:
+                                                          builder: (BuildContext
+                                                                  context,
+                                                              StateSetter
+                                                                  setState) {
+                                                            return Container(
+                                                              width: width,
+                                                              child: Column(
+                                                                children: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Container(
+                                                                        height: height *
+                                                                            0.4,
+                                                                        width:
+                                                                            width,
+                                                                        child:
+                                                                            Flexible(
+                                                                          child: ListView.builder(
+                                                                              itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
+                                                                              itemBuilder: (context, positionn) {
+                                                                                return InkWell(
+                                                                                  onTap: () {
+                                                                                    setState(() {});
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    height: height * 0.1,
+                                                                                    margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                                                                                    child: Material(
+                                                                                      elevation: 8.0,
+                                                                                      borderRadius: BorderRadius.circular(8.0),
+                                                                                      shadowColor: Colors.white,
+                                                                                      child: Container(
+                                                                                        width: width,
+                                                                                        margin: EdgeInsets.all(4.0),
+                                                                                        child: Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: <Widget>[
+                                                                                            Column(
+                                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                              children: <Widget>[
+                                                                                                Text(
+                                                                                                  profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
+                                                                                                  style: TextStyle(fontSize: 8.0),
+                                                                                                ),
+                                                                                                Text(
+                                                                                                  profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
+                                                                                                  textAlign: TextAlign.left,
+                                                                                                  style: TextStyle(fontSize: 8.0),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                            /*TODO---remove service*/
+                                                                                            IconButton(
+                                                                                                onPressed: () async {
+                                                                                                  // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
+                                                                                                  // sub_service_id:1,2
+                                                                                                  Map map = {
+                                                                                                    "session_id": box.read('session'),
+                                                                                                    "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
+                                                                                                    "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
+                                                                                                  };
+
+                                                                                                  print(map);
+                                                                                                  var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
+                                                                                                  print(apiUrl);
+                                                                                                  print(map);
+
+                                                                                                  final response = await http.post(
+                                                                                                    apiUrl,
+                                                                                                    body: map,
+                                                                                                  );
+                                                                                                  var data = deleteCouponFromJson(response.body);
+                                                                                                  print(response.body);
+                                                                                                  CommonDialog.showsnackbar(data.message);
+                                                                                                  Navigator.pop(context);
+                                                                                                  profileController.getUpdatedShopService(box.read('session'));
+                                                                                                },
+                                                                                                icon: Icon(
+                                                                                                  Icons.remove_circle_outline,
+                                                                                                  size: width * 0.05,
+                                                                                                  color: Colors.red,
+                                                                                                )),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              }),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.all(4),
+                                                  width: width * 0.2,
+                                                  height: height * 0.1,
+                                                  child: Material(
+                                                    elevation: 6,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            width * 0.04),
+                                                    child: Container(
+                                                      width: width * 0.2,
+                                                      height: height * 0.1,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      width *
+                                                                          0.04),
+                                                          image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                  '${profileController.shopService.value.serviceDetail![position].serviceImage.toString()}'))),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                      )
+                                    ],
+                                  )),
                               SizedBox(
                                 height: height * 0.02,
                               ),
@@ -1616,7 +1649,7 @@ class _HomePageState extends State<ProfileCarose> {
                                 height: height * 0.16,
                                 child: ListView.builder(
                                     itemCount: profileController
-                                        .couponList.value.staffDetail!.length,
+                                        .couponList.value.staffDetail?.length,
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, position) {
                                       return Container(
@@ -1645,7 +1678,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                             .start,
                                                     children: <Widget>[
                                                       Text(
-                                                        '  ${profileController.couponList.value.staffDetail![position].couponName}',
+                                                        '  ${profileController.couponList.value.staffDetail?[position].couponName}',
                                                         style: TextStyle(
                                                             fontFamily:
                                                                 'Poppins Regular',
@@ -1702,7 +1735,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                             .hexStringToHexInt(
                                                                 '#46D0D9')),
                                                         child: Text(
-                                                          '${profileController.couponList.value.staffDetail![position].couponCode}',
+                                                          '${profileController.couponList.value.staffDetail?[position].couponCode}',
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'Poppins Light',
@@ -1725,7 +1758,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                     onPressed: () {
                                                       profileController
                                                           .removeCoupon(
-                                                              "${profileController.couponList.value.staffDetail![position].id}",
+                                                              "${profileController.couponList.value.staffDetail?[position].id}",
                                                               context);
                                                       profileController
                                                           .couponList
@@ -1793,7 +1826,7 @@ class _HomePageState extends State<ProfileCarose> {
                                     SizedBox(
                                       width: width,
                                       child: ListView.builder(
-                                        itemCount: 2,
+                                          itemCount: 1,
                                           shrinkWrap: true,
                                           physics:
                                               NeverScrollableScrollPhysics(),
@@ -1815,7 +1848,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               Alignment.center,
                                                           child: Center(
                                                             child: Text(
-                                                              '4.3',
+                                                              '${profileController.feedback.value?.totalRating}',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -1831,7 +1864,12 @@ class _HomePageState extends State<ProfileCarose> {
                                                           ),
                                                         ),
                                                         RatingBarIndicator(
-                                                          rating: 2.75,
+                                                          rating:
+                                                              profileController
+                                                                  .feedback
+                                                                  .value
+                                                                  .totalRating!
+                                                                  .toDouble(),
                                                           itemBuilder: (context,
                                                                   index) =>
                                                               Icon(
@@ -1847,7 +1885,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               Axis.horizontal,
                                                         ),
                                                         Text(
-                                                          '2362',
+                                                          '${profileController.feedback.value.ratingDetail?.length}',
                                                           textAlign:
                                                               TextAlign.left,
                                                           style: TextStyle(
@@ -1866,21 +1904,74 @@ class _HomePageState extends State<ProfileCarose> {
                                                   Expanded(
                                                     flex: 3,
                                                     child: SizedBox(
-                                                      width: width * 0.8,
-                                                      child: ListView.builder(
-                                                          itemCount: 4,
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                          NeverScrollableScrollPhysics(),
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          itemBuilder: (context,
-                                                              position) {
-                                                            return Row(
+                                                        width: width * 0.8,
+                                                        child:
+                                                            // ListView.builder(
+                                                            //     itemCount: 4,
+                                                            //     shrinkWrap: true,
+                                                            //     physics:
+                                                            //         NeverScrollableScrollPhysics(),
+                                                            //     scrollDirection:
+                                                            //         Axis.vertical,
+                                                            //     itemBuilder: (context,
+                                                            //         position) {
+                                                            //       return Row(
+                                                            //         children: <
+                                                            //             Widget>[
+                                                            //           Text(
+                                                            //             '$position',
+                                                            //             textAlign:
+                                                            //                 TextAlign
+                                                            //                     .center,
+                                                            //             style: TextStyle(
+                                                            //                 fontSize:
+                                                            //                     width *
+                                                            //                         0.02,
+                                                            //                 color: Colors
+                                                            //                     .black,
+                                                            //                 fontFamily:
+                                                            //                     'Poppins Regular'),
+                                                            //           ),
+                                                            //           SizedBox(
+                                                            //               width: width *
+                                                            //                   0.03),
+                                                            //           Container(
+                                                            //             margin: EdgeInsets.symmetric(
+                                                            //                 vertical:
+                                                            //                     height *
+                                                            //                         0.003),
+                                                            //             width: width *
+                                                            //                 0.5,
+                                                            //             height: 10,
+                                                            //             child:
+                                                            //                 const ClipRRect(
+                                                            //               borderRadius:
+                                                            //                   BorderRadius.all(
+                                                            //                       Radius.circular(10)),
+                                                            //               child:
+                                                            //                   LinearProgressIndicator(
+                                                            //                 value:
+                                                            //                     0.9,
+                                                            //                 valueColor: AlwaysStoppedAnimation<
+                                                            //                         Color>(
+                                                            //                     Colors
+                                                            //                         .cyan),
+                                                            //                 backgroundColor:
+                                                            //                     Color(
+                                                            //                         0xffD6D6D6),
+                                                            //               ),
+                                                            //             ),
+                                                            //           )
+                                                            //         ],
+                                                            //       );
+                                                            //     }),
+                                                            Column(
+                                                          children: <Widget>[
+                                                            Row(
                                                               children: <
                                                                   Widget>[
                                                                 Text(
-                                                                  '$position',
+                                                                  '1',
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -1904,29 +1995,333 @@ class _HomePageState extends State<ProfileCarose> {
                                                                   width: width *
                                                                       0.5,
                                                                   height: 10,
-                                                                  child:
-                                                                      const ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.all(
-                                                                            Radius.circular(10)),
-                                                                    child:
-                                                                        LinearProgressIndicator(
-                                                                      value:
-                                                                          0.9,
-                                                                      valueColor: AlwaysStoppedAnimation<
-                                                                              Color>(
-                                                                          Colors
-                                                                              .cyan),
-                                                                      backgroundColor:
-                                                                          Color(
-                                                                              0xffD6D6D6),
-                                                                    ),
-                                                                  ),
+                                                                  child: ClipRRect(
+                                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                      child: StepProgressIndicator(
+                                                                        totalSteps:
+                                                                            10,
+                                                                        currentStep:
+                                                                            oneStar!.length,
+                                                                        size: 8,
+                                                                        padding:
+                                                                            0,
+                                                                        selectedColor:
+                                                                            Colors.yellow,
+                                                                        unselectedColor:
+                                                                            Colors.cyan,
+                                                                        roundedEdges:
+                                                                            Radius.circular(10),
+                                                                        selectedGradientColor:
+                                                                            const LinearGradient(
+                                                                          begin:
+                                                                              Alignment.topLeft,
+                                                                          end: Alignment
+                                                                              .bottomRight,
+                                                                          colors: [
+                                                                            Colors.cyan,
+                                                                            Colors.cyanAccent
+                                                                          ],
+                                                                        ),
+                                                                        unselectedGradientColor:
+                                                                            const LinearGradient(
+                                                                          begin:
+                                                                              Alignment.topLeft,
+                                                                          end: Alignment
+                                                                              .bottomRight,
+                                                                          colors: [
+                                                                            Colors.grey,
+                                                                            Colors.grey
+                                                                          ],
+                                                                        ),
+                                                                      )),
                                                                 )
                                                               ],
-                                                            );
-                                                          }),
-                                                    ),
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  '2',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.02,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'Poppins Regular'),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: width *
+                                                                        0.03),
+                                                                Container(
+                                                                    margin: EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            height *
+                                                                                0.003),
+                                                                    width:
+                                                                        width *
+                                                                            0.5,
+                                                                    height: 10,
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                        child: StepProgressIndicator(
+                                                                          totalSteps:
+                                                                              10,
+                                                                          currentStep:
+                                                                              twoStar!.length,
+                                                                          size:
+                                                                              8,
+                                                                          padding:
+                                                                              0,
+                                                                          selectedColor:
+                                                                              Colors.yellow,
+                                                                          unselectedColor:
+                                                                              Colors.cyan,
+                                                                          roundedEdges:
+                                                                              Radius.circular(10),
+                                                                          selectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.cyan,
+                                                                              Colors.cyanAccent
+                                                                            ],
+                                                                          ),
+                                                                          unselectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.grey,
+                                                                              Colors.grey
+                                                                            ],
+                                                                          ),
+                                                                        )))
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  '3',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.02,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'Poppins Regular'),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: width *
+                                                                        0.03),
+                                                                Container(
+                                                                    margin: EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            height *
+                                                                                0.003),
+                                                                    width:
+                                                                        width *
+                                                                            0.5,
+                                                                    height: 10,
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                        child: StepProgressIndicator(
+                                                                          totalSteps:
+                                                                              10,
+                                                                          currentStep:
+                                                                              threeStar!.length,
+                                                                          size:
+                                                                              8,
+                                                                          padding:
+                                                                              0,
+                                                                          selectedColor:
+                                                                              Colors.yellow,
+                                                                          unselectedColor:
+                                                                              Colors.cyan,
+                                                                          roundedEdges:
+                                                                              Radius.circular(10),
+                                                                          selectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.cyan,
+                                                                              Colors.cyanAccent
+                                                                            ],
+                                                                          ),
+                                                                          unselectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.grey,
+                                                                              Colors.grey
+                                                                            ],
+                                                                          ),
+                                                                        )))
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  '4',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.02,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'Poppins Regular'),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: width *
+                                                                        0.03),
+                                                                Container(
+                                                                    margin: EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            height *
+                                                                                0.003),
+                                                                    width:
+                                                                        width *
+                                                                            0.5,
+                                                                    height: 10,
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                        child: StepProgressIndicator(
+                                                                          totalSteps:
+                                                                              10,
+                                                                          currentStep:
+                                                                              fourStar!.length,
+                                                                          size:
+                                                                              8,
+                                                                          padding:
+                                                                              0,
+                                                                          selectedColor:
+                                                                              Colors.yellow,
+                                                                          unselectedColor:
+                                                                              Colors.cyan,
+                                                                          roundedEdges:
+                                                                              Radius.circular(10),
+                                                                          selectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.cyan,
+                                                                              Colors.cyanAccent
+                                                                            ],
+                                                                          ),
+                                                                          unselectedGradientColor:
+                                                                              const LinearGradient(
+                                                                            begin:
+                                                                                Alignment.topLeft,
+                                                                            end:
+                                                                                Alignment.bottomRight,
+                                                                            colors: [
+                                                                              Colors.grey,
+                                                                              Colors.grey
+                                                                            ],
+                                                                          ),
+                                                                        )))
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  '5',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.02,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'Poppins Regular'),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: width *
+                                                                        0.03),
+                                                                Container(
+                                                                  margin: EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          height *
+                                                                              0.003),
+                                                                  width: width *
+                                                                      0.5,
+                                                                  height: 10,
+                                                                  child: ClipRRect(
+                                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                      child: StepProgressIndicator(
+                                                                        totalSteps:
+                                                                            10,
+                                                                        currentStep:
+                                                                            fiveStar!.length,
+                                                                        size: 8,
+                                                                        padding:
+                                                                            0,
+                                                                        selectedColor:
+                                                                            Colors.yellow,
+                                                                        unselectedColor:
+                                                                            Colors.cyan,
+                                                                        roundedEdges:
+                                                                            Radius.circular(10),
+                                                                        selectedGradientColor:
+                                                                            const LinearGradient(
+                                                                          begin:
+                                                                              Alignment.topLeft,
+                                                                          end: Alignment
+                                                                              .bottomRight,
+                                                                          colors: [
+                                                                            Colors.cyan,
+                                                                            Colors.cyanAccent
+                                                                          ],
+                                                                        ),
+                                                                        unselectedGradientColor:
+                                                                            const LinearGradient(
+                                                                          begin:
+                                                                              Alignment.topLeft,
+                                                                          end: Alignment
+                                                                              .bottomRight,
+                                                                          colors: [
+                                                                            Colors.grey,
+                                                                            Colors.grey
+                                                                          ],
+                                                                        ),
+                                                                      )),
+                                                                )
+                                                              ],
+                                                            )
+                                                          ],
+                                                        )),
                                                   )
                                                 ],
                                               ),
