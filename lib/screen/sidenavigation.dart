@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kolacur_admin/screen/graph.dart';
 import 'package:kolacur_admin/screen/managestaff.dart';
+import 'package:kolacur_admin/screen/profilecarosed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -75,7 +76,7 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
               children: [
                 Container(
                     width: width,
-                    height: height * 0.3,
+                    height: height * 0.3-height*0.05,
                     decoration: BoxDecoration(
                         color: Color(Utils.hexStringToHexInt('46D0D9')),
                         borderRadius: BorderRadius.only(
@@ -84,85 +85,95 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                         )),
                     child: Stack(
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 6.0, right: 6.0),
-                                    height: height * 0.1,
-                                    child: Center(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Center(
-                                              child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            child: SizedBox.fromSize(
-                                              size: Size.fromRadius(35),
-                                              child: Image.network(
-                                                "${widget.s1}",
-                                                fit: BoxFit.cover,
+                        InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfileCarose()),
+                            );
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 6.0, right: 6.0),
+                                      height: height * 0.1,
+                                      child: Center(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Center(
+                                                child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              child: SizedBox.fromSize(
+                                                size: Size.fromRadius(35),
+                                                child: Image.network(
+                                                  "${widget.s1}",
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
+                                            )),
+                                            SizedBox(
+                                              width: 4.0,
                                             ),
-                                          )),
-                                          SizedBox(
-                                            width: 4.0,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                "${widget.s}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: width * 0.04,
-                                                  fontFamily: 'Poppins Regular',
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  "${widget.s}",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: width * 0.04,
+                                                    fontFamily: 'Poppins Regular',
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                "${widget.s2}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: width * 0.02,
-                                                  fontFamily: 'Poppins Regular',
+                                                Text(
+                                                  "${widget.s2}",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: width * 0.02,
+                                                    fontFamily: 'Poppins Regular',
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                "${widget.s3}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: width * 0.02,
-                                                  fontFamily: 'Poppins Regular',
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8.0, left: 4.0),
-                                            child: Image.asset(
-                                              'images/svgicons/edit.png',
-                                              width: 12,
-                                              height: 12,
+                                                Text(
+                                                  "${widget.s3}",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: width * 0.02,
+                                                    fontFamily: 'Poppins Regular',
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                          )
-                                        ],
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0, left: 4.0),
+                                              child: Image.asset(
+                                                'images/svgicons/edit.png',
+                                                width: 12,
+                                                height: 12,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Align(
                           alignment: Alignment.topRight,

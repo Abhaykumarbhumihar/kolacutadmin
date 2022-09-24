@@ -20,9 +20,10 @@
    static const String UPDATE_PRICE="public/api/update-service";
    static const String GET_ALL_BOOKING="public/api/manage-bookings";
    static const String ACCEPT_BOOKING="public/api/accept-booking";
-   static const String COMPLETE_BOOKIND="public/api/booking-completed";
+   static const String COMPLETE_BOOKIND="public/api/complete-booking-delivery";
    static const String GET_FEEDBACK="public/api/get-rating";
    static const NOTIFICAITON="public/api/shop-notification";
+
 
 
  }

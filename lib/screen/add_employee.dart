@@ -47,7 +47,7 @@ class _RegisterPageState extends State<AddEmployee> {
       _addressController,
       _skillController,
       _passwordController,
-  _experienceController;
+      _experienceController;
   String date = "";
   late Map<String, bool> values;
 
@@ -90,7 +90,6 @@ class _RegisterPageState extends State<AddEmployee> {
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -102,7 +101,7 @@ class _RegisterPageState extends State<AddEmployee> {
     _addressController = TextEditingController();
     _skillController = TextEditingController();
     _passwordController = TextEditingController();
-    _experienceController=TextEditingController();
+    _experienceController = TextEditingController();
   }
 
   @override
@@ -337,7 +336,7 @@ class _RegisterPageState extends State<AddEmployee> {
                       padding: const EdgeInsets.only(left: 6),
                       decoration: BoxDecoration(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(4)),
+                            const BorderRadius.all(Radius.circular(4)),
                         color: Color(Utils.hexStringToHexInt('F4F4F4')),
                       ),
                       child: TextField(
@@ -352,7 +351,7 @@ class _RegisterPageState extends State<AddEmployee> {
                               hintText: 'Experience',
                               hintStyle: TextStyle(
                                   color:
-                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                      Color(Utils.hexStringToHexInt('A4A4A4')),
                                   fontFamily: 'Poppins Regular',
                                   fontSize: width * 0.03),
                               border: InputBorder.none)),
@@ -430,6 +429,33 @@ class _RegisterPageState extends State<AddEmployee> {
                           ),
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
+                          controller: _skillController,
+                          decoration: InputDecoration(
+                              hintText:
+                                  'Enter your other skills if not found in list',
+                              hintStyle: TextStyle(
+                                  color:
+                                      Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
                           controller: _passwordController,
                           decoration: InputDecoration(
                               hintText: 'Password',
@@ -456,26 +482,40 @@ class _RegisterPageState extends State<AddEmployee> {
                 //       phone_number,
                 //       image
                 onTap: () {
-                  var exp=_experienceController.text.toString()+"";
-                  var name=_nameController.text.toString()+"";
-                  var email=emailcontroller.text.toString()+"";
-                  var address=_addressController.text.toString()+"";
-                  var pass=_passwordController.text.toString()+"";
-                  var phone=_phonecontroller.text.toString()+"";
-                  if(exp==""||name==""||email==""||address==""||pass==""||phone==""||skilllist==""){
+                  var exp = _experienceController.text.toString() + "";
+                  var name = _nameController.text.toString() + "";
+                  var email = emailcontroller.text.toString() + "";
+                  var address = _addressController.text.toString() + "";
+                  var pass = _passwordController.text.toString() + "";
+                  var phone = _phonecontroller.text.toString() + "";
+
+                  var skillupdate = "";
+                  if (_skillController.text.toString() != "") {
+                    skillupdate =
+                        skilllist + "," + _skillController.text.toString();
+                  } else {
+                    skillupdate = skilllist;
+                  }
+                  print(skillupdate);
+                  if (exp == "" ||
+                      name == "" ||
+                      email == "" ||
+                      address == "" ||
+                      pass == "" ||
+                      phone == "" ||
+                      skilllist == "") {
                     CommonDialog.showsnackbar("All fileds are mandatory");
-                  }else{
+                  } else {
                     profileController.appEmployee(
-                        _experienceController.text.toString()+"",
+                        _experienceController.text.toString() + "",
                         _nameController.text.toString() + "",
                         emailcontroller.text.toString() + "",
                         _addressController.text.toString() + "",
-                        skilllist + "",
+                        skillupdate + "",
                         _passwordController.text.toString() + "",
                         _phonecontroller.text.toString() + "",
                         imageFile);
                   }
-
                 },
                 child: Container(
                   width: width * 0.5,

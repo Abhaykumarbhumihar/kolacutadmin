@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -245,35 +247,46 @@ class _LoginPageState extends State<LoginPage> {
                                         child: Text('OK'),
                                         onPressed:
                                             () async {
+                                          // Map map = {
+                                          //   "session_id":
+                                          //   box.read(
+                                          //       'session'),
+                                          //   "description":
+                                          //   _textFieldControllerupdateABout
+                                          //       .text
+                                          //       .toString()
+                                          // };
+                                         // print(map);
+                                          forgotPassword(context,height,_textFieldControllerupdateABout
+                                              .text
+                                              .toString());
                                           Map map = {
-                                            "session_id":
-                                            box.read(
-                                                'session'),
-                                            "description":
-                                            _textFieldControllerupdateABout
+                                            "email":  _textFieldControllerupdateABout
                                                 .text
                                                 .toString()
                                           };
                                           print(map);
-                                          // var apiUrl = Uri
-                                          //     .parse(AppConstant
-                                          //     .BASE_URL +
-                                          //     AppConstant
-                                          //         .UPDTE_SHOP);
-                                          // print(apiUrl);
-                                          // print(map);
-                                          // final response =
-                                          // await http
-                                          //     .post(
-                                          //   apiUrl,
-                                          //   body: map,
-                                          // );
-                                          // print(response
-                                          //     .body);
-                                          // _textFieldControllerupdateABout
-                                          //     .clear();
-                                          Navigator.pop(
-                                              context);
+                                          var apiUrl = Uri.parse(
+                                              AppConstant.BASE_URL + "public/api/shop-forgot-password");
+                                          print(apiUrl);
+                                          print(map);
+                                          final response = await http.post(
+                                            apiUrl,
+                                            body: map,
+                                          );
+                                          print(response.body);
+                                          var data = response.body;
+                                          final body = json.decode(response.body);
+                                          setState(() {
+                                            if (body['message'] != "") {
+                                              CommonDialog.showsnackbar(body['message']);
+                                              Navigator.pop(context);
+                                              // CommonDialog.showsnackbar(body['message'] +
+                                              //     "your code is \n" +
+                                              //     body['referel_code']);
+                                              // showLoaderDialog(context, body['referel_code']);
+                                            }
+                                          });
 
                                         },
                                       ),
@@ -397,5 +410,86 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     ));
+  }
+
+  void forgotPassword(context,email,height) async{
+    Map map = {
+      "emaiil":email
+    };
+    print(map);
+    var apiUrl = Uri.parse(
+        AppConstant.BASE_URL + "shop-forgot-password");
+    print(apiUrl);
+    print(map);
+    final response = await http.post(
+      apiUrl,
+      body: map,
+    );
+    print(response.body);
+    var data = response.body;
+    final body = json.decode(response.body);
+    setState(() {
+      if (body['message'] != "") {
+        CommonDialog.showsnackbar(body['message']);
+        // CommonDialog.showsnackbar(body['message'] +
+        //     "your code is \n" +
+        //     body['referel_code']);
+        // showLoaderDialog(context, body['referel_code']);
+      }
+    });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var valueName = "";
+        var valuePrice = "";
+        return AlertDialog(
+          title: Row(
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Text(
+                'Email sent',
+                style: TextStyle(fontSize: 12.0),
+              ),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.cancel_outlined),
+              ),
+            ],
+          ),
+          content: Container(
+            width: 200,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  FlatButton(
+                    color: Color(
+                        Utils.hexStringToHexInt('77ACA2')),
+                    textColor: Colors.white,
+                    child: Text('OK'),
+                    onPressed: () async {
+                      Navigator.pop(context);
+
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[],
+        );
+      },
+    );
+
   }
 }

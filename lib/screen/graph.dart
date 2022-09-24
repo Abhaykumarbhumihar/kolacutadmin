@@ -65,7 +65,7 @@ class _GraphState extends State<Graph> {
                 },
               ),
               title: Text(
-                'Revenie',
+                'Revenue ',
                 style: TextStyle(
                     fontFamily: 'Poppins Regular',
                     color: Colors.black,
@@ -79,8 +79,7 @@ class _GraphState extends State<Graph> {
                 } else {
                   for (var i = 0;
                       i < dashboardController.graphPojo.value.data!.length;
-                      i++)
-                  {
+                      i++) {
                     dashboardController.graphPojo.value.data![i].completedOrder;
                     dashboardController.graphPojo.value.data![i].totalOrder;
                     globalSalesData.add(OrdinalSales(
@@ -103,7 +102,7 @@ class _GraphState extends State<Graph> {
                         ),
                         Center(
                           child: Text(
-                            'Total Revenie',
+                            'Total Revenue ',
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:

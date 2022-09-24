@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kolacur_admin/utils/Utils.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,35 +62,7 @@ class _HomePageState extends State<ManageSlotPage> {
   TimeOfDay openingTime = TimeOfDay.now();
   TimeOfDay closingTime = TimeOfDay.now();
 
-  _selectTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
-      context: context,
-      initialTime: openingTime,
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
-    if (timeOfDay != null && timeOfDay != openingTime) {
-      setState(() {
-        openingTime = timeOfDay;
-        opent =
-            "${openingTime.hour}:${openingTime.minute}:${openingTime.period.toString().split('.')[1].toString()}";
-      });
-    }
-  }
 
-  _closingTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
-    if (timeOfDay != null && timeOfDay != closingTime) {
-      setState(() {
-        closingTime = timeOfDay;
-        closet =
-            "${closingTime.hour}:${closingTime.minute}:${closingTime.period.toString().split('.')[1].toString()}";
-      });
-    }
-  }
 
   void _duratin(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -168,8 +141,9 @@ class _HomePageState extends State<ManageSlotPage> {
   }
 
   var opent = "";
+  var oppp="";
   var closet = "";
-
+   var clooo="";
   @override
   void initState() {
     // TODO: implement initState
@@ -181,8 +155,75 @@ class _HomePageState extends State<ManageSlotPage> {
     daylist.add(DayManage(false, "FRI"));
     daylist.add(DayManage(false, "SAT"));
     daylist.add(DayManage(false, "SUN"));
+    DateTime tempDate = DateFormat("hh:mm").parse(
+        openingTime.hour.toString() +
+            ":" + openingTime.minute.toString());
+    var dateFormat = DateFormat("h:mm a"); // you can change the format here
+    print(dateFormat.format(tempDate));
+    opent=dateFormat.format(tempDate);
+    var dateFormatt = DateFormat("h:mm");
+    oppp=dateFormatt.format(tempDate);
+
+
+    DateTime tempDatee = DateFormat("hh:mm").parse(
+        closingTime.hour.toString() +
+            ":" + closingTime.minute.toString());
+    var dateFormattt = DateFormat("h:mm a"); // you can change the format here
+    print(dateFormattt.format(tempDatee));
+    closet=dateFormattt.format(tempDatee);
+    var dateFormatttt = DateFormat("h:mm");
+    clooo=dateFormatttt.format(tempDatee);
+  }
+  _selectTime(BuildContext context) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: openingTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (timeOfDay != null && timeOfDay != openingTime) {
+      setState(() {
+        openingTime = timeOfDay;
+        // opent =
+        //     "${openingTime.hour}:${openingTime.minute}:${openingTime.period.toString().split('.')[1].toString()}";
+
+        DateTime tempDate = DateFormat("hh:mm").parse(
+            openingTime.hour.toString() +
+                ":" + openingTime.minute.toString());
+        var dateFormat = DateFormat("h:mm a"); // you can change the format here
+        print(dateFormat.format(tempDate));
+        opent=dateFormat.format(tempDate);
+        var dateFormatt = DateFormat("h:mm");
+        oppp=dateFormatt.format(tempDate);
+
+
+      });
+    }
   }
 
+  _closingTime(BuildContext context) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (timeOfDay != null && timeOfDay != closingTime) {
+      setState(() {
+        closingTime = timeOfDay;
+        // closet =
+        // "${closingTime.hour}:${closingTime.minute}:${closingTime.period.toString().split('.')[1].toString()}";
+        DateTime tempDate = DateFormat("hh:mm").parse(
+            closingTime.hour.toString() +
+                ":" + closingTime.minute.toString());
+        var dateFormat = DateFormat("h:mm a"); // you can change the format here
+        print(dateFormat.format(tempDate));
+        closet=dateFormat.format(tempDate);
+        var dateFormatt = DateFormat("h:mm");
+        clooo=dateFormatt.format(tempDate);
+
+
+      });
+    }
+  }
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -462,7 +503,7 @@ class _HomePageState extends State<ManageSlotPage> {
                                       Color(Utils.hexStringToHexInt('E5E5E5')),
                                   borderRadius: BorderRadius.circular(4)),
                               child: Text(
-                                "${openingTime.hour}:${openingTime.minute}",
+                                "${oppp}",
                                 style: TextStyle(
                                     fontSize: width * 0.03,
                                     color: Colors.black,
@@ -529,7 +570,7 @@ class _HomePageState extends State<ManageSlotPage> {
                                       Color(Utils.hexStringToHexInt('E5E5E5')),
                                   borderRadius: BorderRadius.circular(4)),
                               child: Text(
-                                "${closingTime.hour}:${closingTime.minute}",
+                                "${clooo}",
                                 style: TextStyle(
                                     fontSize: width * 0.03,
                                     color: Colors.black,

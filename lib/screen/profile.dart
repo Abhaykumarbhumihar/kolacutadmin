@@ -479,8 +479,6 @@ class _HomePageState extends State<ProfilePage> {
                                 itemCount: employeeController.leaveManagement!.length,
                                 itemBuilder: (context, position) {
 
-
-
                                   return InkWell(
                                     onTap: (){
                                     //  print(employeeController.leaveManagement![position].holidayType);
@@ -539,7 +537,7 @@ class _HomePageState extends State<ProfilePage> {
                                                               color: employeeController.leaveManagement![
                                                                               position]
                                                                           .holidayType ==
-                                                                      "partialy_off"
+                                                                      "Partial off"
                                                                   ? Color(Utils
                                                                       .hexStringToHexInt(
                                                                           '#fed69b'))
@@ -551,7 +549,7 @@ class _HomePageState extends State<ProfilePage> {
                                                               employeeController.leaveManagement![
                                                                               position]
                                                                           .holidayType ==
-                                                                      "partialy_off"
+                                                                      "Partial off"
                                                                   ? "Partial off"
                                                                   : "Full day off",
                                                               textAlign: TextAlign
@@ -560,7 +558,7 @@ class _HomePageState extends State<ProfilePage> {
                                                                   color: employeeController.leaveManagement![
                                                                                   position]
                                                                               .holidayType ==
-                                                                          "partialy_off"
+                                                                          "Partial off"
                                                                       ? Colors
                                                                           .black
                                                                       : Color(Utils
@@ -636,7 +634,7 @@ class _HomePageState extends State<ProfilePage> {
                                                               children: <Widget>[
                                                                 Text(
                                                                   '${employeeController.leaveManagement![position].startFrom}-'
-                                                                  '${employeeController.leaveManagement![position].endFrom}',
+                                                                  '${employeeController.leaveManagement![position].endFrom}  ',
                                                                   style: TextStyle(
                                                                       color: Color(
                                                                           Utils.hexStringToHexInt(
@@ -649,9 +647,9 @@ class _HomePageState extends State<ProfilePage> {
                                                                 ),
                                                                 Container(
                                                                   width: width *
-                                                                      0.06,
+                                                                      0.03,
                                                                   height: height *
-                                                                      0.06,
+                                                                      0.03,
                                                                   decoration: BoxDecoration(
                                                                       shape: BoxShape
                                                                           .circle,

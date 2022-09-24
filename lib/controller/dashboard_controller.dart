@@ -93,7 +93,7 @@ class DashboardController extends GetxController {
       } else {
         notification.value = notificationPojoFromJson(response);
         update();
-        //  lodaer = false;
+          lodaer = false;
       }
     } catch (error) {
       //CommonDialog.hideLoading();
@@ -105,14 +105,14 @@ class DashboardController extends GetxController {
     try {
       CommonDialog.showLoading(title: "Please waitt...");
       final response =
-          await APICall().registerUrseWithoutbody("public/api/get-data");
+      await APICall().registerUrseWithoutbody("public/api/get-data");
       print(response);
       CommonDialog.hideLoading();
       if (response != "null") {
         // print("CODE IS RUNNING HERE");
         graphPojo.value = graphpojjoFromJson(response);
         update();
-        lodaer = false;
+        //lodaer = false;
       } else {
         print("CODE IS RUNNING HERE");
         cleanData();

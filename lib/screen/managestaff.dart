@@ -270,36 +270,36 @@ class _HomePageState extends State<ManageStaff> {
                                                                 .toString()
                                                             : "N/A",
                                                         context),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: width * 0.01),
-                                                      width: width * 0.2,
-                                                      height: height * 0.03,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      width *
-                                                                          0.01),
-                                                          color: Color(Utils
-                                                              .hexStringToHexInt(
-                                                                  '#ecfafb'))),
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Available',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              color: Color(Utils
-                                                                  .hexStringToHexInt(
-                                                                      '46D0D9')),
-                                                              fontFamily:
-                                                                  'Poppins Regular',
-                                                              fontSize:
-                                                                  width * 0.02),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    // Container(
+                                                    //   margin: EdgeInsets.only(
+                                                    //       left: width * 0.01),
+                                                    //   width: width * 0.2,
+                                                    //   height: height * 0.03,
+                                                    //   decoration: BoxDecoration(
+                                                    //       borderRadius:
+                                                    //           BorderRadius
+                                                    //               .circular(
+                                                    //                   width *
+                                                    //                       0.01),
+                                                    //       color: Color(Utils
+                                                    //           .hexStringToHexInt(
+                                                    //               '#ecfafb'))),
+                                                    //   child: Center(
+                                                    //     child: Text(
+                                                    //       '55Available',
+                                                    //       textAlign:
+                                                    //           TextAlign.center,
+                                                    //       style: TextStyle(
+                                                    //           color: Color(Utils
+                                                    //               .hexStringToHexInt(
+                                                    //                   '46D0D9')),
+                                                    //           fontFamily:
+                                                    //               'Poppins Regular',
+                                                    //           fontSize:
+                                                    //               width * 0.02),
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
                                                   ],
                                                 ),
                                                 Text(
@@ -384,7 +384,11 @@ class _HomePageState extends State<ManageStaff> {
                                                               '#ecfafb'))),
                                                   child: Center(
                                                     child: Text(
-                                                      'Available',
+                                                      '${profileController
+                                                          .staffDetail![
+                                                      position]
+                                                          .isDuty
+                                                          .toString()}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(

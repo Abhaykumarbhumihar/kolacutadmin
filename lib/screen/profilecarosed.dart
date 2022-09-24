@@ -178,127 +178,132 @@ class _HomePageState extends State<ProfileCarose> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              height: height * 0.6,
                               width: width,
-                              child: ListView.builder(
-                                  itemCount:
-                                      data[mainlistPosition].services!.length,
-                                  itemBuilder: (context, position) {
-                                    return InkWell(
-                                      onTap: () {
-                                        setState(() {
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: 0.5,
+                                  maxHeight: height * 0.3,
+                                ),
+                                child: ListView.builder(
+                                    itemCount:
+                                        data[mainlistPosition].services!.length,
+                                    itemBuilder: (context, position) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
 
 
-                                          print(data[mainlistPosition]
-                                              .services![position]
-                                              .id);
-                                          if (tempArray.contains(
-                                              data[mainlistPosition]
-                                                  .services![position])) {
-                                            tempArray.remove(
+                                            print(data[mainlistPosition]
+                                                .services![position]
+                                                .id);
+                                            if (tempArray.contains(
                                                 data[mainlistPosition]
-                                                    .services![position]);
-                                          } else {
-                                            tempArray.add(data[mainlistPosition]
-                                                .services![position]);
-                                          }
-                                          print(tempArray.toString());
-                                        });
-                                      },
-                                      child: Container(
-                                        height: height * 0.1,
-                                        margin: EdgeInsets.only(
-                                            top: 4.0, bottom: 4.0),
-                                        child: Material(
-                                          elevation: 8.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          shadowColor: Colors.white,
-                                          child: Container(
-                                            margin: EdgeInsets.all(4.0),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          data[mainlistPosition]
-                                                              .services![
-                                                                  position]
-                                                              .name
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 8.0),
-                                                        ),
-                                                        Text(
-                                                          data[mainlistPosition]
-                                                              .services![
-                                                                  position]
-                                                              .price
-                                                              .toString(),
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style: TextStyle(
-                                                              fontSize: 8.0),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    IconButton(
-                                                      icon: Icon(Icons
-                                                          .info_outline_rounded),
-                                                      onPressed: () {
-                                                        //price,servicename,subservice,service
-                                                        //mainlistPosition
-                                                        updateService(
-                                                            context,
-                                                            data[mainlistPosition]
-                                                                .services![
-                                                                    position]
-                                                                .price
-                                                                .toString(),
+                                                    .services![position])) {
+                                              tempArray.remove(
+                                                  data[mainlistPosition]
+                                                      .services![position]);
+                                            } else {
+                                              tempArray.add(data[mainlistPosition]
+                                                  .services![position]);
+                                            }
+                                            print(tempArray.toString());
+                                          });
+                                        },
+                                        child: Container(
+                                          height: height * 0.1,
+                                          margin: EdgeInsets.only(
+                                              top: 4.0, bottom: 4.0),
+                                          child: Material(
+                                            elevation: 8.0,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            shadowColor: Colors.white,
+                                            child: Container(
+                                              margin: EdgeInsets.all(4.0),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
                                                             data[mainlistPosition]
                                                                 .services![
                                                                     position]
                                                                 .name
                                                                 .toString(),
+                                                            style: TextStyle(
+                                                                fontSize: 8.0),
+                                                          ),
+                                                          Text(
                                                             data[mainlistPosition]
                                                                 .services![
                                                                     position]
-                                                                .id
+                                                                .price
                                                                 .toString(),
-                                                            mainlistPosition);
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                                Icon(tempArray.contains(data[
-                                                            mainlistPosition]
-                                                        .services![position])
-                                                    ? Icons.cancel
-                                                    : Icons.add_circle_outline),
-                                              ],
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: TextStyle(
+                                                                fontSize: 8.0),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      IconButton(
+                                                        icon: Icon(Icons
+                                                            .info_outline_rounded),
+                                                        onPressed: () {
+                                                          //price,servicename,subservice,service
+                                                          //mainlistPosition
+                                                          updateService(
+                                                              context,
+                                                              data[mainlistPosition]
+                                                                  .services![
+                                                                      position]
+                                                                  .price
+                                                                  .toString(),
+                                                              data[mainlistPosition]
+                                                                  .services![
+                                                                      position]
+                                                                  .name
+                                                                  .toString(),
+                                                              data[mainlistPosition]
+                                                                  .services![
+                                                                      position]
+                                                                  .id
+                                                                  .toString(),
+                                                              mainlistPosition);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Icon(tempArray.contains(data[
+                                                              mainlistPosition]
+                                                          .services![position])
+                                                      ? Icons.cancel
+                                                      : Icons.add_circle_outline),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  }),
+                                      );
+                                    }),
+                              ),
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -669,6 +674,7 @@ class _HomePageState extends State<ProfileCarose> {
       child: Container(
         width: width,
         height: height,
+        color: Colors.white,
         child: Scaffold(
           key: _scaffoldKey,
           resizeToAvoidBottomInset: true,
@@ -1509,98 +1515,85 @@ class _HomePageState extends State<ProfileCarose> {
                                                                   context,
                                                               StateSetter
                                                                   setState) {
-                                                            return Container(
-                                                              width: width,
-                                                              child: Column(
-                                                                children: [
-                                                                  Column(
-                                                                    children: [
-                                                                      Container(
-                                                                        height: height *
-                                                                            0.4,
-                                                                        width:
-                                                                            width,
-                                                                        child:
-                                                                            Flexible(
-                                                                          child: ListView.builder(
-                                                                              itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
-                                                                              itemBuilder: (context, positionn) {
-                                                                                return InkWell(
-                                                                                  onTap: () {
-                                                                                    setState(() {});
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    height: height * 0.1,
-                                                                                    margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
-                                                                                    child: Material(
-                                                                                      elevation: 8.0,
-                                                                                      borderRadius: BorderRadius.circular(8.0),
-                                                                                      shadowColor: Colors.white,
-                                                                                      child: Container(
-                                                                                        width: width,
-                                                                                        margin: EdgeInsets.all(4.0),
-                                                                                        child: Row(
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          children: <Widget>[
-                                                                                            Column(
-                                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                              children: <Widget>[
-                                                                                                Text(
-                                                                                                  profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
-                                                                                                  style: TextStyle(fontSize: 8.0),
-                                                                                                ),
-                                                                                                Text(
-                                                                                                  profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
-                                                                                                  textAlign: TextAlign.left,
-                                                                                                  style: TextStyle(fontSize: 8.0),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                            /*TODO---remove service*/
-                                                                                            IconButton(
-                                                                                                onPressed: () async {
-                                                                                                  // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
-                                                                                                  // sub_service_id:1,2
-                                                                                                  Map map = {
-                                                                                                    "session_id": box.read('session'),
-                                                                                                    "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
-                                                                                                    "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
-                                                                                                  };
-
-                                                                                                  print(map);
-                                                                                                  var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
-                                                                                                  print(apiUrl);
-                                                                                                  print(map);
-
-                                                                                                  final response = await http.post(
-                                                                                                    apiUrl,
-                                                                                                    body: map,
-                                                                                                  );
-                                                                                                  var data = deleteCouponFromJson(response.body);
-                                                                                                  print(response.body);
-                                                                                                  CommonDialog.showsnackbar(data.message);
-                                                                                                  Navigator.pop(context);
-                                                                                                  profileController.getUpdatedShopService(box.read('session'));
-                                                                                                },
-                                                                                                icon: Icon(
-                                                                                                  Icons.remove_circle_outline,
-                                                                                                  size: width * 0.05,
-                                                                                                  color: Colors.red,
-                                                                                                )),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              }),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  )
-                                                                ],
+                                                            return ConstrainedBox(
+                                                              constraints: BoxConstraints(
+                                                                minHeight: 0.1,
+                                                                maxHeight: height * 0.3,
                                                               ),
+                                                              child:
+                                                                  ListView.builder(
+                                                                      itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
+                                                                      itemBuilder: (context, positionn) {
+                                                                        return InkWell(
+                                                                          onTap: () {
+                                                                            setState(() {});
+                                                                          },
+                                                                          child: Container(
+                                                                            height: height * 0.1,
+                                                                            margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                                                                            child: Material(
+                                                                              elevation: 8.0,
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                              shadowColor: Colors.white,
+                                                                              child: Container(
+                                                                                width: width,
+                                                                                margin: EdgeInsets.all(4.0),
+                                                                                child: Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: <Widget>[
+                                                                                    Column(
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: <Widget>[
+                                                                                        Text(
+                                                                                          profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
+                                                                                          style: TextStyle(fontSize: 8.0),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
+                                                                                          textAlign: TextAlign.left,
+                                                                                          style: TextStyle(fontSize: 8.0),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                    /*TODO---remove service*/
+                                                                                    IconButton(
+                                                                                        onPressed: () async {
+                                                                                          // session_id:4ysvjISDdKKEk5qtSzBamzWco6VnkDuK
+                                                                                          // sub_service_id:1,2
+                                                                                          Map map = {
+                                                                                            "session_id": box.read('session'),
+                                                                                            "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
+                                                                                            "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
+                                                                                          };
+
+                                                                                          print(map);
+                                                                                          var apiUrl = Uri.parse(AppConstant.BASE_URL + AppConstant.DELETE_ADD_SERVICE);
+                                                                                          print(apiUrl);
+                                                                                          print(map);
+
+                                                                                          final response = await http.post(
+                                                                                            apiUrl,
+                                                                                            body: map,
+                                                                                          );
+                                                                                          var data = deleteCouponFromJson(response.body);
+                                                                                          print(response.body);
+                                                                                          CommonDialog.showsnackbar(data.message);
+                                                                                          Navigator.pop(context);
+                                                                                          profileController.getUpdatedShopService(box.read('session'));
+                                                                                        },
+                                                                                        icon: Icon(
+                                                                                          Icons.remove_circle_outline,
+                                                                                          size: width * 0.05,
+                                                                                          color: Colors.red,
+                                                                                        )),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      }),
                                                             );
                                                           },
                                                         ),
