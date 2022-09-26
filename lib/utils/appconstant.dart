@@ -23,7 +23,5 @@
    static const String COMPLETE_BOOKIND="public/api/complete-booking-delivery";
    static const String GET_FEEDBACK="public/api/get-rating";
    static const NOTIFICAITON="public/api/shop-notification";
-
-
-
+   static const DELET_ACCOUNT="public/api/delete-account";
  }

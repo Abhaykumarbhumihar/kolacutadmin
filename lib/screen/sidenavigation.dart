@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kolacur_admin/screen/TermconditiionPage.dart';
 import 'package:kolacur_admin/screen/graph.dart';
 import 'package:kolacur_admin/screen/managestaff.dart';
 import 'package:kolacur_admin/screen/profilecarosed.dart';
@@ -238,6 +239,18 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                       height: 1.0,
                       color: Colors.grey,
                     ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.delete,
+                        color: Color(Utils.hexStringToHexInt('46D0D9')),
+                      ),
+                      title: const Text(' Delete Account '),
+
+                      onTap: () async {
+                        _showDialog(context);
+                      },
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                    ),
                     Divider(
                       height: 1.0,
                       color: Colors.grey,
@@ -294,12 +307,22 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                           height: height * 0.01,
                         ),
                         Center(
-                          child: Text(
-                            'Terms & Conditions',
-                            style: TextStyle(
-                                color: Color(Utils.hexStringToHexInt('46D0D9')),
-                                fontFamily: 'Poppins Semibold',
-                                fontSize: width * 0.03),
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const TermConditionPage()),
+                              );
+                            },
+                            child: Text(
+                              'Terms & Conditions',
+                              style: TextStyle(
+                                  color: Color(Utils.hexStringToHexInt('46D0D9')),
+                                  fontFamily: 'Poppins Semibold',
+                                  fontSize: width * 0.03),
+                            ),
                           ),
                         ),
                       ],
@@ -313,5 +336,59 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
         ),
       ),
     ));
+  }
+
+  _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Expanded(
+          child: AlertDialog(
+            title: Text('Delet Account!'),
+            content: Text('Do you want to delete your account?'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  Map map = {
+                    "session_id": box.read('session'),
+                  };
+                  print(map);
+                  var apiUrl = Uri.parse(
+                      AppConstant.BASE_URL + AppConstant.DELET_ACCOUNT);
+                  print(apiUrl);
+                  print(map);
+                  final response = await http.post(
+                    apiUrl,
+                    body: map,
+                  );
+                  print(response.body);
+                  var data = response.body;
+                  final body = json.decode(response.body);
+                  setState(()async {
+                    if (body['message'] != "") {
+                      CommonDialog.showsnackbar(body['message']);
+                      SharedPreferences prefrences =
+                      await SharedPreferences.getInstance();
+                      await prefrences.remove("session");
+                      box.remove('session');
+                      Get.offAll(LoginPage());
+                      //showLoaderDialog(context, body['referel_code']);
+                    }
+                  });
+                },
+                child: Text('YES', style: TextStyle(color: Colors.black),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('NO', style: TextStyle(color: Colors.black),),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
