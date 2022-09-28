@@ -36,18 +36,23 @@ class Datum {
   Datum({
     this.completedOrder,
     this.totalOrder,
+    this.Month
   });
 
   int? completedOrder;
   int? totalOrder;
+  String? Month;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    completedOrder: json["completed_order"],
-    totalOrder: json["total_order"],
+      completedOrder: json["completed_order"],
+      totalOrder: json["total_order"],
+      Month: json["Month"]
+
   );
 
   Map<String, dynamic> toJson() => {
     "completed_order": completedOrder,
     "total_order": totalOrder,
+    "Month":Month
   };
 }

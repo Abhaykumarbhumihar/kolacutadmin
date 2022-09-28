@@ -48,7 +48,7 @@ class DashboardController extends GetxController {
     Future.delayed(Duration(seconds: 2), () {
       getDashboardData();
       getNotificationList();
-      getChart();
+      getChart("365");
     });
   }
 
@@ -100,12 +100,14 @@ class DashboardController extends GetxController {
     }
   }
 
-  void getChart() async {
+
+
+  void getChart(days) async {
     Map map;
     try {
       CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrseWithoutbody("public/api/get-data");
+      await APICall().registerUrseWithoutbody("public/api/get-data",days);
       print(response);
       CommonDialog.hideLoading();
       if (response != "null") {
