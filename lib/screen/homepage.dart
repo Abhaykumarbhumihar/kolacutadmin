@@ -367,7 +367,7 @@ class _HomePageState extends State<HomePage> {
                                                children: <Widget>[
                                                  Positioned(
                                                    top: height * 0.01,
-                                                   child: Text(
+                                                   child: Text("₹ "+
                                                      dashboardController
                                                          .dashboardPojo
                                                          .value

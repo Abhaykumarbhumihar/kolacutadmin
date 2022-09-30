@@ -116,7 +116,7 @@ class _GraphState extends State<Graph> {
                           ),
                           Center(
                             child: Text(
-                              '${dashboardController.dashboardPojo.value.data![0].totalBooking.toString()}',
+                              '₹ ${dashboardController.dashboardPojo.value.data![0].totalBooking.toString()}',
                               style: TextStyle(
                                   fontFamily: 'Poppins Medium',
                                   fontSize:
@@ -234,7 +234,7 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              "${dashboardController.dashboardPojo.value.data![0].totalRevenue.toString()}",
+                                              "₹ ${dashboardController.dashboardPojo.value.data![0].totalRevenue.toString()}",
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',
                                                   fontSize: MediaQuery.of(context)
@@ -262,7 +262,8 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              '0',
+                                              "₹ ${dashboardController.dashboardPojo.value.data![0].month_earning.toString()}",
+
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',
                                                   fontSize: MediaQuery.of(context)

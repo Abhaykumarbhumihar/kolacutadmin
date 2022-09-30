@@ -14,6 +14,7 @@
    static const String ADD_SERVICE="public/api/add-service";
    static const String SHOP_SERVICE="public/api/get-service";
    static const String UPDTE_SHOP="public/api/update-shop";
+   static const String ADD_MISSING_SERVIE="public/api/add-extra-service";
    static const String ENABLE_DESABLE="public/api/disable-account";
    static const String DELETE_COUPON="public/api/delete-coupon";
    static const String DELETE_ADD_SERVICE='public/api/delete-service';

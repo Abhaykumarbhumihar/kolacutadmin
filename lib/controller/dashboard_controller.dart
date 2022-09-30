@@ -107,7 +107,7 @@ class DashboardController extends GetxController {
     try {
       CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrseWithoutbody("public/api/get-data",days);
+      await APICall().registerUrseWithoutbody("public/api/get-data",days, sessionId.value);
       print(response);
       CommonDialog.hideLoading();
       if (response != "null") {

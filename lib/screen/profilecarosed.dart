@@ -93,6 +93,144 @@ class _HomePageState extends State<ProfileCarose> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  InkWell(
+                      onTap: (){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            var valueName = "";
+                            var valuePrice = "";
+                            return AlertDialog(
+                              title: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    'Write your missing services',
+                                    style: TextStyle(
+                                        fontSize: 12.0),
+                                  ),
+                                  IconButton(
+                                    onPressed: () =>
+                                        Navigator.pop(
+                                            context),
+                                    icon: Icon(Icons
+                                        .cancel_outlined),
+                                  ),
+                                ],
+                              ),
+                              content: Container(
+                                width: 200,
+                                height: height * 0.4,
+                                child:
+                                SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment
+                                        .start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height:
+                                        height * 0.03,
+                                      ),
+                                      SizedBox(
+                                        width: width,
+                                        height:
+                                        height * 0.3,
+                                        child: TextField(
+                                          textCapitalization:
+                                          TextCapitalization
+                                              .sentences,
+                                          onChanged:
+                                              (value) {
+                                            setState(() {
+                                              valueName =
+                                                  value;
+                                            });
+                                          },
+                                          keyboardType:
+                                          TextInputType
+                                              .multiline,
+                                          maxLines: 30,
+                                          controller:
+                                          _textFieldControllerupdateABout,
+                                          decoration:
+                                          InputDecoration(
+                                              hintText:
+                                              "Enter here..."),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      FlatButton(
+                                        color: Colors.green,
+                                        textColor:
+                                        Colors.white,
+                                        child: Text('OK'),
+                                        onPressed:
+                                            () async {
+                                          Map map = {
+                                            "session_id":
+                                            box.read(
+                                                'session'),
+                                            "description":
+                                            _textFieldControllerupdateABout
+                                                .text
+                                                .toString()
+                                          };
+                                          print(map);
+                                          var apiUrl = Uri
+                                              .parse(AppConstant
+                                              .BASE_URL +
+                                              AppConstant
+                                                  .ADD_MISSING_SERVIE);
+                                          print(apiUrl);
+                                          print(map);
+                                          final response =
+                                          await http
+                                              .post(
+                                            apiUrl,
+                                            body: map,
+                                          );
+                                          print(response
+                                              .body);
+                                          _textFieldControllerupdateABout
+                                              .clear();
+                                          Navigator.pop(
+                                              context);
+                                          profileController
+                                              .getUpdatedShopProfile(
+                                              box.read(
+                                                  'session'));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              actions: <Widget>[],
+                            );
+                          },
+                        );
+                      },
+                      child:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("Please write us if you not\nget your Service category."),
+                      IconButton(
+                        onPressed: () =>null,
+                        icon: Icon(Icons
+                            .keyboard_arrow_right),
+                      ),
+                    ],
+                  )
+                  ),
                   Visibility(
                     visible: showmainList,
                     child: Flexible(

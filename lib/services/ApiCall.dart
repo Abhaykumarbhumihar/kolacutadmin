@@ -26,8 +26,8 @@ print(response);
       return "null";
     }
   }
-  Future<String> registerUrseWithoutbody( url,days) async {
-    var apiUrl = Uri.parse(AppConstant.BASE_URL+url+"?filter="+days);
+  Future<String> registerUrseWithoutbody( url,days,session) async {
+    var apiUrl = Uri.parse(AppConstant.BASE_URL+url+"?filter="+days+"&"+"session_id="+session);
     print(apiUrl);
     final response = await http.get(
       apiUrl,
