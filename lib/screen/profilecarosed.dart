@@ -53,7 +53,7 @@ class _HomePageState extends State<ProfileCarose> {
   ProfileCOntroller profileController = Get.put(ProfileCOntroller());
   TextEditingController _textFieldControllerName = TextEditingController();
   TextEditingController _textFieldControllerPrice = TextEditingController();
-
+  TextEditingController _textFieldControllerPercentage = TextEditingController();
   TextEditingController _textFieldControllerupdatedprice =
       TextEditingController();
 
@@ -735,6 +735,15 @@ class _HomePageState extends State<ProfileCarose> {
                   controller: _textFieldControllerPrice,
                   decoration: InputDecoration(hintText: "Price"),
                 ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      valuePrice = value;
+                    });
+                  },
+                  controller: _textFieldControllerPercentage,
+                  decoration: InputDecoration(hintText: "Offer %"),
+                ),
               ],
             ),
           ),
@@ -748,7 +757,8 @@ class _HomePageState extends State<ProfileCarose> {
                   Map map = {
                     "session_id": box.read('session'),
                     "coupon_name": _textFieldControllerName.text.toString(),
-                    "price": _textFieldControllerPrice.text.toString()
+                    "price": _textFieldControllerPrice.text.toString(),
+                    "percentage": _textFieldControllerPercentage.text.toString()
                   };
 
                   var apiUrl =
@@ -767,6 +777,7 @@ class _HomePageState extends State<ProfileCarose> {
                       Navigator.pop(context);
                       _textFieldControllerPrice.clear();
                       _textFieldControllerName.clear();
+                      _textFieldControllerPercentage.clear();
                     });
                     //return jsonString;
                   } else {
@@ -852,28 +863,28 @@ class _HomePageState extends State<ProfileCarose> {
               var profiledata = profileController.shopproflePojo.value.data;
               var oneStar =
                   profileController.feedback.value.ratingDetail!.where((item) {
-                return int.parse(item.rating!) == 1;
+                return item.rating == 1;
               });
               var twoStar =
                   profileController.feedback.value.ratingDetail!.where((item) {
-                return int.parse(item.rating!) == 2;
+                return item.rating== 2;
               });
               var threeStar =
                   profileController.feedback.value.ratingDetail!.where((item) {
-                return int.parse(item.rating!) == 3;
+                return item.rating == 3;
               });
               var fourStar =
                   profileController.feedback.value.ratingDetail!.where((item) {
-                return int.parse(item.rating!) == 4;
+                return item.rating == 4;
               });
               var fiveStar =
                   profileController.feedback.value.ratingDetail!.where((item) {
-                return int.parse(item.rating!) == 5;
+                return item.rating== 5;
               });
               final List<Widget> imageSliders = profiledata!.shopImage!
                   .map((item) => Container(
                         child: Container(
-                          margin: const EdgeInsets.all(5.0),
+                          margin: const EdgeInsets.all(1.0),
                           child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(5.0)),
@@ -994,20 +1005,18 @@ class _HomePageState extends State<ProfileCarose> {
                                 color: Colors.transparent,
                                 child: Stack(children: <Widget>[
                                   CarouselSlider(
-                                    items: imageSliders != null
-                                        ? imageSliders
-                                        : null,
+                                    items: imageSliders,
                                     carouselController: _controller,
                                     options: CarouselOptions(
                                         autoPlay: true,
                                         enlargeCenterPage: true,
-                                        autoPlayCurve: Curves.fastOutSlowIn,
-                                        aspectRatio: 2.0,
+                                        autoPlayCurve: Curves.easeIn,
+                                        aspectRatio:2.0,
                                         enableInfiniteScroll: true,
-                                        viewportFraction: 0.8,
-                                        autoPlayInterval: Duration(seconds: 3),
+                                        viewportFraction: 0.9,
+                                        autoPlayInterval: Duration(seconds: 6),
                                         autoPlayAnimationDuration:
-                                            Duration(milliseconds: 800),
+                                            Duration(milliseconds: 2000),
                                         onPageChanged: (index, reason) {
                                           setState(() {
                                             _current = index;
@@ -1825,7 +1834,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                         height: 8,
                                                       ),
                                                       Text(
-                                                        '  Upto 50% off via UPI',
+                                                        '  Upto ${profileController.couponList.value.staffDetail?[position].percentage}% off via UPI',
                                                         style: TextStyle(
                                                             fontFamily:
                                                                 'Poppins Light',

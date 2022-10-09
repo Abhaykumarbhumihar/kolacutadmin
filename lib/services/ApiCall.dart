@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
+import 'package:kolacur_admin/utils/CommomDialog.dart';
+import 'package:path/path.dart' as path;
+import '../controller/profile_caroselController.dart';
 import '../utils/appconstant.dart';
 
 class APICall {
@@ -17,7 +22,7 @@ class APICall {
       body: map,
     );
 
-print(response);
+    print(response);
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -68,7 +73,7 @@ print(response);
 
     print(request);
     http.Response response =
-        await http.Response.fromStream(await request.send());
+    await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");
     print("Result: ${response.body}");
     if (response.statusCode == 400) {
@@ -132,7 +137,7 @@ print(response);
     print(request);
 
     http.Response response =
-        await http.Response.fromStream(await request.send());
+    await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");
     print("Result: ${response.body}");
     if (response.statusCode == 400) {
@@ -143,7 +148,7 @@ print(response);
     }
   }
 
-  Future<String> uploadshopimages(List<XFile> logo, session_id) async {
+  Future<String> uploadshopimages1(List<XFile> logo, session_id) async {
     print(logo.length);
     print("IN API FILE");
 
@@ -153,15 +158,16 @@ print(response);
     request.fields['session_id'] = session_id;
 
     for(int i = 0; i < logo.length; i++){
-      request.fields['shop_image[$i]'] = '${logo[i]}';
+      print('${logo[i].path} =====');
+      request.fields['shop_image[$i]'] = '${logo[i].path}';
     }
 
-
+    print(request.fields);
     print(request);
     http.Response response =
-        await http.Response.fromStream(await request.send());
+    await http.Response.fromStream(await request.send());
     print("SDF DSF SDF SDF SDF ");
-   // print(response);
+    // print(response);
     final body = json.decode(response.body);
     print(body);
     print("Result: ${response.statusCode}");
@@ -175,7 +181,47 @@ print(response);
       return response.body;
     }
   }
+
+  //final List<XFile>  _image;
+  // List<XFile> logo
+
+  Future<String> uploadshopimages(List<XFile> _image, session_id)  async {
+    CommonDialog.showLoading();
+    // create multipart request
+    var request = http.MultipartRequest('POST', Uri.parse(AppConstant.BASE_URL + AppConstant.UPDTE_SHOP));
+    var dataa="";
+    request.fields['session_id'] = session_id;
+    for (var i = 0; i < _image.length; i++) {
+      print(_image[i].path);
+      request.files.add(http.MultipartFile('shop_image[$i]',
+          File(_image[i].path).readAsBytes().asStream(), File(_image[i].path).lengthSync(),
+          filename: _image[i].path.split("/").last));
+    }
+
+    var response = await request.send();
+    // listen for response
+    response.stream.transform(utf8.decoder).listen((value) {
+      final body = json.decode(value);
+      if (response.statusCode == 400) {
+        print("${response}  ';';';';';';");
+        dataa="null";
+        print("SFSDFSDFDSFSDFSDFSDFSDFSDF");
+      }
+      else {
+        CommonDialog.hideLoading();
+        print("HI I AM HERE");
+        dataa="HI I AM HERE";
+        Get.find<ProfileCOntroller>().getUpdatedShopProfile(session_id);
+      }
+      //_submitedSuccessfully(context);
+    });
+
+
+    return "sdfdsfsd";
+  }
 }
+
+
 
 /*void main() async {
   WidgetsFlutterBinding.ensureInitialized();

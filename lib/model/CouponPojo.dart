@@ -38,10 +38,12 @@ class StaffDetail {
     this.couponName,
     this.price,
     this.couponCode,
+    this.percentage
   });
 
   int? id;
   String? couponName;
+  String? percentage;
   String? price;
   String? couponCode;
 
@@ -50,6 +52,7 @@ class StaffDetail {
     couponName: json["coupon_name"],
     price: json["price"],
     couponCode: json["coupon_code"],
+    percentage: json["percentage"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +60,6 @@ class StaffDetail {
     "coupon_name": couponName,
     "price": price,
     "coupon_code": couponCode,
+    "percentage": percentage,
   };
 }

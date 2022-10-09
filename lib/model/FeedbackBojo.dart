@@ -44,7 +44,7 @@ class RatingDetail {
   });
 
   int? id;
-  String? rating;
+  int? rating;
   String? comment;
 
   factory RatingDetail.fromJson(Map<String, dynamic> json) => RatingDetail(

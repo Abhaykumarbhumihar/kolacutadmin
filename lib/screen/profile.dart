@@ -405,7 +405,7 @@ class _HomePageState extends State<ProfilePage> {
                                                   "Partial Off",
                                                   style: TextStyle(color: Colors.red),
                                                 )),
-                                            value: 'partialy_off'),
+                                            value: 'Partial Off'),
                                         PopupMenuItem<String>(
                                             child: Container(
                                                 width: 100,
