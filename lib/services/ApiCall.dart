@@ -100,7 +100,11 @@ class APICall {
       password,
       logo,
       owner_profile_image,
-      adhaar_card_file) async {
+      adhaar_card_file,
+      account_number,
+      ifsc_code,
+      account_name,
+      bank_name) async {
     print("IN API FILE");
     print(logo);
     print(owner_profile_image);
@@ -133,6 +137,13 @@ class APICall {
     request.fields['device_type'] = device_type;
     request.fields['device_token'] = device_token;
     request.fields['password'] = password;
+
+
+
+    request.fields['account_number'] = account_number;
+    request.fields['ifsc_code'] = ifsc_code;
+    request.fields['account_name'] = account_name;
+    request.fields['bank_name'] = bank_name;
     print(request.fields);
     print(request);
 

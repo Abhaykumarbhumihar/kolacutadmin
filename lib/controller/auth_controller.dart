@@ -93,7 +93,11 @@ class AuthControlller extends GetxController {
       password,
       logo,
       owner_profile_image,
-      adhaar_card_file) async {
+      adhaar_card_file,
+  account_number,
+  ifsc_code,
+  account_name,
+  bank_name) async {
     CommonDialog.showLoading(title: "Please waitt...");
     final response = await APICall().registerUserMulti(
         shop_name,
@@ -111,7 +115,12 @@ class AuthControlller extends GetxController {
         password,
         logo,
         owner_profile_image,
-        adhaar_card_file);
+        adhaar_card_file,
+        account_number,
+        ifsc_code,
+        account_name,
+        bank_name
+    );
     print("jjhjkjjhkjkhkjhkhkhkjjkhkhkkhhkjkjjk");
     if (response != "null") {
       CommonDialog.hideLoading();

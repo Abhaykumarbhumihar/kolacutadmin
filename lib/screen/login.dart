@@ -383,6 +383,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: GestureDetector(
                           onTap: (){
+                            print("SDL:FL:DFJDSl;fl;dslf;s");
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => const RegisterPage()),

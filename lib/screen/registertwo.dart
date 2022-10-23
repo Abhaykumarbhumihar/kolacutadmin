@@ -26,7 +26,12 @@ class _RegisterPageState extends State<RegisterPageTwo> {
       _ownenamecontroller,
       _owncontactnocontroller,
       _adharnocontroller,
-      _genderController;
+      _genderController,
+      _accountnoController,
+      _reenteraccountController,
+      _banknameController,
+      _acountholderController,
+      _ifsccodeController;
 
   //late File shopimagefile;
 
@@ -49,6 +54,12 @@ class _RegisterPageState extends State<RegisterPageTwo> {
     _owncontactnocontroller = TextEditingController();
     _adharnocontroller = TextEditingController();
     _genderController = TextEditingController();
+
+    _accountnoController = TextEditingController();
+    _reenteraccountController = TextEditingController();
+    _banknameController = TextEditingController();
+    _acountholderController = TextEditingController();
+    _ifsccodeController = TextEditingController();
   }
 
   @override
@@ -135,10 +146,11 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                               image: DecorationImage(
                                   image: AssetImage(
                                       'images/svgicons/addphotocircleplus.png'),
-                                  fit: BoxFit.contain)),
+                                 )),
                           child: Center(
                             child: SvgPicture.asset(
                               'images/svgicons/adddd.svg',
+                              fit: BoxFit.fill,
                               width: width * 0.02,
                               height: height * 0.02,
                             ),
@@ -313,6 +325,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                                 style: const TextStyle(
                                   color: Colors.black,
                                 ),
+                                keyboardType: TextInputType.number,
                                 textAlignVertical: TextAlignVertical.center,
                                 textAlign: TextAlign.left,
                                 controller: _adharnocontroller,
@@ -328,7 +341,151 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Bank information',
+                        style: TextStyle(
+                            color: Color(
+                                Utils.hexStringToHexInt('A4A4A4')),
+                            fontFamily: 'Poppins Regular',
+                            fontSize: width * 0.03),),
+                      ],
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _accountnoController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              hintText: 'Account no ',
+                              hintStyle: TextStyle(
+                                  color:
+                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _reenteraccountController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              hintText: 'Re enter account no ',
+                              hintStyle: TextStyle(
+                                  color:
+                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _banknameController,
+                          decoration: InputDecoration(
+                              hintText: 'Bank name ',
+                              hintStyle: TextStyle(
+                                  color:
+                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _acountholderController,
+                          decoration: InputDecoration(
+                              hintText: 'Account holder name ',
+                              hintStyle: TextStyle(
+                                  color:
+                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
+                    Container(
+                      width: width - 5,
+                      height: height * 0.1 - height * 0.04,
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4)),
+                        color: Color(Utils.hexStringToHexInt('F4F4F4')),
+                      ),
+                      child: TextField(
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          controller: _ifsccodeController,
+                          decoration: InputDecoration(
+                              hintText: 'IFSC code ',
+                              hintStyle: TextStyle(
+                                  color:
+                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                  fontFamily: 'Poppins Regular',
+                                  fontSize: width * 0.03),
+                              border: InputBorder.none)),
+                    ),
                   ],
                 ),
               ),
@@ -342,6 +499,11 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                     var nameOwner = _ownenamecontroller.text.toString();
                     var ownercontact = _owncontactnocontroller.text.toString();
                     var adharno = _adharnocontroller.text.toString();
+                    var accountnno= _accountnoController.text.toString();
+                    var reaccountno= _reenteraccountController.text.toString();
+                    var bankname= _banknameController.text.toString();
+                    var accountholder= _acountholderController.text.toString();
+                    var ifscode= _ifsccodeController.text.toString();
                     // shopimagefile=shopimage;
                     print(shopimagefile);
                     //  CommonDialog.showsnackbar("Hit here api");
@@ -361,7 +523,16 @@ class _RegisterPageState extends State<RegisterPageTwo> {
                         password,
                         shopimagefile,
                         imageFile,
-                        adharno);
+                        adharno,
+                        accountnno,
+                        ifscode,
+                        accountholder,
+                        bankname
+                    );
+                    //account_number,
+                    //   ifsc_code,
+                    //   account_name,
+                    //   bank_name
                   } else {
                     // CommonDialog.showsnackbar("Hit here api");
                   }
@@ -627,6 +798,11 @@ class _RegisterPageState extends State<RegisterPageTwo> {
     var name = _ownenamecontroller.text.toString();
     var ownercontact = _owncontactnocontroller.text.toString();
     var adharno = _adharnocontroller.text.toString();
+   var accountnno= _accountnoController.text.toString();
+   var reaccountno= _reenteraccountController.text.toString();
+   var bankname= _banknameController.text.toString();
+   var accountholder= _acountholderController.text.toString();
+   var ifscode= _ifsccodeController.text.toString();
     if (name == "") {
       CommonDialog.showsnackbar("Please enter name.");
       return false;
@@ -647,6 +823,24 @@ class _RegisterPageState extends State<RegisterPageTwo> {
       return false;
     } else if (_genderController.text.toString() == "") {
       CommonDialog.showsnackbar("Please select dob.");
+      return false;
+    }else if(accountnno==""){
+      CommonDialog.showsnackbar("Please enter account no.");
+      return false;
+    }else if(reaccountno==""){
+      CommonDialog.showsnackbar("Please Re-enter account no.");
+      return false;
+    }else if(bankname==""){
+      CommonDialog.showsnackbar("Please enter bank name");
+      return false;
+    }else if(accountholder==""){
+      CommonDialog.showsnackbar("Please enter account holder name");
+      return false;
+    }else if(ifscode==""){
+      CommonDialog.showsnackbar("Please enter IFSC code");
+      return false;
+    }else if(accountnno!=reaccountno){
+      CommonDialog.showsnackbar("Account no and Re-account no not mathced");
       return false;
     }
     return true;

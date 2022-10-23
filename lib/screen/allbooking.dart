@@ -947,7 +947,8 @@ class _HomePageState extends State<AllBooking> {
                       ),
                     ),
                     Text(
-                      'Visit on 24 Jun, 10:00 AM',
+                      'Booking time :- ${DateFormat.MMMd('en_US')
+                          .format(DateTime.parse("${element.date}"))} , ${element.toTime}',
                       style: TextStyle(
                           fontFamily: 'Poppins Regular',
                           color: Color(Utils.hexStringToHexInt('C4C4C4')),
