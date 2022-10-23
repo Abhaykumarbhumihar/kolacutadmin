@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../utils/Utils.dart';
+
 class TermConditionPage extends StatefulWidget {
   const TermConditionPage({Key? key}) : super(key: key);
 
@@ -36,7 +38,7 @@ class _TermConditionPageState extends State<TermConditionPage> {
     return SafeArea(child:
      Scaffold(
        appBar: AppBar(
-         backgroundColor: Colors.white,
+         backgroundColor:Color(Utils.hexStringToHexInt('46D0D9')),
          elevation: 0.0,
          automaticallyImplyLeading: false,
          titleSpacing: 0,
@@ -47,21 +49,24 @@ class _TermConditionPageState extends State<TermConditionPage> {
            },
            child: Icon(
              Icons.arrow_back,
-             color: Colors.black,
+             color: Colors.white,
            ),
          ),
          title: Text(
            'Terms and conditions',
            style: TextStyle(
-               color: Colors.black,
+               color: Colors.white,
                fontFamily: 'Poppins Medium',
                fontSize: width * 0.04),
          ),
          actions: <Widget>[],
        ),
-       body: WebView(
-         initialUrl: 'http://kolacut.kvpscampuscare.com/public/user-terms',
-         javascriptMode: JavascriptMode.disabled,
+       body: Container(
+         margin: EdgeInsets.only(bottom: 12),
+         child: WebView(
+           initialUrl: 'http://kolacut.kvpscampuscare.com/public/user-terms',
+           javascriptMode: JavascriptMode.disabled,
+         ),
        ),
      ));
   }

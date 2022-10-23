@@ -10,6 +10,7 @@ import 'package:kolacur_admin/screen/managestaff.dart';
 import 'package:kolacur_admin/screen/profile.dart';
 import 'package:kolacur_admin/screen/profilecarosed.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../utils/Utils.dart';
@@ -24,18 +25,40 @@ class HomeBottomBar extends StatefulWidget {
 class _HomeBottomBarState extends State<HomeBottomBar> {
   var index = 0;
   final PersistentTabController _controller =
-  PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 0);
+  var image = "";
+  late SharedPreferences sharedPreferences;
+
+  getImage() async {
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      sharedPreferences = sp;
+      // var _testValue = sharedPreferences.getString("name");
+      // var emailValue = sharedPreferences.getString("email");
+      var _imageValue = sharedPreferences.getString("image");
+      //  var _phoneValue = sharedPreferences.getString("phoneno");
+      // var _sessss = sharedPreferences.getString("session");
+      setState(() {
+        if (_imageValue != null) {
+          image = _imageValue;
+        } else {
+          image = "";
+        }
+
+        //  print(name+" "+email+" "+phone+" "+_imageValue);
+      });
+      // will be null if never previously saved
+      // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
+    });
+  }
 
   List<Widget> _buildScreens() {
     return [
-     const HomePage(),
-     const ManageStaff(),
-     const ManageSlotPage(),
-     const ProfileCarose()
+      const HomePage(),
+      const ManageStaff(),
+      const ManageSlotPage(),
+      const ProfileCarose()
     ];
   }
-
-
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
@@ -48,25 +71,26 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon:  Icon(
-      index == 1 ? Icons.group : Icons.group,
-      size: 30,
-      ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-    icon: Icon(
-    index == 2 ? Icons.settings_rounded : Icons.settings_rounded,
-    size: 30,
-    ),
-        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          CupertinoIcons.profile_circled,
+        icon: Icon(
+          index == 1 ? Icons.group : Icons.group,
           size: 30,
+        ),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          index == 2 ? Icons.settings_rounded : Icons.settings_rounded,
+          size: 30,
+        ),
+        activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          backgroundImage: NetworkImage(image),
+          radius: 30.0,
         ),
         activeColorPrimary: Color(Utils.hexStringToHexInt('46D0D9')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -74,14 +98,12 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     ];
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     notification();
   }
-
 
   notification() async {
     await FirebaseMessaging.instance
@@ -110,7 +132,7 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-      print(  message.data["we"]);
+      print(message.data["we"]);
       print("54566565565656565556 ----UNONPE UNONPE ");
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
@@ -135,7 +157,7 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-      print(  message.data["we"]);
+      print(message.data["we"]);
       print(
           "UNONPE  UNONPE  UNONPE  UNONPE UNONPE UNONPE UNONPE ----UNONPE UNONPE ");
       if (notification != null && android != null) {
@@ -162,10 +184,10 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    getImage();
     return PersistentTabView(
       context,
       controller: _controller,
-
 
       screens: _buildScreens(),
       items: _navBarsItems(),
