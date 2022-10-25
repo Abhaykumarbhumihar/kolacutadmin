@@ -361,7 +361,7 @@ class _GraphState extends State<Graph> {
                                     ),),
                                 ],),
                                 Container(
-                                  width: 70,
+                                  width: 75,
                                   height: 30,
                                   child: Center(
                                     child: Align(
@@ -385,7 +385,7 @@ class _GraphState extends State<Graph> {
                                           maxLines: 1,
                                           decoration:
                                           InputDecoration(
-                                            hintText: 'Enter here days',
+                                            hintText: 'Enter days count',
                                             isCollapsed: false,
                                             isDense: false,
                                             contentPadding: EdgeInsets.symmetric(horizontal: 5),
@@ -393,7 +393,7 @@ class _GraphState extends State<Graph> {
                                                 color:
                                                 Color(Utils.hexStringToHexInt('A4A4A4')),
                                                 fontFamily: 'Poppins Regular',
-                                                fontSize: width * 0.03),
+                                                fontSize: width * 0.02),
                                             border: OutlineInputBorder(),)
 
                                       ),
