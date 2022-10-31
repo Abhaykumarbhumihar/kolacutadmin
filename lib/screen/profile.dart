@@ -461,7 +461,7 @@ class _HomePageState extends State<ProfilePage> {
                                           margin: EdgeInsets.only(
                                               left: width * 0.04,
                                               right: width * 0.04,
-                                              top: height * 0.02),
+                                              top: height * 0.02,bottom: 2),
                                           child: Material(
                                             borderRadius:
                                             BorderRadius.circular(width * 0.04),
@@ -601,7 +601,7 @@ class _HomePageState extends State<ProfilePage> {
                                                         employeeController.leaveManagement![
                                                         position]
                                                             .holidayType ==
-                                                            "partialy_off"
+                                                            "Partial off"
                                                             ? Container(
                                                           child: Row(
                                                             children: <Widget>[
