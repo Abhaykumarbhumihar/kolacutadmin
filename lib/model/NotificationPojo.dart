@@ -15,9 +15,9 @@ class NotificationPojo {
     this.notificationDetail,
   });
 
-  int? status;
-  String? message;
-  List<NotificationDetail>? notificationDetail;
+  int status;
+  String message;
+  List<NotificationDetail> notificationDetail;
 
   factory NotificationPojo.fromJson(Map<String, dynamic> json) => NotificationPojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class NotificationPojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "Notification Detail": List<dynamic>.from(notificationDetail!.map((x) => x.toJson())),
+    "Notification Detail": List<dynamic>.from(notificationDetail.map((x) => x.toJson())),
   };
 }
 
@@ -41,11 +41,11 @@ class NotificationDetail {
     this.type,
   });
 
-  int? id;
-  String? title;
-  String? description;
-  int?status;
-  int?type;
+  int id;
+  String title;
+  String description;
+  int status;
+  int type;
 
   factory NotificationDetail.fromJson(Map<String, dynamic> json) => NotificationDetail(
     id: json["id"],

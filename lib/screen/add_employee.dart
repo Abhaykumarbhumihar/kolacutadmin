@@ -16,7 +16,7 @@ import '../utils/CommomDialog.dart';
 import '../utils/Utils.dart';
 
 class AddEmployee extends StatefulWidget {
-  const AddEmployee({Key? key}) : super(key: key);
+  const AddEmployee({Key key}) : super(key: key);
 
   @override
   State<AddEmployee> createState() => _RegisterPageState();
@@ -27,8 +27,8 @@ class Animal {
   final String name;
 
   Animal({
-    required this.id,
-    required this.name,
+     this.id,
+     this.name,
   });
 
   @override
@@ -40,7 +40,7 @@ class Animal {
 
 class _RegisterPageState extends State<AddEmployee> {
   ManageStaffController profileController = Get.put(ManageStaffController());
-  late TextEditingController emailcontroller,
+   TextEditingController emailcontroller,
       _nameController,
       _dobController,
       _phonecontroller,
@@ -49,7 +49,7 @@ class _RegisterPageState extends State<AddEmployee> {
       _passwordController,
       _experienceController;
   String date = "";
-  late Map<String, bool> values;
+   Map<String, bool> values;
 
   String dropdownvalue = 'Male';
   final list = ['Male', 'Female'];
@@ -692,7 +692,7 @@ class _RegisterPageState extends State<AddEmployee> {
   }
 
   _selectDate(BuildContext context) async {
-    final DateTime? selected = await showDatePicker(
+    final DateTime selected = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2010),

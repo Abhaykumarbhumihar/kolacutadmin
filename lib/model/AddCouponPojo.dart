@@ -14,8 +14,8 @@ class AddCouponPojo {
     this.message,
   });
 
-  int? status;
-  String? message;
+  int status;
+  String message;
 
   factory AddCouponPojo.fromJson(Map<String, dynamic> json) => AddCouponPojo(
     status: json["status"],

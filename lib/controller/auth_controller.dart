@@ -39,7 +39,7 @@ class AuthControlller extends GetxController {
 
   void login(email, password) async {
     Map map;
-    String? fcm_token = await FirebaseMessaging.instance.getToken();
+    String fcm_token = await FirebaseMessaging.instance.getToken();
 
     map = {
       "email": email,
@@ -62,11 +62,11 @@ class AuthControlller extends GetxController {
       } else {
         box.write('session',   loginPojo.value.data?.token);
         final SharedPreferences prefs = await _prefs;
-        await prefs.setString('session', loginPojo.value.data!.token.toString());
-        await prefs.setString('name', loginPojo.value.data!.name.toString());
-        await prefs.setString('email', loginPojo.value.data!.email.toString());
-        await prefs.setString('phoneno', loginPojo.value.data!.ownerPhoneNo.toString());
-        await prefs.setString('image', loginPojo.value.data!.ownerProfileImage.toString());
+        await prefs.setString('session', loginPojo.value.data.token.toString());
+        await prefs.setString('name', loginPojo.value.data.name.toString());
+        await prefs.setString('email', loginPojo.value.data.email.toString());
+        await prefs.setString('phoneno', loginPojo.value.data.ownerPhoneNo.toString());
+        await prefs.setString('image', loginPojo.value.data.ownerProfileImage.toString());
         Get.to(const HomeBottomBar());
       }
     } catch (error) {

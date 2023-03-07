@@ -14,8 +14,8 @@ class DeleteCoupon {
     this.message,
   });
 
-  int? status;
-  String? message;
+  int status;
+  String message;
 
   factory DeleteCoupon.fromJson(Map<String, dynamic> json) => DeleteCoupon(
     status: json["status"],

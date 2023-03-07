@@ -13,7 +13,7 @@ import '../utils/appconstant.dart';
 class EmployeeController extends GetxController {
   var employeeListPojo = EmployeeProfilePojo().obs;
   var employee_Id = "".obs;
-  List<LeaveManagement>? leaveManagement = [];
+  List<LeaveManagement> leaveManagement = [];
   var lodaer = true;
   final box = GetStorage();
 
@@ -34,10 +34,10 @@ class EmployeeController extends GetxController {
     leaveManagement = [];
     update();
     if (selectedDate == "All") {
-      leaveManagement = employeeListPojo.value.data!.leaveManagement!;
+      leaveManagement = employeeListPojo.value.data.leaveManagement;
       update();
     } else {
-      var newlist = employeeListPojo.value.data!.leaveManagement!
+      var newlist = employeeListPojo.value.data.leaveManagement
           .where((x) => x.holidayType
           .toString()
           .toLowerCase()
@@ -61,7 +61,7 @@ class EmployeeController extends GetxController {
       print(response);
       CommonDialog.hideLoading();
       employeeListPojo.value = employeeProfilePojoFromJson(response);
-      leaveManagement = employeeListPojo.value.data!.leaveManagement;
+      leaveManagement = employeeListPojo.value.data.leaveManagement;
       if (employeeListPojo.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {

@@ -16,9 +16,9 @@ class EmployeeList {
     this.staffDetail,
   });
 
-  int? status;
-  String? message;
-  List<StaffDetail>? staffDetail;
+  int status;
+  String message;
+  List<StaffDetail> staffDetail;
 
   factory EmployeeList.fromJson(Map<String, dynamic> json) => EmployeeList(
         status: json["status"],
@@ -30,7 +30,7 @@ class EmployeeList {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "Staff Detail": List<dynamic>.from(staffDetail!.map((x) => x.toJson())),
+        "Staff Detail": List<dynamic>.from(staffDetail.map((x) => x.toJson())),
       };
 }
 
@@ -47,15 +47,15 @@ class StaffDetail {
     this.rating
   });
 
-  int? id;
-  String? name;
-  String? profile_image;
-  String? email;
-  String? phone;
-  List<String>? skills;
-  String? isDuty;
-  String? experience;
-  int? rating;
+  int id;
+  String name;
+  String profile_image;
+  String email;
+  String phone;
+  List<String> skills;
+  String isDuty;
+  String experience;
+  int rating;
 
   factory StaffDetail.fromJson(Map<String, dynamic> json) => StaffDetail(
         id: json["id"],
@@ -75,7 +75,7 @@ class StaffDetail {
         "rating": rating,
         "email": email,
         "phone": phone,
-        "skills": List<dynamic>.from(skills!.map((x) => x)),
+        "skills": List<dynamic>.from(skills.map((x) => x)),
         "is_duty": isDuty,
         "experience": experience,
       };

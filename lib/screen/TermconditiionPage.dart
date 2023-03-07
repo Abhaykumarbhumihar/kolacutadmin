@@ -6,7 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../utils/Utils.dart';
 
 class TermConditionPage extends StatefulWidget {
-  const TermConditionPage({Key? key}) : super(key: key);
+  const TermConditionPage({Key key}) : super(key: key);
 
   @override
   State<TermConditionPage> createState() => _TermConditionPageState();

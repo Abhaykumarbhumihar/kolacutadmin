@@ -16,10 +16,10 @@ class FeedbackBojo {
     this.ratingDetail,
   });
 
-  int? status;
-  String? message;
-  int? totalRating;
-  List<RatingDetail>? ratingDetail;
+  int status;
+  String message;
+  int totalRating;
+  List<RatingDetail> ratingDetail;
 
   factory FeedbackBojo.fromJson(Map<String, dynamic> json) => FeedbackBojo(
     status: json["status"],
@@ -32,7 +32,7 @@ class FeedbackBojo {
     "status": status,
     "message": message,
     "total_rating": totalRating,
-    "Rating Detail": List<dynamic>.from(ratingDetail!.map((x) => x.toJson())),
+    "Rating Detail": List<dynamic>.from(ratingDetail.map((x) => x.toJson())),
   };
 }
 
@@ -43,9 +43,9 @@ class RatingDetail {
     this.comment,
   });
 
-  int? id;
-  int? rating;
-  String? comment;
+  int id;
+  int rating;
+  String comment;
 
   factory RatingDetail.fromJson(Map<String, dynamic> json) => RatingDetail(
     id: json["id"],

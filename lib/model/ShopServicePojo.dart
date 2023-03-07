@@ -15,9 +15,9 @@ class ShopServicePojo {
     this.serviceDetail,
   });
 
-  int? status;
-  String? message;
-  List<ServiceDetail>? serviceDetail;
+  int status;
+  String message;
+  List<ServiceDetail> serviceDetail;
 
   factory ShopServicePojo.fromJson(Map<String, dynamic> json) => ShopServicePojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class ShopServicePojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "Service Detail": List<dynamic>.from(serviceDetail!.map((x) => x.toJson())),
+    "Service Detail": List<dynamic>.from(serviceDetail.map((x) => x.toJson())),
   };
 }
 
@@ -40,10 +40,10 @@ class ServiceDetail {
     this.services,
   });
 
-  int? serviceId;
-  String? serviceTitle;
-  String? serviceImage;
-  List<Service>? services;
+  int serviceId;
+  String serviceTitle;
+  String serviceImage;
+  List<Service> services;
 
   factory ServiceDetail.fromJson(Map<String, dynamic> json) => ServiceDetail(
     serviceId: json["service_id"],
@@ -56,7 +56,7 @@ class ServiceDetail {
     "service_id": serviceId,
     "service_title": serviceTitle,
     "service_image": serviceImage,
-    "services": List<dynamic>.from(services!.map((x) => x.toJson())),
+    "services": List<dynamic>.from(services.map((x) => x.toJson())),
   };
 }
 
@@ -67,9 +67,9 @@ class Service {
     this.price,
   });
 
-  int? id;
-  String? name;
-  String? price;
+  int id;
+  String name;
+  String price;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
     id: json["id"],

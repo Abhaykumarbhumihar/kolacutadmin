@@ -14,8 +14,8 @@ class EmployeeAdded {
     this.message,
   });
 
-  int? status;
-  String? message;
+  int status;
+  String message;
 
   factory EmployeeAdded.fromJson(Map<String, dynamic> json) => EmployeeAdded(
     status: json["status"],

@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/manage_staff_controller.dart';
 
 class ManageStaff extends StatefulWidget {
-  const ManageStaff({Key? key}) : super(key: key);
+  const ManageStaff({Key key}) : super(key: key);
 
   @override
   State<ManageStaff> createState() => _HomePageState();
@@ -24,7 +24,7 @@ class _HomePageState extends State<ManageStaff> {
   var email = "";
   var phone = "";
   var iamge = "";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -36,10 +36,10 @@ class _HomePageState extends State<ManageStaff> {
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
       setState(() {
-        name = _testValue!;
-        email = emailValue!;
-        phone = _phoneValue!;
-        iamge = _imageValue!;
+        name = _testValue;
+        email = emailValue;
+        phone = _phoneValue;
+        iamge = _imageValue;
       });
       // will be null if never previously saved
       // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -62,7 +62,7 @@ class _HomePageState extends State<ManageStaff> {
               color: Colors.white,
             ),
             tooltip: 'Menu Icon',
-            onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           title: Text(
             'Manage Staff',
@@ -165,7 +165,7 @@ class _HomePageState extends State<ManageStaff> {
                     Container(
                       margin: EdgeInsets.only(left: width * 0.06),
                       child: Text(
-                        'Total :${profileController.staffDetail!.length}',
+                        'Total :${profileController.staffDetail.length}',
                         style: TextStyle(
                             color: Color(Utils.hexStringToHexInt('8D8D8D')),
                             fontSize: width * 0.03,
@@ -186,13 +186,13 @@ class _HomePageState extends State<ManageStaff> {
                       height: height * 0.6,
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          itemCount: profileController.staffDetail!.length,
+                          itemCount: profileController.staffDetail.length,
                           itemBuilder: (context, position) {
                             return GestureDetector(
                               onTap: () {
                                 Get.to(ProfilePage(),
                                     arguments: profileController
-                                        .staffDetail![position].id);
+                                        .staffDetail[position].id);
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
@@ -232,13 +232,13 @@ class _HomePageState extends State<ManageStaff> {
                                                 radius: width * 0.07,
                                                 backgroundImage: NetworkImage(
                                                     profileController
-                                                                .staffDetail![
+                                                                .staffDetail[
                                                                     position]
                                                                 .profile_image
                                                                 .toString() !=
                                                             ""
                                                         ? profileController
-                                                            .staffDetail![
+                                                            .staffDetail[
                                                                 position]
                                                             .profile_image
                                                             .toString()
@@ -258,13 +258,13 @@ class _HomePageState extends State<ManageStaff> {
                                                   children: <Widget>[
                                                     Utils().titleText(
                                                         profileController
-                                                                    .staffDetail![
+                                                                    .staffDetail[
                                                                         position]
                                                                     .name
                                                                     .toString() !=
                                                                 ""
                                                             ? profileController
-                                                                .staffDetail![
+                                                                .staffDetail[
                                                                     position]
                                                                 .name
                                                                 .toString()
@@ -304,13 +304,13 @@ class _HomePageState extends State<ManageStaff> {
                                                 ),
                                                 Text(
                                                   profileController
-                                                              .staffDetail![
+                                                              .staffDetail[
                                                                   position]
                                                               .experience
                                                               .toString() !=
                                                           ""
                                                       ? profileController
-                                                          .staffDetail![
+                                                          .staffDetail[
                                                               position]
                                                           .experience
                                                           .toString()
@@ -328,14 +328,14 @@ class _HomePageState extends State<ManageStaff> {
                                                 ),
                                                 Text(
                                                   profileController
-                                                              .staffDetail![
+                                                              .staffDetail[
                                                                   position]
                                                               .email
                                                               .toString() !=
                                                           ""
                                                       ? " " +
                                                           profileController
-                                                              .staffDetail![
+                                                              .staffDetail[
                                                                   position]
                                                               .email
                                                               .toString()
@@ -350,14 +350,14 @@ class _HomePageState extends State<ManageStaff> {
                                                 ),
                                                 Text(
                                                   profileController
-                                                              .staffDetail![
+                                                              .staffDetail[
                                                                   position]
                                                               .phone
                                                               .toString() !=
                                                           ""
                                                       ? " " +
                                                           profileController
-                                                              .staffDetail![
+                                                              .staffDetail[
                                                                   position]
                                                               .phone
                                                               .toString()
@@ -385,7 +385,7 @@ class _HomePageState extends State<ManageStaff> {
                                                   child: Center(
                                                     child: Text(
                                                       '${profileController
-                                                          .staffDetail![
+                                                          .staffDetail[
                                                       position]
                                                           .isDuty
                                                           .toString()}',
@@ -419,7 +419,7 @@ class _HomePageState extends State<ManageStaff> {
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
                                               Text(
-                                                '${profileController.staffDetail![position].rating.toString()}',
+                                                '${profileController.staffDetail[position].rating.toString()}',
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: width * 0.03,
@@ -436,8 +436,8 @@ class _HomePageState extends State<ManageStaff> {
                                               ),
                                               RatingBarIndicator(
                                                 rating: profileController
-                                                    .staffDetail![position]
-                                                    .rating!
+                                                    .staffDetail[position]
+                                                    .rating
                                                     .toDouble(),
                                                 itemBuilder: (context, index) =>
                                                     const Icon(

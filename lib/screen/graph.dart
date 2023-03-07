@@ -12,7 +12,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Graph extends StatefulWidget {
-  const Graph({Key? key}) : super(key: key);
+  const Graph({Key key}) : super(key: key);
 
   @override
   State<Graph> createState() => _GraphState();
@@ -80,19 +80,19 @@ class _GraphState extends State<Graph> {
                   return Container();
                 } else {
                   for (var i = 0;
-                      i < dashboardController.graphPojo.value.data!.length;
+                      i < dashboardController.graphPojo.value.data.length;
                       i++) {
-                    dashboardController.graphPojo.value.data![i].completedOrder;
-                    dashboardController.graphPojo.value.data![i].totalOrder;
+                    dashboardController.graphPojo.value.data[i].completedOrder;
+                    dashboardController.graphPojo.value.data[i].totalOrder;
                     globalSalesData.add(OrdinalSales(
-                        dashboardController.graphPojo.value.data![i].Month!,
+                        dashboardController.graphPojo.value.data[i].Month,
                         dashboardController
-                            .graphPojo.value.data![i].totalOrder!));
+                            .graphPojo.value.data[i].totalOrder));
                     losAngeles.add(OrdinalSales(
-                        '${dashboardController.graphPojo.value.data![i].Month}',
+                        '${dashboardController.graphPojo.value.data[i].Month}',
                         dashboardController
-                            .graphPojo.value.data![i].completedOrder!));
-                    //OrdinalSales('JAIN',  dashboardController.graphPojo.value.data![i].completedOrder!);
+                            .graphPojo.value.data[i].completedOrder));
+                    //OrdinalSales('JAIN',  dashboardController.graphPojo.value.data[i].completedOrder);
                   }
                   return Container(
                     width: width,
@@ -116,7 +116,7 @@ class _GraphState extends State<Graph> {
                           ),
                           Center(
                             child: Text(
-                              '₹ ${dashboardController.dashboardPojo.value.data![0].totalBooking.toString()}',
+                              '₹ ${dashboardController.dashboardPojo.value.data[0].totalBooking.toString()}',
                               style: TextStyle(
                                   fontFamily: 'Poppins Medium',
                                   fontSize:
@@ -172,7 +172,7 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              '${dashboardController.dashboardPojo.value.data![0].totalBooking.toString()} ',
+                                              '${dashboardController.dashboardPojo.value.data[0].totalBooking.toString()} ',
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',
                                                   fontSize: MediaQuery.of(context)
@@ -200,7 +200,7 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              '${dashboardController.dashboardPojo.value.data![0].completed_booking.toString()} ',
+                                              '${dashboardController.dashboardPojo.value.data[0].completed_booking.toString()} ',
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',
                                                   fontSize: MediaQuery.of(context)
@@ -234,7 +234,7 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              "₹ ${dashboardController.dashboardPojo.value.data![0].totalRevenue.toString()}",
+                                              "₹ ${dashboardController.dashboardPojo.value.data[0].totalRevenue.toString()}",
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',
                                                   fontSize: MediaQuery.of(context)
@@ -262,7 +262,7 @@ class _GraphState extends State<Graph> {
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              "₹ ${dashboardController.dashboardPojo.value.data![0].month_earning.toString()}",
+                                              "₹ ${dashboardController.dashboardPojo.value.data[0].month_earning.toString()}",
 
                                               style: TextStyle(
                                                   fontFamily: 'Poppins Semibold',

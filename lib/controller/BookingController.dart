@@ -14,7 +14,7 @@ class BookingController extends GetxController {
   final box = GetStorage();
   var lodaer = true;
   var shopId = "".obs;
-  List<SlotDetail>? slotDetail = [];
+  List<SlotDetail> slotDetail = [];
 
   @override
   void onInit() {
@@ -23,29 +23,29 @@ class BookingController extends GetxController {
   }
 
   void filterWithDate(selectedDate) {
-    if (bookingPojo.value.slotDetail!.isNotEmpty) {
+    if (bookingPojo.value.slotDetail.isNotEmpty) {
       slotDetail = [];
-      for (var i = 0; i < bookingPojo.value.slotDetail!.length; i++) {
-        print(bookingPojo.value.slotDetail![i].date.toString());
-        if (bookingPojo.value.slotDetail![i].date!.compareTo(selectedDate) ==
+      for (var i = 0; i < bookingPojo.value.slotDetail.length; i++) {
+        print(bookingPojo.value.slotDetail[i].date.toString());
+        if (bookingPojo.value.slotDetail[i].date.compareTo(selectedDate) ==
             0) {
-          slotDetail!.add(bookingPojo.value.slotDetail![i]);
+          slotDetail.add(bookingPojo.value.slotDetail[i]);
         } else {}
       }
       update();
       print(" <><><><><><><><><><><><><>");
-      print(slotDetail!.length.toString() + " <><><><><><><><><><><><><>");
+      print(slotDetail.length.toString() + " <><><><><><><><><><><><><>");
     }
   }
 
   void filterEmplist(text) {
     if (text.toString().trim() == "") {
       update();
-      slotDetail = bookingPojo.value.slotDetail!;
+      slotDetail = bookingPojo.value.slotDetail;
       update();
     } else {
-      var newList = bookingPojo.value.slotDetail!
-          .where((t) => t.bookingId!.toString().contains(text))
+      var newList = bookingPojo.value.slotDetail
+          .where((t) => t.bookingId.toString().contains(text))
           .toList();
 
       slotDetail = [
@@ -57,7 +57,7 @@ class BookingController extends GetxController {
   }
 
   void clearDateFilter() {
-    slotDetail = bookingPojo.value.slotDetail!;
+    slotDetail = bookingPojo.value.slotDetail;
     update();
   }
 
@@ -65,10 +65,10 @@ class BookingController extends GetxController {
     slotDetail = [];
     update();
     if (selectedDate == "All") {
-      slotDetail = bookingPojo.value.slotDetail!;
+      slotDetail = bookingPojo.value.slotDetail;
       update();
     } else {
-      var newlist = bookingPojo.value.slotDetail!
+      var newlist = bookingPojo.value.slotDetail
           .where((x) => x.status
               .toString()
               .toLowerCase()
@@ -136,8 +136,8 @@ class BookingController extends GetxController {
       if (body['message'] == "Booking has been accepted successfully.") {
         lodaer = false;
         CommonDialog.showsnackbar(body['message']);
-        slotDetail!.clear();
-        bookingPojo.value.slotDetail!.clear();
+        slotDetail.clear();
+        bookingPojo.value.slotDetail.clear();
         getUpdatedBookingList();
         update();
       } else {
@@ -153,8 +153,8 @@ class BookingController extends GetxController {
 
   void getUpdatedBookingList() async {
     lodaer = false;
-    slotDetail!.clear();
-    bookingPojo.value.slotDetail!.clear();
+    slotDetail.clear();
+    bookingPojo.value.slotDetail.clear();
     update();
     Map map;
     map = {"session_id": box.read('session')};

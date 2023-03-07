@@ -14,8 +14,8 @@ class AcceptBookigPojo {
     this.message,
   });
 
-  int? status;
-  String? message;
+  int status;
+  String message;
 
   factory AcceptBookigPojo.fromJson(Map<String, dynamic> json) => AcceptBookigPojo(
     status: json["status"],

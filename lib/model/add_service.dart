@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../controller/profile_caroselController.dart';
 
 class AddService extends StatefulWidget {
-  const AddService({Key? key}) : super(key: key);
+  const AddService({Key key}) : super(key: key);
 
   @override
   State<AddService> createState() => _AddServiceState();
@@ -33,7 +33,7 @@ class _AddServiceState extends State<AddService> {
           Container(
             child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: data!.length,
+                itemCount: data.length,
                 itemBuilder: (context, position) {
                   return Card(
                     child: Container(
@@ -53,7 +53,7 @@ class _AddServiceState extends State<AddService> {
                             margin: EdgeInsets.all(4.0),
                             child: ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: data[position].services!.length,
+                                itemCount: data[position].services.length,
                                 itemBuilder: (context, index) {
                                   return Container(
                                     margin: EdgeInsets.all(4.0),
@@ -69,7 +69,7 @@ class _AddServiceState extends State<AddService> {
                                           children: [
                                             Text(
                                               data[position]
-                                                  .services![index]
+                                                  .services[index]
                                                   .name
                                                   .toString(),
                                               style: TextStyle(
@@ -79,7 +79,7 @@ class _AddServiceState extends State<AddService> {
                                             ),
                                             Text(
                                                 data[position]
-                                                    .services![index]
+                                                    .services[index]
                                                     .price
                                                     .toString(),
                                                 style: TextStyle(
@@ -93,14 +93,14 @@ class _AddServiceState extends State<AddService> {
                                             setState(() {
                                               if (tempArray.contains(
                                                   data[position]
-                                                      .services![index]
+                                                      .services[index]
                                                       .name)) {
                                                 tempArray.remove(data[position]
-                                                    .services![index]
+                                                    .services[index]
                                                     .name);
                                               } else {
                                                 tempArray.add(data[position]
-                                                    .services![index]
+                                                    .services[index]
                                                     .name);
                                               }
 
@@ -111,7 +111,7 @@ class _AddServiceState extends State<AddService> {
                                             padding: EdgeInsets.all(10.0),
                                             child: Text(tempArray.contains(
                                                 data[position]
-                                                    .services![index]
+                                                    .services[index]
                                                     .name)
                                                 ? "Remove"
                                                 : "Add"),

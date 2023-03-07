@@ -14,7 +14,7 @@ import '../utils/Utils.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
 class RegisterPageTwo extends StatefulWidget {
-  const RegisterPageTwo({Key? key}) : super(key: key);
+  const RegisterPageTwo({Key key}) : super(key: key);
 
   @override
   State<RegisterPageTwo> createState() => _RegisterPageState();
@@ -22,7 +22,7 @@ class RegisterPageTwo extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPageTwo> {
   AuthControlller authControlller = Get.put(AuthControlller());
-  late TextEditingController emailcontroller,
+   TextEditingController emailcontroller,
       _ownenamecontroller,
       _owncontactnocontroller,
       _adharnocontroller,

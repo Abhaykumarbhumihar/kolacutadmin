@@ -16,7 +16,7 @@ import '../utils/appconstant.dart';
 class ManageStaffController extends GetxController {
   var registerPojo = RegisterPojo().obs;
   final List<String> data = [];
-  List<StaffDetail>? staffDetail = [];
+  List<StaffDetail> staffDetail = [];
   var employeeListPojo = EmployeeList().obs;
   var loginPojo = LoginPojo().obs;
   var message = "";
@@ -32,10 +32,10 @@ class ManageStaffController extends GetxController {
 
   void filterStatus(selectedDate) {
     if (selectedDate == "All") {
-      staffDetail = employeeListPojo.value.staffDetail!;
+      staffDetail = employeeListPojo.value.staffDetail;
       update();
     } else {
-      var newlist = employeeListPojo.value.staffDetail!
+      var newlist = employeeListPojo.value.staffDetail
           .where((x) => x.isDuty
               .toString()
               .toLowerCase()
@@ -53,11 +53,11 @@ class ManageStaffController extends GetxController {
   void filterEmplist(text) {
     print(text);
     if (text.toString().trim() == "") {
-      staffDetail = employeeListPojo.value.staffDetail!;
+      staffDetail = employeeListPojo.value.staffDetail;
       update();
     } else {
-      var newList = employeeListPojo.value.staffDetail!
-          .where((t) => t.name!.toLowerCase().contains(text.toLowerCase()))
+      var newList = employeeListPojo.value.staffDetail
+          .where((t) => t.name.toLowerCase().contains(text.toLowerCase()))
           .toList();
       staffDetail = newList;
       update();
@@ -81,8 +81,8 @@ class ManageStaffController extends GetxController {
       print(response);
       CommonDialog.hideLoading();
       employeeListPojo.value = employeeListFromJson(response);
-      if (employeeListPojo.value.staffDetail!.isNotEmpty) {
-        staffDetail = employeeListPojo.value.staffDetail!;
+      if (employeeListPojo.value.staffDetail.isNotEmpty) {
+        staffDetail = employeeListPojo.value.staffDetail;
       }
 
       if (employeeListPojo.value.message == "No Data found") {

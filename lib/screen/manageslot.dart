@@ -14,7 +14,7 @@ import '../controller/manageslot_controller.dart';
 import 'sidenavigation.dart';
 
 class ManageSlotPage extends StatefulWidget {
-  const ManageSlotPage({Key? key}) : super(key: key);
+  const ManageSlotPage({Key key}) : super(key: key);
 
   @override
   State<ManageSlotPage> createState() => _HomePageState();
@@ -41,7 +41,7 @@ class _HomePageState extends State<ManageSlotPage> {
   var phone = "";
   var iamge = "";
   var session = "";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
 
   void toggleSwitch(bool value) {
     if (isSwitched == false) {
@@ -128,7 +128,7 @@ class _HomePageState extends State<ManageSlotPage> {
   }
 
   _selectclosingDate(BuildContext context) async {
-    final DateTime? selected = await showDatePicker(
+    final DateTime selected = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(selectedDate.year - 1),
@@ -175,7 +175,7 @@ class _HomePageState extends State<ManageSlotPage> {
     clooo=dateFormatttt.format(tempDatee);
   }
   _selectTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
+    final TimeOfDay timeOfDay = await showTimePicker(
       context: context,
       initialTime: openingTime,
       initialEntryMode: TimePickerEntryMode.dial,
@@ -201,7 +201,7 @@ class _HomePageState extends State<ManageSlotPage> {
   }
 
   _closingTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
+    final TimeOfDay timeOfDay = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.dial,
@@ -236,11 +236,11 @@ class _HomePageState extends State<ManageSlotPage> {
       var _phoneValue = sharedPreferences.getString("phoneno");
       var _session = sharedPreferences.getString("session");
       setState(() {
-        session = _session!;
-        name = _testValue!;
-        email = emailValue!;
-        phone = _phoneValue!;
-        iamge = _imageValue!;
+        session = _session;
+        name = _testValue;
+        email = emailValue;
+        phone = _phoneValue;
+        iamge = _imageValue;
       });
       // will be null if never previously saved
       // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -263,7 +263,7 @@ class _HomePageState extends State<ManageSlotPage> {
               color: Colors.white,
             ),
             tooltip: 'Menu Icon',
-            onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           titleSpacing: 0,
           title: Text(

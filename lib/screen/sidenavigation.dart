@@ -19,7 +19,7 @@ import 'login.dart';
 class SideNavigatinPage extends StatefulWidget {
   var s = "", s1 = "", s2 = "", s3 = "";
 
-  SideNavigatinPage(String s, String s1, String s2, String s3, {Key? key}) {
+  SideNavigatinPage(String s, String s1, String s2, String s3, {Key key}) {
     this.s = s;
     this.s1 = s1;
     this.s2 = s2;
@@ -32,7 +32,7 @@ class SideNavigatinPage extends StatefulWidget {
 }
 
 class _SideNavigatinPageState extends State<SideNavigatinPage> {
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   final box = GetStorage();
 
   _SideNavigatinPageState(String s, String s1, String s2, String s3);

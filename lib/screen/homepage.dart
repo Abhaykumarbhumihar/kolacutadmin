@@ -14,7 +14,7 @@ import 'allbooking.dart';
 import 'sidenavigation.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   var email = "";
   var phone = "";
   var iamge = "";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -38,10 +38,10 @@ class _HomePageState extends State<HomePage> {
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
       setState(() {
-        name = _testValue!;
-        email = emailValue!;
-        phone = _phoneValue!;
-        iamge = _imageValue!;
+        name = _testValue;
+        email = emailValue;
+        phone = _phoneValue;
+        iamge = _imageValue;
       //  print(name+" "+email+" "+phone+" "+_imageValue);
       });
       // will be null if never previously saved
@@ -154,12 +154,7 @@ class _HomePageState extends State<HomePage> {
                                                  Positioned(
                                                    top: height * 0.01,
                                                    child: Text(
-                                                     dashboardController
-                                                         .dashboardPojo
-                                                         .value
-                                                         .data![0]
-                                                         .staffAccount
-                                                         .toString(),
+                                                     "2",
                                                      style: TextStyle(
                                                          fontFamily:
                                                          'Poppins Semibold',
@@ -224,12 +219,7 @@ class _HomePageState extends State<HomePage> {
                                                  Positioned(
                                                    top: height * 0.01,
                                                    child: Text(
-                                                     dashboardController
-                                                         .dashboardPojo
-                                                         .value
-                                                         .data![0]
-                                                         .totalBooking
-                                                         .toString(),
+                                                     "5",
                                                      style: TextStyle(
                                                          fontFamily:
                                                          'Poppins Semibold',
@@ -298,12 +288,7 @@ class _HomePageState extends State<HomePage> {
                                                  Positioned(
                                                    top: height * 0.01,
                                                    child: Text(
-                                                     dashboardController
-                                                         .dashboardPojo
-                                                         .value
-                                                         .data![0]
-                                                         .openBooking
-                                                         .toString(),
+                                                     "10",
                                                      style: TextStyle(
                                                          fontFamily:
                                                          'Poppins Semibold',
@@ -368,12 +353,7 @@ class _HomePageState extends State<HomePage> {
                                                  Positioned(
                                                    top: height * 0.01,
                                                    child: Text("₹ "+
-                                                     dashboardController
-                                                         .dashboardPojo
-                                                         .value
-                                                         .data![0]
-                                                         .totalRevenue
-                                                         .toString(),
+                                                   "500",
                                                      style: TextStyle(
                                                          fontFamily:
                                                          'Poppins Semibold',
@@ -807,7 +787,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
             ),
             tooltip: 'Menu Icon',
-            onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           Container(
             child: Stack(
