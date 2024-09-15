@@ -167,10 +167,15 @@ class _HomePageState extends State<ProfileCarose> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      FlatButton(
-                                        color: Colors.green,
-                                        textColor:
-                                        Colors.white,
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          //padding: EdgeInsets.all(6.0),
+                                          textStyle: TextStyle(
+                                              color: Colors.white
+                                          ),
+                                          backgroundColor:Colors.green,
+                                        ),
+
                                         child: Text('OK'),
                                         onPressed:
                                             () async {
@@ -603,9 +608,16 @@ class _HomePageState extends State<ProfileCarose> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              color: Colors.green,
-              textColor: Colors.white,
+            TextButton(
+              style: TextButton.styleFrom(
+                //padding: EdgeInsets.all(6.0),
+                textStyle: TextStyle(
+                    color: Colors.white
+                ),
+                backgroundColor: Colors.green,
+              ),
+              // color: Colors.green,
+              // textColor: Colors.white,
               child: Text('OK'),
               onPressed: () async {
                 //service_id:1
@@ -657,9 +669,16 @@ class _HomePageState extends State<ProfileCarose> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                FlatButton(
-                  color: Colors.green,
-                  textColor: Colors.white,
+                TextButton(
+                  style: TextButton.styleFrom(
+                    //padding: EdgeInsets.all(6.0),
+                    textStyle: TextStyle(
+                        color: Colors.white
+                    ),
+                    backgroundColor: Colors.green,
+                  ),
+                  // color: Colors.green,
+                  // textColor: Colors.white,
                   child: Text('Add Images'),
                   onPressed: () {},
                 ),
@@ -681,9 +700,16 @@ class _HomePageState extends State<ProfileCarose> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              color: Colors.green,
-              textColor: Colors.white,
+            TextButton(
+              style: TextButton.styleFrom(
+                //padding: EdgeInsets.all(6.0),
+                textStyle: TextStyle(
+                    color: Colors.white
+                ),
+                backgroundColor: Colors.green,
+              ),
+              // color: Colors.green,
+              // textColor: Colors.white,
               child: Text('OK'),
               onPressed: () {
                 Navigator.pop(context);
@@ -748,9 +774,16 @@ class _HomePageState extends State<ProfileCarose> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              color: Colors.green,
-              textColor: Colors.white,
+            TextButton(
+              style: TextButton.styleFrom(
+                //padding: EdgeInsets.all(6.0),
+                textStyle: TextStyle(
+                    color: Colors.white
+                ),
+                backgroundColor: Colors.green,
+              ),
+              // color: Colors.green,
+              // textColor: Colors.white,
               child: Text('OK'),
               onPressed: () {
                 setState(() async {
@@ -1151,10 +1184,17 @@ class _HomePageState extends State<ProfileCarose> {
                                                           SizedBox(
                                                             height: 10,
                                                           ),
-                                                          FlatButton(
-                                                            color: Colors.green,
-                                                            textColor:
-                                                                Colors.white,
+                                                          TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              //padding: EdgeInsets.all(6.0),
+                                                              textStyle: TextStyle(
+                                                                  color: Colors.white
+                                                              ),
+                                                              backgroundColor: Colors.green,
+                                                            ),
+                                                            // color: Colors.green,
+                                                            // textColor:
+                                                            //     Colors.white,
                                                             child: Text('OK'),
                                                             onPressed:
                                                                 () async {
@@ -1350,10 +1390,17 @@ class _HomePageState extends State<ProfileCarose> {
                                                           SizedBox(
                                                             height: 10,
                                                           ),
-                                                          FlatButton(
-                                                            color: Colors.green,
-                                                            textColor:
-                                                                Colors.white,
+                                                          TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              //padding: EdgeInsets.all(6.0),
+                                                              textStyle: TextStyle(
+                                                                  color: Colors.white
+                                                              ),
+                                                              backgroundColor: Colors.green,
+                                                            ),
+                                                            // color: Colors.green,
+                                                            // textColor:
+                                                            //     Colors.white,
                                                             child: Text('OK'),
                                                             onPressed:
                                                                 () async {

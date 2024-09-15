@@ -239,11 +239,22 @@ class _LoginPageState extends State<LoginPage> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      FlatButton(
-                                        padding: EdgeInsets.all(6.0),
-                                        color: Color(Utils.hexStringToHexInt('46D0D9')),
-                                        textColor:
-                                        Colors.white,
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.all(6.0),
+                                            textStyle: TextStyle(
+                                              color: Colors.white
+                                            ),
+                                          backgroundColor: Color(Utils.hexStringToHexInt('46D0D9')),
+                                        ),
+                                       // style: ButtonStyle(
+                                       //   backgroundColor: MaterialStateProperty.all<Color>(Color(Utils.hexStringToHexInt('46D0D9'))),
+                                       //   padding: MaterialStateProperty.all(Padding(padding: EdgeInsets.all(6.0),))
+                                       // ),
+                                       //  padding: EdgeInsets.all(6.0),
+                                       //  color: Color(Utils.hexStringToHexInt('46D0D9')),
+                                       //  textColor:
+                                       //  Colors.white,
                                         child: Text('OK'),
                                         onPressed:
                                             () async {
@@ -473,10 +484,15 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  FlatButton(
-                    color: Color(
-                        Utils.hexStringToHexInt('77ACA2')),
-                    textColor: Colors.white,
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      //padding: EdgeInsets.all(6.0),
+                      textStyle: TextStyle(
+                          color: Colors.white
+                      ),
+                      backgroundColor: Color(Utils.hexStringToHexInt('77ACA2')),
+                    ),
+
                     child: Text('OK'),
                     onPressed: () async {
                       Navigator.pop(context);

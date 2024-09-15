@@ -695,7 +695,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
               const SizedBox(
                 height: 35,
               ),
-              RaisedButton.icon(
+              TextButton.icon(
                   onPressed: () async {
                     _openGallery(context);
                   },
@@ -713,7 +713,7 @@ class _RegisterPageState extends State<RegisterPageTwo> {
               const SizedBox(
                 height: 15.0,
               ),
-              RaisedButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     _openCame(context);
                   },
