@@ -1,4 +1,4 @@
-// ignore_for_file: iterable_contains_unrelated_type
+// ignore_for_file: iterable_contains_unred_type
 
 import 'dart:convert';
 import 'dart:io';
@@ -29,7 +29,7 @@ import '../utils/appconstant.dart';
 import 'sidenavigation.dart';
 
 class ProfileCarose extends StatefulWidget {
-  const ProfileCarose({Key? key}) : super(key: key);
+  const ProfileCarose({Key key}) : super(key: key);
 
   @override
   State<ProfileCarose> createState() => _HomePageState();
@@ -46,7 +46,7 @@ class _HomePageState extends State<ProfileCarose> {
   ];
 
   final ImagePicker imgpicker = ImagePicker();
-  List<XFile>? imagefiles;
+  List<XFile> imagefiles;
 
   int _current = 0;
   final CarouselController _controller = CarouselController();
@@ -68,7 +68,7 @@ class _HomePageState extends State<ProfileCarose> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var categoryvisiblitt = true;
 
-  void dd(BuildContext context, List<ServiceDetail>? data) {
+  void dd(BuildContext context, List<ServiceDetail> data) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     showDialog(
@@ -243,7 +243,7 @@ class _HomePageState extends State<ProfileCarose> {
                           physics: const AlwaysScrollableScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: data!.length,
+                          itemCount: data.length,
                           itemBuilder: (context, positio) {
                             return InkWell(
                               onTap: () {
@@ -329,7 +329,7 @@ class _HomePageState extends State<ProfileCarose> {
                                 ),
                                 child: ListView.builder(
                                     itemCount:
-                                        data[mainlistPosition].services!.length,
+                                        data[mainlistPosition].services.length,
                                     itemBuilder: (context, position) {
                                       return InkWell(
                                         onTap: () {
@@ -337,17 +337,17 @@ class _HomePageState extends State<ProfileCarose> {
 
 
                                             print(data[mainlistPosition]
-                                                .services![position]
+                                                .services[position]
                                                 .id);
                                             if (tempArray.contains(
                                                 data[mainlistPosition]
-                                                    .services![position])) {
+                                                    .services[position])) {
                                               tempArray.remove(
                                                   data[mainlistPosition]
-                                                      .services![position]);
+                                                      .services[position]);
                                             } else {
                                               tempArray.add(data[mainlistPosition]
-                                                  .services![position]);
+                                                  .services[position]);
                                             }
                                             print(tempArray.toString());
                                           });
@@ -386,7 +386,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                         children: [
                                                           Text(
                                                             data[mainlistPosition]
-                                                                .services![
+                                                                .services[
                                                                     position]
                                                                 .name
                                                                 .toString(),
@@ -395,7 +395,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                           ),
                                                           Text(
                                                             data[mainlistPosition]
-                                                                .services![
+                                                                .services[
                                                                     position]
                                                                 .price
                                                                 .toString(),
@@ -415,17 +415,17 @@ class _HomePageState extends State<ProfileCarose> {
                                                           updateService(
                                                               context,
                                                               data[mainlistPosition]
-                                                                  .services![
+                                                                  .services[
                                                                       position]
                                                                   .price
                                                                   .toString(),
                                                               data[mainlistPosition]
-                                                                  .services![
+                                                                  .services[
                                                                       position]
                                                                   .name
                                                                   .toString(),
                                                               data[mainlistPosition]
-                                                                  .services![
+                                                                  .services[
                                                                       position]
                                                                   .id
                                                                   .toString(),
@@ -436,8 +436,8 @@ class _HomePageState extends State<ProfileCarose> {
                                                   ),
                                                   Icon(tempArray.contains(data[
                                                               mainlistPosition]
-                                                          .services![position])
-                                                      ? Icons.cancel
+                                                          .services[position])?
+                                                       Icons.cancel
                                                       : Icons.add_circle_outline),
                                                 ],
                                               ),
@@ -535,14 +535,14 @@ class _HomePageState extends State<ProfileCarose> {
         imagefiles = pickedfiles;
         setState(() {
           if (imagefiles != null) {
-            imagefiles!.forEach((element) {
+            imagefiles.forEach((element) {
               print(element.path);
-              profileController.shopproflePojo.value.data!.shopImage!
+              profileController.shopproflePojo.value.data.shopImage
                   .add(ShopImage(shopImageId: 1, shopImage: element.path));
               imgList.add(element.path);
               var apicall = APICall();
               var a =
-                  apicall.uploadshopimages(imagefiles!, box.read('session'));
+                  apicall.uploadshopimages(imagefiles, box.read('session'));
 
               print("${a} KLKLKLKLKLK");
             });
@@ -684,7 +684,7 @@ class _HomePageState extends State<ProfileCarose> {
                 ),
                 imagefiles != null
                     ? Wrap(
-                        children: imagefiles!.map((imageone) {
+                        children: imagefiles.map((imageone) {
                           return Container(
                               child: Card(
                             child: Container(
@@ -726,7 +726,7 @@ class _HomePageState extends State<ProfileCarose> {
   var phone = "";
   var iamge = "";
   var session = "";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
 
   void addCoupon(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -840,11 +840,11 @@ class _HomePageState extends State<ProfileCarose> {
       var _phoneValue = sharedPreferences.getString("phoneno");
       var _session = sharedPreferences.getString("session");
       setState(() {
-        name = _testValue!;
-        email = emailValue!;
-        phone = _phoneValue!;
-        iamge = _imageValue!;
-        session = _session!;
+        name = _testValue;
+        email = emailValue;
+        phone = _phoneValue;
+        iamge = _imageValue;
+        session = _session;
       });
       // will be null if never previously saved
       //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -872,7 +872,7 @@ class _HomePageState extends State<ProfileCarose> {
                 color: Colors.white,
               ),
               tooltip: 'Menu Icon',
-              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              onPressed: () => _scaffoldKey.currentState.openDrawer(),
             ),
             titleSpacing: 0,
             title: Text(
@@ -895,26 +895,26 @@ class _HomePageState extends State<ProfileCarose> {
             } else {
               var profiledata = profileController.shopproflePojo.value.data;
               var oneStar =
-                  profileController.feedback.value.ratingDetail!.where((item) {
+                  profileController.feedback.value.ratingDetail.where((item) {
                 return item.rating == 1;
               });
               var twoStar =
-                  profileController.feedback.value.ratingDetail!.where((item) {
+                  profileController.feedback.value.ratingDetail.where((item) {
                 return item.rating== 2;
               });
               var threeStar =
-                  profileController.feedback.value.ratingDetail!.where((item) {
+                  profileController.feedback.value.ratingDetail.where((item) {
                 return item.rating == 3;
               });
               var fourStar =
-                  profileController.feedback.value.ratingDetail!.where((item) {
+                  profileController.feedback.value.ratingDetail.where((item) {
                 return item.rating == 4;
               });
               var fiveStar =
-                  profileController.feedback.value.ratingDetail!.where((item) {
+                  profileController.feedback.value.ratingDetail.where((item) {
                 return item.rating== 5;
               });
-              final List<Widget> imageSliders = profiledata!.shopImage!
+              final List<Widget> imageSliders = profiledata.shopImage
                   .map((item) => Container(
                         child: Container(
                           margin: const EdgeInsets.all(1.0),
@@ -1555,7 +1555,7 @@ class _HomePageState extends State<ProfileCarose> {
                                               MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                              '${profileController.feedback.value?.totalRating}',
+                                              '${profileController.feedback.value.totalRating}',
                                               style: TextStyle(
                                                   fontSize: width * 0.02,
                                                   fontFamily: 'Poppins Regular',
@@ -1607,7 +1607,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                         'Poppins Regular'),
                                               ),
                                               Text(
-                                                '${profileController.shopService.value.serviceDetail!.length.toString() != null ? profileController.shopService.value.serviceDetail!.length.toString() : ""} services',
+                                                '${profileController.shopService.value.serviceDetail.length.toString() != null ? profileController.shopService.value.serviceDetail.length.toString() : ""} services',
                                                 style: TextStyle(
                                                     fontSize: width * 0.02,
                                                     color: Color(
@@ -1625,7 +1625,7 @@ class _HomePageState extends State<ProfileCarose> {
                                               print(profileController
                                                   .adminServicePojo
                                                   .value
-                                                  .serviceDetail!
+                                                  .serviceDetail
                                                   .length);
                                               //  Get.to(AddService());
                                               dd(
@@ -1679,7 +1679,7 @@ class _HomePageState extends State<ProfileCarose> {
                                             itemCount: profileController
                                                 .shopService
                                                 .value
-                                                .serviceDetail!
+                                                .serviceDetail
                                                 .length,
                                             scrollDirection: Axis.horizontal,
                                             shrinkWrap: true,
@@ -1716,7 +1716,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               ),
                                                               child:
                                                                   ListView.builder(
-                                                                      itemCount: profileController.shopService.value.serviceDetail![position].services!.length,
+                                                                      itemCount: profileController.shopService.value.serviceDetail[position].services.length,
                                                                       itemBuilder: (context, positionn) {
                                                                         return InkWell(
                                                                           onTap: () {
@@ -1740,11 +1740,11 @@ class _HomePageState extends State<ProfileCarose> {
                                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                                       children: <Widget>[
                                                                                         Text(
-                                                                                          profileController.shopService.value.serviceDetail![position].services![positionn].name.toString(),
+                                                                                          profileController.shopService.value.serviceDetail[position].services[positionn].name.toString(),
                                                                                           style: TextStyle(fontSize: 8.0),
                                                                                         ),
                                                                                         Text(
-                                                                                          profileController.shopService.value.serviceDetail![position].services![positionn].price.toString(),
+                                                                                          profileController.shopService.value.serviceDetail[position].services[positionn].price.toString(),
                                                                                           textAlign: TextAlign.left,
                                                                                           style: TextStyle(fontSize: 8.0),
                                                                                         ),
@@ -1757,8 +1757,8 @@ class _HomePageState extends State<ProfileCarose> {
                                                                                           // sub_service_id:1,2
                                                                                           Map map = {
                                                                                             "session_id": box.read('session'),
-                                                                                            "sub_service_id": profileController.shopService.value.serviceDetail![position].services![positionn].id.toString(),
-                                                                                            "service_id": profileController.shopService.value.serviceDetail![position].serviceId.toString(),
+                                                                                            "sub_service_id": profileController.shopService.value.serviceDetail[position].services[positionn].id.toString(),
+                                                                                            "service_id": profileController.shopService.value.serviceDetail[position].serviceId.toString(),
                                                                                           };
 
                                                                                           print(map);
@@ -1815,7 +1815,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                           0.04),
                                                           image: DecorationImage(
                                                               image: NetworkImage(
-                                                                  '${profileController.shopService.value.serviceDetail![position].serviceImage.toString()}'))),
+                                                                  '${profileController.shopService.value.serviceDetail[position].serviceImage.toString()}'))),
                                                     ),
                                                   ),
                                                 ),
@@ -1950,7 +1950,7 @@ class _HomePageState extends State<ProfileCarose> {
                               //                         profileController
                               //                             .couponList
                               //                             .value
-                              //                             .staffDetail!
+                              //                             .staffDetail
                               //                             .clear();
                               //                         //profileController.getCouponList1();
                               //                       },
@@ -2035,7 +2035,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               Alignment.center,
                                                           child: Center(
                                                             child: Text(
-                                                              '${profileController.feedback.value?.totalRating}',
+                                                              '${profileController.feedback.value.totalRating}',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -2055,7 +2055,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               profileController
                                                                   .feedback
                                                                   .value
-                                                                  .totalRating!
+                                                                  .totalRating
                                                                   .toDouble(),
                                                           itemBuilder: (context,
                                                                   index) =>
@@ -2072,7 +2072,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                               Axis.horizontal,
                                                         ),
                                                         Text(
-                                                          '${profileController.feedback.value.ratingDetail?.length}',
+                                                          '${profileController.feedback.value.ratingDetail.length}',
                                                           textAlign:
                                                               TextAlign.left,
                                                           style: TextStyle(
@@ -2188,7 +2188,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                         totalSteps:
                                                                             10,
                                                                         currentStep:
-                                                                            oneStar!.length,
+                                                                            oneStar.length,
                                                                         size: 8,
                                                                         padding:
                                                                             0,
@@ -2259,7 +2259,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                           totalSteps:
                                                                               10,
                                                                           currentStep:
-                                                                              twoStar!.length,
+                                                                              twoStar.length,
                                                                           size:
                                                                               8,
                                                                           padding:
@@ -2330,7 +2330,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                           totalSteps:
                                                                               10,
                                                                           currentStep:
-                                                                              threeStar!.length,
+                                                                              threeStar.length,
                                                                           size:
                                                                               8,
                                                                           padding:
@@ -2401,7 +2401,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                           totalSteps:
                                                                               10,
                                                                           currentStep:
-                                                                              fourStar!.length,
+                                                                              fourStar.length,
                                                                           size:
                                                                               8,
                                                                           padding:
@@ -2471,7 +2471,7 @@ class _HomePageState extends State<ProfileCarose> {
                                                                         totalSteps:
                                                                             10,
                                                                         currentStep:
-                                                                            fiveStar!.length,
+                                                                            fiveStar.length,
                                                                         size: 8,
                                                                         padding:
                                                                             0,

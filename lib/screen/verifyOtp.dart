@@ -8,14 +8,14 @@ import 'package:otp_text_field/otp_text_field.dart';
 import '../utils/Utils.dart';
 
 class VerifyOtp extends StatefulWidget {
-  const VerifyOtp({Key? key}) : super(key: key);
+  const VerifyOtp({Key key}) : super(key: key);
 
   @override
   State<VerifyOtp> createState() => _VerifyPageState();
 }
 
 class _VerifyPageState extends State<VerifyOtp> {
-  late TextEditingController emailcontroller;
+   TextEditingController emailcontroller;
   var otp = "";
 
   @override

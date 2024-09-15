@@ -19,7 +19,7 @@ import '../model/AllBookingPojo.dart';
 import '../utils/appconstant.dart';
 
 class AllBooking extends StatefulWidget {
-  const AllBooking({Key? key}) : super(key: key);
+  const AllBooking({Key key}) : super(key: key);
 
   @override
   State<AllBooking> createState() => _HomePageState();
@@ -49,7 +49,7 @@ class _HomePageState extends State<AllBooking> {
   String date = "";
 
   _selectclosingDate(BuildContext context) async {
-    final DateTime? selected = await showDatePicker(
+    final DateTime selected = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(selectedDate.year - 1),
@@ -158,8 +158,8 @@ class _HomePageState extends State<AllBooking> {
                   onSelected: (index) async {
                     print(index);
                     setState(() {
-                      bookingController.slotDetail = [];
-                      bookingController.filterStatus(index);
+                      // bookingController.slotDetail = [];
+                      // bookingController.filterStatus(index);
                     });
                   }),
             ],
@@ -170,8 +170,8 @@ class _HomePageState extends State<AllBooking> {
             if (bookingController.lodaer) {
               return Container();
             } else {
-              for (var i = 0; i < bookingController.slotDetail!.length; i++) {
-                _element.add(bookingController.slotDetail![i]);
+              for (var i = 0; i < bookingController.slotDetail.length; i++) {
+                _element.add(bookingController.slotDetail[i]);
               }
               return SingleChildScrollView(
                 child: Column(
@@ -215,7 +215,7 @@ class _HomePageState extends State<AllBooking> {
                           },
                           onTap: () async {
                             print("SDF SDF SDF SDF ");
-                            final DateTime? selected = await showDatePicker(
+                            final DateTime selected = await showDatePicker(
                               context: context,
                               initialDate: selectedDate,
                               firstDate: DateTime(selectedDate.year - 1),
@@ -248,15 +248,15 @@ class _HomePageState extends State<AllBooking> {
                         elements: _element,
                         order: StickyGroupedListOrder.ASC,
                         groupBy: (SlotDetail element) => DateTime(
-                          element.date!.year,
-                          element.date!.month,
-                          element.date!.day,
+                          element.date.year,
+                          element.date.month,
+                          element.date.day,
                         ),
                         groupComparator: (DateTime value1, DateTime value2) =>
                             value2.compareTo(value1),
                         itemComparator:
                             (SlotDetail element1, SlotDetail element2) =>
-                                element1.date!.compareTo(element2.date!),
+                                element1.date.compareTo(element2.date),
                         floatingHeader: false,
                         groupSeparatorBuilder: _getGroupSeparator,
                         itemBuilder: _getItem,
@@ -411,7 +411,7 @@ class _HomePageState extends State<AllBooking> {
     var height = MediaQuery.of(context).size.height;
 
     List<String> serviceName = [];
-    element.service!.forEach((element) {
+    element.service.forEach((element) {
       serviceName.add(element.name.toString());
     });
 
@@ -509,7 +509,7 @@ class _HomePageState extends State<AllBooking> {
                                     fontSize: width * 0.03),
                               ),
                               Text(
-                                  "${element.date!.day}-${element.date!.month}-${element.date!.year}",
+                                  "${element.date.day}-${element.date.month}-${element.date.year}",
                                   style: TextStyle(
                                       fontFamily: 'Poppins Regular',
                                       color: Color(
@@ -599,7 +599,7 @@ class _HomePageState extends State<AllBooking> {
                           LimitedBox(
                             maxHeight: height * 0.3,
                             child: ListView.builder(
-                                itemCount: element.service!.length,
+                                itemCount: element.service.length,
                                 itemBuilder: (context, position) {
                                   return Container(
                                     height: height * 0.03,
@@ -617,13 +617,13 @@ class _HomePageState extends State<AllBooking> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                "${element.service![position].name}",
+                                                "${element.service[position].name}",
                                                 style: TextStyle(fontSize: 8.0),
                                               ),
                                             ],
                                           ),
                                           Text(
-                                            "${element.service![position].price}",
+                                            "${element.service[position].price}",
                                             style: TextStyle(fontSize: 8.0),
                                           )
                                         ],
@@ -728,9 +728,9 @@ class _HomePageState extends State<AllBooking> {
                           //         if (body['message'] ==
                           //             "Booking has been accepted successfully.") {
                           //           setState(() {
-                          //             bookingController.slotDetail!.clear();
+                          //             bookingController.slotDetail.clear();
                           //             bookingController
-                          //                 .bookingPojo.value.slotDetail!
+                          //                 .bookingPojo.value.slotDetail
                           //                 .clear();
                           //
                           //             bookingController.getBookingList();
@@ -780,9 +780,9 @@ class _HomePageState extends State<AllBooking> {
                           //         if (body['message'] ==
                           //             "Booking has been completed successfully.") {
                           //           setState(() {
-                          //             bookingController.slotDetail!.clear();
+                          //             bookingController.slotDetail.clear();
                           //             bookingController
-                          //                 .bookingPojo.value.slotDetail!
+                          //                 .bookingPojo.value.slotDetail
                           //                 .clear();
                           //             bookingController.getBookingList();
                           //           });
@@ -829,9 +829,9 @@ class _HomePageState extends State<AllBooking> {
                                     if (body['message'] ==
                                         "Booking has been completed successfully.") {
                                       setState(() {
-                                        bookingController.slotDetail!.clear();
+                                        bookingController.slotDetail.clear();
                                         bookingController
-                                            .bookingPojo.value.slotDetail!
+                                            .bookingPojo.value.slotDetail
                                             .clear();
                                         bookingController.getBookingList();
                                       });
@@ -877,10 +877,10 @@ class _HomePageState extends State<AllBooking> {
                                         final body = json.decode(response.body);
                                         if (body['message'] != "") {
                                           setState(() {
-                                            bookingController.slotDetail!
+                                            bookingController.slotDetail
                                                 .clear();
                                             bookingController
-                                                .bookingPojo.value.slotDetail!
+                                                .bookingPojo.value.slotDetail
                                                 .clear();
 
                                             bookingController.getBookingList();

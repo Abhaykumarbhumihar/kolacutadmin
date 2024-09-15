@@ -24,7 +24,7 @@ class DashboardController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
 
     var session = prefs.getString('session');
-    sessionId.value = session!;
+    sessionId.value = session;
     update();
   }
 

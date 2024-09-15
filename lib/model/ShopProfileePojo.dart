@@ -15,9 +15,9 @@ class ShopProfileePojo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  Data? data;
+  int status;
+  String message;
+  Data data;
 
   factory ShopProfileePojo.fromJson(Map<String, dynamic> json) => ShopProfileePojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class ShopProfileePojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data!.toJson(),
+    "data": data.toJson(),
   };
 }
 
@@ -53,23 +53,23 @@ class Data {
     this.shopImage,
   });
 
-  int? id;
-  String? name;
-  String? email;
-  String? ownerName;
-  String? ownerEmail;
-  String? ownerPhoneNo;
-  String? ownerProfileImage;
-  int? owerAge;
-  String? logo;
-  String? adhaarCardFile;
-  String? address;
-  String? latitude;
-  String? longitude;
-  String? shopType;
-  String? description;
-  String? amenties;
-  List<ShopImage>? shopImage;
+  int id;
+  String name;
+  String email;
+  String ownerName;
+  String ownerEmail;
+  String ownerPhoneNo;
+  String ownerProfileImage;
+  int owerAge;
+  String logo;
+  String adhaarCardFile;
+  String address;
+  String latitude;
+  String longitude;
+  String shopType;
+  String description;
+  String amenties;
+  List<ShopImage> shopImage;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
@@ -88,7 +88,7 @@ class Data {
     shopType: json["shop_type"],
     description: json["description"],
     amenties: json["amenties"],
-    shopImage: List<ShopImage>.from(json["shop_image"]!.map((x) => ShopImage.fromJson(x))),
+    shopImage: List<ShopImage>.from(json["shop_image"].map((x) => ShopImage.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -108,7 +108,7 @@ class Data {
     "shop_type": shopType,
     "description": description,
     "amenties": amenties,
-    "shop_image": List<dynamic>.from(shopImage!.map((x) => x.toJson())),
+    "shop_image": List<dynamic>.from(shopImage.map((x) => x.toJson())),
   };
 }
 
@@ -118,8 +118,8 @@ class ShopImage {
     this.shopImage,
   });
 
-  int? shopImageId;
-  String? shopImage;
+  int shopImageId;
+  String shopImage;
 
   factory ShopImage.fromJson(Map<String, dynamic> json) => ShopImage(
     shopImageId: json["shop_image_id"],

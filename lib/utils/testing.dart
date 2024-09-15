@@ -9,13 +9,13 @@ class Animal {
   final String name;
 
   Animal({
-    required this.id,
-    required this.name,
+  this.id,
+     this.name,
   });
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }

@@ -17,7 +17,7 @@ import '../utils/appconstant.dart';
 import 'register.dart';
 import 'dart:io';
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -25,7 +25,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   AuthControlller authControlller = Get.put(AuthControlller());
-  late TextEditingController emailcontroller,_passwordcontorller;
+   TextEditingController emailcontroller,_passwordcontorller;
   TextEditingController _textFieldControllerupdateABout =
   TextEditingController();
   final box = GetStorage();

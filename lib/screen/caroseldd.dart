@@ -17,7 +17,7 @@ class MyAppp extends StatelessWidget {
 
 class Carousel extends StatefulWidget {
   const Carousel({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
-  late PageController _pageController;
+   PageController _pageController;
 
   List<String> images = [
     "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",

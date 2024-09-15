@@ -15,9 +15,9 @@ class EmployeeProfilePojo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  Data? data;
+  int status;
+  String message;
+  Data data;
 
   factory EmployeeProfilePojo.fromJson(Map<String, dynamic> json) => EmployeeProfilePojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class EmployeeProfilePojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data!.toJson(),
+    "data": data.toJson(),
   };
 }
 
@@ -48,18 +48,18 @@ class Data {
     this.feedback,
   });
 
-  int? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? image;
-  List<String>? skills;
-  String? isDuty;
-  String? address;
-  int? status;
-  String? experience;
-  List<LeaveManagement>? leaveManagement;
-  List<Feedback>? feedback;
+  int id;
+  String name;
+  String email;
+  String phone;
+  String image;
+  List<String> skills;
+  String isDuty;
+  String address;
+  int status;
+  String experience;
+  List<LeaveManagement> leaveManagement;
+  List<Feedback> feedback;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
@@ -82,13 +82,13 @@ class Data {
     "email": email,
     "phone": phone,
     "image": image,
-    "skills": List<dynamic>.from(skills!.map((x) => x)),
+    "skills": List<dynamic>.from(skills.map((x) => x)),
     "is_duty": isDuty,
     "address": address,
     "status": status,
     "experience": experience,
-    "leave_management": List<dynamic>.from(leaveManagement!.map((x) => x.toJson())),
-    "feedback": List<dynamic>.from(feedback!.map((x) => x.toJson())),
+    "leave_management": List<dynamic>.from(leaveManagement.map((x) => x.toJson())),
+    "feedback": List<dynamic>.from(feedback.map((x) => x.toJson())),
   };
 }
 
@@ -101,11 +101,11 @@ class Feedback {
     this.date
   });
 
-  int? id;
-  int? rating;
-  String? comment;
-  String? user_name;
-  String?date;
+  int id;
+  int rating;
+  String comment;
+  String user_name;
+  String date;
 
   factory Feedback.fromJson(Map<String, dynamic> json) => Feedback(
     id: json["id"],
@@ -134,11 +134,11 @@ class LeaveManagement {
     this.endFrom,
   });
 
-  String? leaveDate;
-  String? holidayType;
-  String? holidayReason;
-  String? startFrom;
-  String? endFrom;
+  String leaveDate;
+  String holidayType;
+  String holidayReason;
+  String startFrom;
+  String endFrom;
 
   factory LeaveManagement.fromJson(Map<String, dynamic> json) => LeaveManagement(
     leaveDate: json["leave_date"],

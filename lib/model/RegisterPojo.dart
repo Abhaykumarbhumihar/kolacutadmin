@@ -15,9 +15,9 @@ class RegisterPojo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  Data? data;
+  int status;
+  String message;
+  Data data;
 
   factory RegisterPojo.fromJson(Map<String, dynamic> json) => RegisterPojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class RegisterPojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data!.toJson(),
+    "data": data.toJson(),
   };
 }
 
@@ -51,21 +51,21 @@ class Data {
     this.token,
   });
 
-  int? id;
-  String? name;
-  String? email;
-  String? ownerName;
-  String? ownerEmail;
-  String? ownerPhoneNo;
-  String? ownerProfileImage;
-  int? owerAge;
-  String? logo;
-  String? adhaarCardFile;
-  String? address;
-  String? latitude;
-  String? longitude;
-  String? shopType;
-  String? token;
+  int id;
+  String name;
+  String email;
+  String ownerName;
+  String ownerEmail;
+  String ownerPhoneNo;
+  String ownerProfileImage;
+  int owerAge;
+  String logo;
+  String adhaarCardFile;
+  String address;
+  String latitude;
+  String longitude;
+  String shopType;
+  String token;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],

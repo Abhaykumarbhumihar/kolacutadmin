@@ -27,7 +27,7 @@ class CommonDialog{
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (Get.isDialogOpen!) Get.back();
+                  if (Get.isDialogOpen) Get.back();
                 },
                 child: const Text("Okay"),
               ),

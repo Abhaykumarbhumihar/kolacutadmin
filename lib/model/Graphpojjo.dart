@@ -15,9 +15,9 @@ class Graphpojjo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  List<Datum>? data;
+  int status;
+  String message;
+  List<Datum> data;
 
   factory Graphpojjo.fromJson(Map<String, dynamic> json) => Graphpojjo(
     status: json["status"],
@@ -28,7 +28,7 @@ class Graphpojjo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
 }
 
@@ -39,9 +39,9 @@ class Datum {
     this.Month
   });
 
-  int? completedOrder;
-  int? totalOrder;
-  String? Month;
+  int completedOrder;
+  int totalOrder;
+  String Month;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       completedOrder: json["completed_order"],

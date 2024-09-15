@@ -15,14 +15,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_place/google_place.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key key}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  late TextEditingController emailcontroller,
+   TextEditingController emailcontroller,
       _namecontroller,
       _websitecontroller,
       _addresscontroller,
@@ -39,9 +39,9 @@ class _RegisterPageState extends State<RegisterPage> {
   var items = ['Male', 'Female'];
   var dropdown;
   var showselectGender = "";
-  late GooglePlace googlePlace;
+   GooglePlace googlePlace;
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-  late Position _currentPosition;
+   Position _currentPosition;
   String _currentAddress = "";
   bool _isLoading = true;
 
@@ -98,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var result = await googlePlace.autocomplete.get(value);
     if (result != null && result.predictions != null && mounted) {
       setState(() {
-        predictions = result.predictions!;
+        predictions = result.predictions;
       });
     }
   }
@@ -107,13 +107,13 @@ class _RegisterPageState extends State<RegisterPage> {
     var result = await this.googlePlace.details.get(placeId);
     if (result != null && result.result != null && mounted) {
       setState(() {
-        var detailsResult = result.result!;
+        var detailsResult = result.result;
         print(detailsResult.name);
         print(detailsResult.formattedAddress);
         print(detailsResult.adrAddress);
         print(detailsResult.scope);
         print(detailsResult.name);
-        _currentAddress = detailsResult.name!;
+        _currentAddress = detailsResult.name;
 
         //print(detailsResult.geometry!.location!.lat);
         //print( detailsResult.geometry!.location!.lat);
@@ -397,7 +397,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                         predictions[index]
                                                             .placeId);
                                                     getDetils(predictions[index]
-                                                        .placeId!);
+                                                        .placeId);
                                                     Navigator.pop(context);
                                                   });
                                                   // Navigator.push(

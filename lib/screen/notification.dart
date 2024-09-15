@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/Utils.dart';
 
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  const NotificationPage({Key key}) : super(key: key);
 
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -80,7 +80,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  "${homecontroller.notification.value.notificationDetail?[position].title}",
+                                                  "${homecontroller.notification.value.notificationDetail[position].title}",
                                                   style:
                                                       TextStyle(fontSize: 12.0),
                                                 ),
@@ -88,7 +88,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                   height: 3.0,
                                                 ),
                                                 Text(
-                                                  "${homecontroller.notification.value.notificationDetail?[position].description}",
+                                                  "${homecontroller.notification.value.notificationDetail[position].description}",
                                                   style:
                                                       TextStyle(fontSize: 10.0),
                                                 ),

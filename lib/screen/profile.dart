@@ -9,7 +9,7 @@ import 'package:kolacur_admin/utils/CommomDialog.dart';
 import 'package:kolacur_admin/utils/Utils.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _HomePageState();
@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 
 class _HomePageState extends State<ProfilePage> {
   EmployeeController employeeController = Get.put(EmployeeController());
-  late int accountStatus;
+   int accountStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _HomePageState extends State<ProfilePage> {
           if (employeeController.lodaer) {
             return Container();
           } else {
-            accountStatus = employeeController.employeeListPojo.value.data!.status!;
+            accountStatus = employeeController.employeeListPojo.value.data.status;
             return Scaffold(
                 resizeToAvoidBottomInset: false,
                 backgroundColor: Colors.white,
@@ -62,12 +62,12 @@ class _HomePageState extends State<ProfilePage> {
                       child: InkWell(
                         onTap: () {
                           if (employeeController
-                              .employeeListPojo.value.data!.status ==
+                              .employeeListPojo.value.data.status ==
                               1) {
                             print("000000000000000000");
                             employeeController.enabeDesable(0, context);
                           } else if (employeeController
-                              .employeeListPojo.value.data!.status ==
+                              .employeeListPojo.value.data.status ==
                               0) {
                             print("111111111111111");
                             employeeController.enabeDesable(1, context);
@@ -84,7 +84,7 @@ class _HomePageState extends State<ProfilePage> {
                             child: Center(
                               child: Text(
                                 employeeController
-                                    .employeeListPojo.value.data!.status ==
+                                    .employeeListPojo.value.data.status ==
                                     1
                                     ? "Disable Account"
                                     : "Enable Account",
@@ -128,11 +128,11 @@ class _HomePageState extends State<ProfilePage> {
                                   CircleAvatar(
                                     radius: width * 0.2 - width * 0.06,
                                     backgroundImage: NetworkImage(employeeController
-                                        .employeeListPojo.value.data!.image
+                                        .employeeListPojo.value.data.image
                                         .toString() !=
                                         ""
                                         ? employeeController
-                                        .employeeListPojo.value.data!.image
+                                        .employeeListPojo.value.data.image
                                         .toString()
                                         : ""),
                                   )
@@ -215,11 +215,11 @@ class _HomePageState extends State<ProfilePage> {
                                         ),
                                         Text(
                                           employeeController.employeeListPojo.value
-                                              .data!.name
+                                              .data.name
                                               .toString() !=
                                               ""
                                               ? employeeController
-                                              .employeeListPojo.value.data!.name
+                                              .employeeListPojo.value.data.name
                                               .toString()
                                               : "",
                                           textAlign: TextAlign.left,
@@ -250,14 +250,14 @@ class _HomePageState extends State<ProfilePage> {
                                         ),
                                         Text(
                                           employeeController.employeeListPojo.value
-                                              .data!.email
+                                              .data.email
                                               .toString() !=
                                               ""
                                               ? " " +
                                               employeeController
                                                   .employeeListPojo
                                                   .value
-                                                  .data!
+                                                  .data
                                                   .email
                                                   .toString()
                                               : "",
@@ -289,11 +289,11 @@ class _HomePageState extends State<ProfilePage> {
                                         ),
                                         Text(
                                           employeeController.employeeListPojo.value
-                                              .data!.phone
+                                              .data.phone
                                               .toString() !=
                                               ""
                                               ? employeeController.employeeListPojo
-                                              .value.data!.phone
+                                              .value.data.phone
                                               .toString()
                                               : "",
                                           textAlign: TextAlign.left,
@@ -332,8 +332,8 @@ class _HomePageState extends State<ProfilePage> {
                                               itemCount: employeeController
                                                   .employeeListPojo
                                                   .value
-                                                  .data!
-                                                  .skills!
+                                                  .data
+                                                  .skills
                                                   .length,
                                               itemBuilder: (context, position) {
                                                 return Text(
@@ -341,8 +341,8 @@ class _HomePageState extends State<ProfilePage> {
                                                       employeeController
                                                           .employeeListPojo
                                                           .value
-                                                          .data!
-                                                          .skills![position],
+                                                          .data
+                                                          .skills[position],
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                       color: Color(
@@ -449,13 +449,13 @@ class _HomePageState extends State<ProfilePage> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     //physics: NeverScrollableScrollPhysics(),
-                                    itemCount: employeeController.leaveManagement!.length,
+                                    itemCount: employeeController.leaveManagement.length,
                                     itemBuilder: (context, position) {
 
                                       return InkWell(
                                         onTap: (){
-                                          //  print(employeeController.leaveManagement![position].holidayType);
-                                          //CommonDialog.showsnackbar(employeeController.leaveManagement![position].holidayType);
+                                          //  print(employeeController.leaveManagement[position].holidayType);
+                                          //CommonDialog.showsnackbar(employeeController.leaveManagement[position].holidayType);
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(
@@ -507,7 +507,7 @@ class _HomePageState extends State<ProfilePage> {
                                                                       .circular(
                                                                       width *
                                                                           0.01),
-                                                                  color: employeeController.leaveManagement![
+                                                                  color: employeeController.leaveManagement[
                                                                   position]
                                                                       .holidayType ==
                                                                       "Partial off"
@@ -519,7 +519,7 @@ class _HomePageState extends State<ProfilePage> {
                                                                       '#ecfafb'))),
                                                               child: Center(
                                                                 child: Text(
-                                                                  employeeController.leaveManagement![
+                                                                  employeeController.leaveManagement[
                                                                   position]
                                                                       .holidayType ==
                                                                       "Partial off"
@@ -528,7 +528,7 @@ class _HomePageState extends State<ProfilePage> {
                                                                   textAlign: TextAlign
                                                                       .center,
                                                                   style: TextStyle(
-                                                                      color: employeeController.leaveManagement![
+                                                                      color: employeeController.leaveManagement[
                                                                       position]
                                                                           .holidayType ==
                                                                           "Partial off"
@@ -549,7 +549,7 @@ class _HomePageState extends State<ProfilePage> {
                                                               height: height * 0.01,
                                                             ),
                                                             Text(
-                                                              employeeController.leaveManagement![
+                                                              employeeController.leaveManagement[
                                                               position]
                                                                   .leaveDate
                                                                   .toString() +
@@ -567,7 +567,7 @@ class _HomePageState extends State<ProfilePage> {
                                                               height: height * 0.001,
                                                             ),
                                                             Text(
-                                                              employeeController.leaveManagement![
+                                                              employeeController.leaveManagement[
                                                               position]
                                                                   .holidayReason
                                                                   .toString() +
@@ -598,7 +598,7 @@ class _HomePageState extends State<ProfilePage> {
                                                       mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                       children: <Widget>[
-                                                        employeeController.leaveManagement![
+                                                        employeeController.leaveManagement[
                                                         position]
                                                             .holidayType ==
                                                             "Partial off"
@@ -606,8 +606,8 @@ class _HomePageState extends State<ProfilePage> {
                                                           child: Row(
                                                             children: <Widget>[
                                                               Text(
-                                                                '${employeeController.leaveManagement![position].startFrom}-'
-                                                                    '${employeeController.leaveManagement![position].endFrom}  ',
+                                                                '${employeeController.leaveManagement[position].startFrom}-'
+                                                                    '${employeeController.leaveManagement[position].endFrom}  ',
                                                                 style: TextStyle(
                                                                     color: Color(
                                                                         Utils.hexStringToHexInt(
@@ -705,7 +705,7 @@ class _HomePageState extends State<ProfilePage> {
                                     scrollDirection: Axis.vertical,
                                     //physics: NeverScrollableScrollPhysics(),
                                     itemCount: employeeController.employeeListPojo
-                                        .value.data!.feedback!.length,
+                                        .value.data.feedback.length,
                                     itemBuilder: (context, position) {
 
                                       return
@@ -717,7 +717,7 @@ class _HomePageState extends State<ProfilePage> {
                                             children: <Widget>[
                                               Text(
                                                 employeeController.employeeListPojo
-                                                    .value.data!.feedback![position]!.user_name.toString(),
+                                                    .value.data.feedback[position].user_name.toString(),
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: width * 0.03,
@@ -727,7 +727,7 @@ class _HomePageState extends State<ProfilePage> {
                                                 children: <Widget>[
                                                   RatingBarIndicator(
                                                     rating: double.parse(employeeController.employeeListPojo
-                                                        .value.data!.feedback![position]!.rating.toString()),
+                                                        .value.data.feedback[position].rating.toString()),
                                                     itemBuilder: (context, index) =>
                                                     const Icon(
                                                       Icons.star,
@@ -739,7 +739,7 @@ class _HomePageState extends State<ProfilePage> {
                                                   ),
                                                   Text(
                                                     ' ${employeeController.employeeListPojo
-                                                        .value.data!.feedback![position]!.date.toString()}',
+                                                        .value.data.feedback[position].date.toString()}',
                                                     style: TextStyle(
                                                         fontFamily: 'Poppins Regular',
                                                         fontSize: width * 0.02,
@@ -753,7 +753,7 @@ class _HomePageState extends State<ProfilePage> {
                                               ),
                                               AutoSizeText(
                                                 '${employeeController.employeeListPojo
-                                                    .value.data!.feedback![position]!.comment}',
+                                                    .value.data.feedback[position].comment}',
                                                 style: TextStyle(
                                                     fontSize: width * 0.02,
                                                     color: Color(
